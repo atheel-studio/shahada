@@ -692,8 +692,8 @@ async function render(){
 }
 const hasCV=()=>{ const c=D.cv||{}; return !!(c.qual||c.exp||c.mail||lines(c.courses).length||lines(c.awards).length); };
 const hasVM=()=>!!(D.vision||D.about||D.values);
-function open(id){ $(id).classList.add("open"); }
-function close(id){ $(id).classList.remove("open"); }
+function openM(id){ $(id).classList.add("open"); }
+function closeM(id){ $(id).classList.remove("open"); }
 document.querySelectorAll(".modal").forEach(m=>{ m.addEventListener("click",ev=>{ if(ev.target===m || ev.target.closest("[data-close]")) m.classList.remove("open"); }); });
 
 /* ===== العنصر ===== */
@@ -715,13 +715,13 @@ async function openEl(i){
     d.querySelector('[data-a="x"]').onclick=async()=>{ if(!confirm("حذف الشاهد «"+it.t+"»؟")) return; for(const im of it.imgs) await dbDel("img",im).catch(()=>{}); e.items.splice(j,1); await save(); openEl(i); render(); };
     L.appendChild(d);
   }
-  open("mEl");
+  openM("mEl");
 }
 $("addEv").onclick=()=>openEv(-1);
 $("elLink").onchange=async()=>{ const e=D.els[curEl], raw=$("elLink").value.trim(), u=normLink(raw); if(raw&&!u){ toast("الرابط غير صحيح"); return; } e.link=u; $("elLink").value=u; await save(); render(); if(u) toast("✅ انحفظ الرابط، ويطلع باركود في صفحة العنصر"); };
 $("elW").onchange=async()=>{ const e=D.els[curEl], v=$("elW").value.replace(/[٠-٩]/g,d=>"٠١٢٣٤٥٦٧٨٩".indexOf(d)).replace(/[^0-9.]/g,""); e.w = v===""?"":Math.min(100,parseFloat(v)); await save(); render(); };
 $("renEl").onclick=async()=>{ const e=D.els[curEl]; const t=prompt("اسم العنصر:", e.t); if(t&&t.trim()){ e.t=t.trim(); await save(); openEl(curEl); render(); } };
-$("delEl").onclick=async()=>{ const e=D.els[curEl]; if(!confirm("حذف العنصر «"+e.t+"» وكل شواهده؟")) return; for(const it of e.items) for(const im of it.imgs) await dbDel("img",im).catch(()=>{}); D.els.splice(curEl,1); await save(); close("mEl"); render(); };
+$("delEl").onclick=async()=>{ const e=D.els[curEl]; if(!confirm("حذف العنصر «"+e.t+"» وكل شواهده؟")) return; for(const it of e.items) for(const im of it.imgs) await dbDel("img",im).catch(()=>{}); D.els.splice(curEl,1); await save(); closeM("mEl"); render(); };
 $("addEl").onclick=async()=>{ const t=prompt("اسم العنصر الخاص (مثال: النشاط الطلابي):"); if(t&&t.trim()){ D.els.push({k:"c_"+uid(), t:t.trim(), items:[]}); await save(); render(); openEl(D.els.length-1); } };
 
 /* ===== الشاهد ===== */
@@ -739,7 +739,7 @@ function openEv(j){
   const used=new Set(e.items.map(x=>x.t));
   $("evSug").innerHTML = def ? def.s.map(s=>gS(s,D.g)).map(s=>'<button type="button" class="chip'+(used.has(s)?' used':'')+'">'+esc(s)+'</button>').join("") : "";
   $("evSug").querySelectorAll(".chip").forEach(c=>c.onclick=()=>{ $("evT").value=c.textContent; $("repType").value=repFor(D.els[curEl], c.textContent); });
-  drawPh(); open("mEv");
+  drawPh(); openM("mEv");
 }
 async function drawPh(){
   const box=$("evPh"); box.innerHTML="";
@@ -787,7 +787,7 @@ $("evSave").onclick=async()=>{
   const e=D.els[curEl], obj={id:curEv>=0?e.items[curEv].id:uid(), t, d:$("evD").value.trim(), dt:$("evDate").value.trim(), imgs:tmpPh.slice(), link, rep};
   const before=stats(), isNew=curEv<0;
   if(curEv>=0){ const old=e.items[curEv].imgs.filter(x=>!obj.imgs.includes(x)); for(const im of old) await dbDel("img",im).catch(()=>{}); e.items[curEv]=obj; } else e.items.push(obj);
-  await save(); close("mEv"); await openEl(curEl); render();
+  await save(); closeM("mEv"); await openEl(curEl); render();
   if(isNew){ markActivity(); clearNudge(); if(!milestone(before, stats())) toast("✅ انحفظ الشاهد"); } else toast("✅ انحفظ الشاهد");
 };
 
@@ -798,7 +798,7 @@ function openInfo(){
   [["Name","name"],["Subj","subj"],["School","school"],["Grades","grades"],["Dept","dept"],["Office","office"],["Prin","prin"],["Year","year"]].forEach(([a,b])=>$("i"+a).value=D[b]||"");
   prevImg("logoPrev",tmpLogo); prevImg("meImgPrev",tmpMe);
   const f=tmpG!=="m"; $("lName").textContent=f?"اسم المعلمة":"اسم المعلم"; $("lPrin").textContent=f?"اسم مديرة المدرسة":"اسم مدير المدرسة";
-  open("mInfo");
+  openM("mInfo");
 }
 function prevImg(id,v){ const i=$(id); if(v){ i.src=v; i.classList.remove("hidden"); } else { i.removeAttribute("src"); i.classList.add("hidden"); } }
 document.querySelectorAll("#gSeg button").forEach(b=>b.onclick=()=>{ tmpG=b.dataset.v; seg("gSeg",tmpG); const f=tmpG!=="m"; $("lName").textContent=f?"اسم المعلمة":"اسم المعلم"; $("lPrin").textContent=f?"اسم مديرة المدرسة":"اسم مدير المدرسة"; });
@@ -817,7 +817,7 @@ $("meDel").onclick=()=>{ tmpMe=""; prevImg("meImgPrev",""); };
 $("infoSave").onclick=async()=>{
   D.g=tmpG; D.logo=tmpLogo; D.me=tmpMe;
   [["Name","name"],["Subj","subj"],["School","school"],["Grades","grades"],["Dept","dept"],["Office","office"],["Prin","prin"],["Year","year"]].forEach(([a,b])=>D[b]=$("i"+a).value.trim());
-  await save(); close("mInfo"); render(); toast("✅ انحفظت بياناتك");
+  await save(); closeM("mInfo"); render(); toast("✅ انحفظت بياناتك");
 };
 $("bInfo").onclick=openInfo; $("infoTipGo").onclick=e=>{ e.preventDefault(); openInfo(); };
 
@@ -825,13 +825,13 @@ $("bInfo").onclick=openInfo; $("infoTipGo").onclick=e=>{ e.preventDefault(); ope
 function openPages(){ const c=D.cv||{};
   $("cQual").value=c.qual||""; $("cExp").value=c.exp||""; $("cMail").value=c.mail||""; $("cCourses").value=c.courses||""; $("cAwards").value=c.awards||"";
   $("vVision").value=D.vision||""; $("vMission").value=D.about||""; $("vValues").value=D.values||""; $("gGoals").value=D.goals||"";
-  $("pCheck").checked=D.pCheck!==false; $("pW").checked=D.pW!==false; open("mPages"); }
+  $("pCheck").checked=D.pCheck!==false; $("pW").checked=D.pW!==false; openM("mPages"); }
 $("pagesCard").onclick=openPages;
 $("vMagic").onclick=()=>{ if(!$("vVision").value.trim()) $("vVision").value=D.g==="m"?VM_DEF.vision_m:VM_DEF.vision_f; if(!$("vMission").value.trim()) $("vMission").value=VM_DEF.mission; if(!$("vValues").value.trim()) $("vValues").value=VM_DEF.values; toast("✨ عدّلي عليها براحتك"); };
 $("gMagic").onclick=()=>{ if($("gGoals").value.trim() && !confirm("أستبدل الأهداف الحالية بأهداف جاهزة؟")) return; $("gGoals").value=fillT(GOALS_DEF,""); if(!D.subj) toast("💡 اكتبي مادتك في 👤 بياناتي عشان تطلع في الأهداف"); else toast("✨ عدّلي عليها براحتك"); };
 $("pagesSave").onclick=async()=>{ D.cv={qual:$("cQual").value.trim(), exp:$("cExp").value.trim(), mail:$("cMail").value.trim(), courses:$("cCourses").value.trim(), awards:$("cAwards").value.trim()};
   D.vision=$("vVision").value.trim(); D.about=$("vMission").value.trim(); D.values=$("vValues").value.trim(); D.goals=$("gGoals").value.trim(); D.pCheck=$("pCheck").checked; D.pW=$("pW").checked;
-  await save(); close("mPages"); render(); toast("✅ انحفظت الصفحات"); };
+  await save(); closeM("mPages"); render(); toast("✅ انحفظت الصفحات"); };
 
 /* ===== الشكل ===== */
 function openLook(){
@@ -839,7 +839,7 @@ function openLook(){
   $("themes").innerHTML=Object.entries(THEMES).map(([k,t])=>'<button data-v="'+k+'"><i style="background:linear-gradient(135deg,'+t.a+','+t.b+');box-shadow:inset 0 -6px 0 '+t.g+'"></i>'+t.n+'</button>').join("");
   drawCovers(); seg("themes",tmpTheme);
   $("themes").querySelectorAll("button").forEach(b=>b.onclick=()=>{ tmpTheme=b.dataset.v; seg("themes",tmpTheme); drawCovers(); });
-  open("mLook");
+  openM("mLook");
 }
 function drawCovers(){
   const t=THEMES[tmpTheme];
@@ -850,9 +850,9 @@ function drawCovers(){
   seg("covers",tmpCover);
   $("covers").querySelectorAll("button").forEach(b=>b.onclick=()=>{ tmpCover=b.dataset.v; seg("covers",tmpCover); });
 }
-$("lookSave").onclick=async()=>{ D.theme=tmpTheme; D.cover=tmpCover; D.showEmpty=$("iEmpty").checked; D.sign=$("iSign").checked; await save(); close("mLook"); toast("✅ انحفظ الشكل"); };
+$("lookSave").onclick=async()=>{ D.theme=tmpTheme; D.cover=tmpCover; D.showEmpty=$("iEmpty").checked; D.sign=$("iSign").checked; await save(); closeM("mLook"); toast("✅ انحفظ الشكل"); };
 $("bLook").onclick=openLook;
-$("bMore").onclick=()=>open("mMore");
+$("bMore").onclick=()=>openM("mMore");
 
 /* ===== صفحات الملف (A4) ===== */
 const PW=794, PH=1123;
@@ -1046,7 +1046,7 @@ $("fab").onclick=async()=>{
   const pages=await buildPages(), sc=Math.min(1,($("pv").clientWidth||330)/PW);
   const ev=D.els.reduce((a,e)=>a+e.items.length,0);
   $("expInfo").textContent="الملف فيه "+AR_DIG(pages.length)+" صفحة و"+AR_DIG(ev)+" شاهد. راجعيه، وبعدها حمّليه أو أرسليه.";
-  open("mExp");
+  openM("mExp");
   const w=$("pv").clientWidth-20, s=w/PW;
   $("pv").innerHTML=pages.map(h=>'<div style="width:'+(PW*s)+'px;height:'+(PH*s)+'px;margin:0 auto 10px;overflow:hidden"><div style="transform:scale('+s+');transform-origin:top right;width:'+PW+'px">'+h+'</div></div>').join("");
   $("pv").scrollTop=0;
@@ -1087,7 +1087,7 @@ async function exportOne(i,j){
   const html=frame(t, evHTML(t,{e,i},it,j,urls), 1, 1);
   oneBlob=null; oneName=(it.rep?"report":"shahid")+".pdf";
   $("expInfo").textContent="صفحة الشاهد «"+it.t+"» لوحدها. حمّليها أو أرسليها."; $("expMsg").textContent=""; $("expProg").classList.add("hidden");
-  open("mExp"); const w=$("pv").clientWidth-20, s=w/PW;
+  openM("mExp"); const w=$("pv").clientWidth-20, s=w/PW;
   $("pv").innerHTML='<div style="width:'+(PW*s)+'px;height:'+(PH*s)+'px;margin:0 auto;overflow:hidden"><div style="transform:scale('+s+');transform-origin:top right;width:'+PW+'px">'+html+'</div></div>';
   $("mExp").dataset.one="1"; $("mExp")._one=[html];
 }
@@ -1178,7 +1178,7 @@ $("bRemind").onclick=()=>{
     "DESCRIPTION:خطوة صغيرة اليوم توفر عليك تعب نهاية العام ✨\\nافتحي ملفك: "+url,"URL:"+url,
     "BEGIN:VALARM","ACTION:DISPLAY","DESCRIPTION:وقت الشواهد ✨","TRIGGER:PT0M","END:VALARM","END:VEVENT","END:VCALENDAR"].join("\r\n");
   saveBlob(new Blob([ics],{type:"text/calendar;charset=utf-8"}),"shawahid-reminder.ics");
-  close("mMore"); toast("📅 افتحي الملف اللي نزل واضغطي «إضافة إلى التقويم»");
+  closeM("mMore"); toast("📅 افتحي الملف اللي نزل واضغطي «إضافة إلى التقويم»");
 };
 
 /* ===== النسخة الاحتياطية ===== */
@@ -1195,7 +1195,7 @@ async function restoreZip(fileOrBlob){
   if(!j||!j.data||!Array.isArray(j.data.els)) throw new Error("bad");
   if(!confirm("استرجاع النسخة يستبدل الشواهد الموجودة هنا. أكمل؟")) return false;
   for(const name of Object.keys(z.files)){ const m=name.match(/^img\/(.+)\.jpg$/); if(m){ const b=await z.file(name).async("blob"); await dbPut("img",m[1],new Blob([b],{type:"image/jpeg"})); } }
-  D=migrate(j.data); await save(); close("mMore"); render(); toast("✅ رجعت شواهدك"); return true;
+  D=migrate(j.data); await save(); closeM("mMore"); render(); toast("✅ رجعت شواهدك"); return true;
 }
 
 /* ===== Google Drive (اختياري، من المتصفح مباشرة) =====
@@ -1307,7 +1307,7 @@ const IS_IOS=/iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.platform==
 let pwaPrompt=null;
 if("serviceWorker" in navigator && (location.protocol==="https:"||location.hostname==="localhost")) addEventListener("load",()=>navigator.serviceWorker.register("/sw.js").catch(()=>{}));
 addEventListener("beforeinstallprompt",e=>{ e.preventDefault(); pwaPrompt=e; });
-$("bInstall").onclick=()=>{ close("mMore"); if(IS_STANDALONE){ toast("✅ الملف مثبت عندك"); return; } if(pwaPrompt){ pwaPrompt.prompt(); pwaPrompt=null; return; } open("mInst"); };
+$("bInstall").onclick=()=>{ closeM("mMore"); if(IS_STANDALONE){ toast("✅ الملف مثبت عندك"); return; } if(pwaPrompt){ pwaPrompt.prompt(); pwaPrompt=null; return; } openM("mInst"); };
 $("iosTipX").onclick=()=>{ $("iosTip").classList.add("hidden"); store.set("pf_iostip",1); };
 
 /* ===== عداد الأجهزة ===== */
