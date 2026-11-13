@@ -1,5 +1,5 @@
 /* أثيل ستوديو: تشغيل التطبيق بدون نت أو بنت ضعيف */
-const V = "ath-cert-v3";
+const V = "ath-cert-v4";
 const CORE = ["/index.html", "/manifest.webmanifest", "/icon-192.png", "/icon-512.png", "/apple-touch-icon.png", "/guide.png"];
 const LIBS = [
   "https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js",
