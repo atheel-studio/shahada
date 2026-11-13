@@ -433,7 +433,7 @@ const uid = () => Date.now().toString(36)+Math.random().toString(36).slice(2,8);
 
 /* ===== الكود ===== */
 async function hashCode(c){ const buf=await crypto.subtle.digest("SHA-256", new TextEncoder().encode("ath|"+c)); return [...new Uint8Array(buf)].map(b=>b.toString(16).padStart(2,"0")).join("").slice(0,20); }
-function normCode(s){ s=(s||"").toUpperCase().replace(/[^A-Z0-9]/g,""); if(s.length!==10 || !/^(PF|PS|BD)/.test(s)) return null; return s.slice(0,2)+"-"+s.slice(2,6)+"-"+s.slice(6); }
+function normCode(s){ s=(s||"").replace(/[\u0660-\u0669]/g,d=>d.charCodeAt(0)-1632).replace(/[\u06F0-\u06F9]/g,d=>d.charCodeAt(0)-1776).toUpperCase().replace(/O/g,"0").replace(/[^A-Z0-9]/g,""); if(s.length!==10 || !/^(PF|PS|BD)/.test(s)) return null; return s.slice(0,2)+"-"+s.slice(2,6)+"-"+s.slice(6); }
 async function checkCode(raw){ const c=normCode(raw); if(!c) return null; const h=await hashCode(c); return (VALID.has(h)&&!REVOKED.has(h)) ? c : null; }
 
 /* ===== العناصر ===== */
