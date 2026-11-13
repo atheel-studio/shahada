@@ -384,7 +384,14 @@ canvas#confetti{position:fixed;inset:0;pointer-events:none;z-index:20}
   <div class="panel" style="text-align:center">
     <h4 id="vidTitle">🎬 تجهيز الفيديو…</h4>
     <div class="hint" id="vidHint">خلّي الصفحة مفتوحة لين يخلص التسجيل.</div>
-    <div class="vbar"><i id="vidProg"></i></div>
+    <div id="vidChoose" class="hidden" style="margin-top:12px">
+      <div class="hint" style="margin-bottom:8px">اختاري صوت الفيديو:</div>
+      <div class="row" style="flex-direction:column;margin-top:0">
+        <button class="btn btn-gold" id="vidMusic">🎵 موسيقى هادئة (صندوق موسيقى)</button>
+        <button class="btn btn-light" id="vidMute">🔇 بدون صوت</button>
+      </div>
+    </div>
+    <div class="vbar" id="vidBar"><i id="vidProg"></i></div>
     <canvas id="vidCanvas" width="720" height="1280" class="hidden"></canvas>
     <video id="vidOut" class="hidden" controls playsinline></video>
     <div class="row hidden" id="vidBtns" style="flex-wrap:wrap">
@@ -584,17 +591,19 @@ const AR_DIG = s=>String(s).replace(/\d/g,d=>"٠١٢٣٤٥٦٧٨٩"[d]);
 function todayISO(){ const d=new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
 function fmtDate(iso, fmt, lang){
   const dt = new Date((iso||todayISO())+"T12:00:00");
-  const hij = fmt[0]==="h", lng = fmt[1]==="l";
-  const p = {};
+  const hij = fmt[0]==="h", lng = fmt[1]==="l", cal = hij?"islamic-umalqura":"gregory";
+  const num = {}, txt = {};
   try{
-    new Intl.DateTimeFormat((lang==="en"?"en-US":"ar-SA")+"-u-ca-"+(hij?"islamic-umalqura":"gregory")+"-nu-latn",
-      {weekday:"long",day:"numeric",month:lng?"long":"numeric",year:"numeric"}).formatToParts(dt).forEach(x=>p[x.type]=x.value);
+    new Intl.DateTimeFormat("en-US-u-ca-"+cal+"-nu-latn",{day:"numeric",month:"numeric",year:"numeric"}).formatToParts(dt).forEach(x=>num[x.type]=x.value);
+    new Intl.DateTimeFormat((lang==="en"?"en-US":"ar-SA")+"-u-ca-"+cal+"-nu-latn",{weekday:"long"}).formatToParts(dt).forEach(x=>{ if(x.type==="weekday") txt.wd=x.value; });
+    if(lng) new Intl.DateTimeFormat((lang==="en"?"en-US":"ar-SA")+"-u-ca-"+cal+"-nu-latn",{day:"numeric",month:"long",year:"numeric"}).formatToParts(dt).forEach(x=>{ if(x.type==="month") txt.m=x.value; });
   }catch(e){ return dt.toLocaleDateString(); }
-  const y=(p.year||"").replace(/\D/g,""), m=p.month, d=p.day, wd=p.weekday;
-  if(lang==="en") return lng ? wd+", "+d+" "+m+" "+y+(hij?" AH":"") : d+" / "+m+" / "+y+(hij?" AH":"");
+  const dig = v => String(v||"").replace(/\D/g,"");
+  const d=dig(num.day), m=dig(num.month), y=dig(num.year), wd=txt.wd||"", ml=txt.m||m;
+  if(lang==="en") return lng ? wd+", "+d+" "+ml+" "+y+(hij?" AH":"") : d+" / "+m+" / "+y+(hij?" AH":"");
   const suf = hij?"هـ":"م";
-  return lng ? wd+" "+AR_DIG(d)+" "+m+" "+AR_DIG(y)+" "+suf
-             : wd+" "+AR_DIG(d)+"‏ / "+AR_DIG(m)+"‏ / "+AR_DIG(y)+" "+suf;
+  return lng ? wd+" "+AR_DIG(d)+" "+ml+" "+AR_DIG(y)+" "+suf
+             : wd+" "+AR_DIG(d)+"\u200F / "+AR_DIG(m)+"\u200F / "+AR_DIG(y)+" "+suf;
 }
 function normDate(s, lang){
   s = String(s||"").trim();
@@ -991,10 +1000,16 @@ async function renderCanvas(name, scale=2.5){ const c=await prepRender(name); re
 const fname = n => ("شهادة-"+n).replace(/[\\/:*?"<>|]/g,"").slice(0,60);
 const toBlob = (cv,type,q) => new Promise(r=>cv.toBlob(r,type,q));
 function canShareFiles(files){ try{ return !!(navigator.canShare && navigator.canShare({files})); }catch(e){ return false; } }
-async function shareFiles(files, title){
+async function shareFiles(files){
   if(!canShareFiles(files)){ toast("جهازك ما يدعم الإرسال المباشر، حمّلي الملف وأرسليه من واتساب"); return false; }
-  try{ await navigator.share({files, title}); return true; }
-  catch(e){ if(e && e.name!=="AbortError") toast("ما تمت المشاركة، جربي مرة ثانية"); return false; }
+  try{ await navigator.share({files}); return true; }
+  catch(e){
+    if(e && e.name==="AbortError") return false;
+    console.error("SHARE",e);
+    if(files.length===1){ saveBlob(files[0], files[0].name); toast("ما زبط الإرسال المباشر، نزّلنا لك الملف. أرسليه من واتساب 📎"); }
+    else toast("ما زبط الإرسال المباشر، استخدمي «تحميل كل الشهادات»");
+    return false;
+  }
 }
 let shotFile=null, shotName="";
 $("shotBtn").onclick=async()=>{
@@ -1007,12 +1022,12 @@ $("shotBtn").onclick=async()=>{
     const cv=await renderCanvas(name), url=cv.toDataURL("image/png");
     $("shotImg").src=url; $("shotImg").classList.remove("hidden"); $("shotHint").classList.remove("hidden");
     $("shotDl").href=url; $("shotDl").download=fname(name)+".png";
-    const jb=await toBlob(cv,"image/jpeg",.93); shotFile=new File([jb], fname(name)+".jpg", {type:"image/jpeg"});
+    const jb=await toBlob(cv,"image/jpeg",.93); shotFile=new File([jb], "certificate.jpg", {type:"image/jpeg"});
     $("shotBtns").classList.remove("hidden");
     $("shotTitle").textContent="📸 "+name;
   }catch(e){ console.error(e); $("shotTitle").textContent="تعذّر تجهيز الصورة، خذي لقطة شاشة بدلها"; }
 };
-$("shotShare").onclick=()=>{ if(shotFile) shareFiles([shotFile], fname(shotName)); };
+$("shotShare").onclick=()=>{ if(shotFile) shareFiles([shotFile]); };
 $("shotVid").onclick=()=>{ $("shotModal").classList.remove("open"); makeVideo([shotName], true); };
 $("shotClose").onclick=()=>$("shotModal").classList.remove("open");
 function saveBlob(blob, name){
@@ -1052,14 +1067,14 @@ let allFiles=null;
 function resetShareAll(){ allFiles=null; $("shareAll").innerHTML="📤 إرسال كل الشهادات واتساب"; $("shareAll").disabled=false; }
 $("shareAll").onclick=async()=>{
   const b=$("shareAll");
-  if(allFiles){ const ok=await shareFiles(allFiles, "شهادات "+(D.cls||"")); if(ok) resetShareAll(); return; }
+  if(allFiles){ const ok=await shareFiles(allFiles); if(ok) resetShareAll(); return; }
   b.disabled=true;
   try{
     const files=[];
     for(let i=0;i<D.names.length;i++){
       b.innerHTML="⏳ تجهيز "+(i+1)+" من "+D.names.length;
       const cv=await renderCanvas(D.names[i],2.2);
-      files.push(new File([await toBlob(cv,"image/jpeg",.92)], String(i+1).padStart(2,"0")+"-"+fname(D.names[i])+".jpg",{type:"image/jpeg"}));
+      files.push(new File([await toBlob(cv,"image/jpeg",.92)], "certificate-"+String(i+1).padStart(2,"0")+".jpg",{type:"image/jpeg"}));
     }
     if(!canShareFiles(files)){ toast("جهازك ما يدعم الإرسال المباشر، استخدمي «تحميل كل الشهادات»"); resetShareAll(); return; }
     allFiles=files; b.innerHTML="✅ جاهزة! اضغطي هنا للإرسال"; b.disabled=false;
@@ -1102,15 +1117,46 @@ const eOut=x=>1-Math.pow(1-x,3);
 const eBack=x=>{ const c1=1.9,c3=c1+1; return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2); };
 function rr(g,x,y,w,h,r){ g.beginPath(); g.moveTo(x+r,y); g.arcTo(x+w,y,x+w,y+h,r); g.arcTo(x+w,y+h,x,y+h,r); g.arcTo(x,y+h,x,y,r); g.arcTo(x,y,x+w,y,r); g.closePath(); }
 let vidBlob=null, vidFile=null, vidAbort=false;
-async function makeVideo(names, single){
-  pause();
+/* موسيقى هادئة مولّدة: صندوق موسيقى فوق أكوردات ناعمة */
+function scheduleMusic(dest, total, segT, count, single){
+  try{
+    const t0=ac.currentTime+0.08, end=t0+total;
+    const master=ac.createGain(); master.gain.setValueAtTime(0,t0); master.gain.linearRampToValueAtTime(2.4,t0+1.2);
+    master.gain.setValueAtTime(2.4,Math.max(t0+1.3,end-1.8)); master.gain.linearRampToValueAtTime(0,end);
+    master.connect(dest); if(sound) master.connect(ac.destination);
+    const dl=ac.createDelay(1); dl.delayTime.value=.36; const fb=ac.createGain(); fb.gain.value=.3; const wet=ac.createGain(); wet.gain.value=.3;
+    dl.connect(fb); fb.connect(dl); dl.connect(wet); wet.connect(master);
+    const bus=ac.createGain(); bus.connect(master); bus.connect(dl);
+    const note=(f,t,dur,vol,type,att)=>{ const o=ac.createOscillator(), g=ac.createGain(); o.type=type; o.frequency.value=f;
+      g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(vol,t+att); g.gain.exponentialRampToValueAtTime(.0001,t+dur); o.connect(g); g.connect(bus); o.start(t); o.stop(t+dur+.05); };
+    const bar=2.4, CH=[[261.63,329.63,392,493.88],[220,261.63,329.63,392],[174.61,220,261.63,349.23],[196,246.94,293.66,392]];
+    const PAT=[[0,2,1,3],[3,1,2,0],[0,1,2,3],[2,3,1,2]];
+    for(let b=0, t=t0; t<end; b++, t+=bar){
+      const ch=CH[b%4];
+      ch.forEach(f=>note(f/2,t,bar+.9,.016,"sine",.7));
+      PAT[b%4].forEach((k,i)=>{ if((b+i)%5===4) return; const f=ch[k]*(i%2?4:2); note(f,t+i*bar/4,1.5,.045,"sine",.006); note(f*2,t+i*bar/4,.6,.008,"triangle",.004); });
+    }
+    for(let i=0;i<count;i++){ const t=t0+i*segT+.85; note(2093,t,1.4,.035,"sine",.004); note(3136,t+.07,1.1,.02,"sine",.004); }
+    if(!single){ const tf=t0+count*segT; [523.25,659.25,783.99,1046.5,1318.5].forEach((f,k)=>note(f,tf+k*.14,1.8,.05,"sine",.005)); }
+  }catch(e){ console.error(e); }
+}
+let vidPending=null;
+function makeVideo(names, single){
+  pause(); vidPending={names, single};
+  $("vidModal").classList.add("open"); $("vidBtns").classList.add("hidden"); $("vidOut").classList.add("hidden"); $("vidCanvas").classList.add("hidden");
+  $("vidTitle").textContent="🎬 فيديو "+(single?"الشهادة":"الشهادات"); $("vidHint").textContent="";
+  $("vidChoose").classList.remove("hidden"); $("vidBar").classList.add("hidden");
+}
+$("vidMusic").onclick=()=>{ initAudio(); const p=vidPending; if(p) runVideo(p.names,p.single,true); };
+$("vidMute").onclick=()=>{ const p=vidPending; if(p) runVideo(p.names,p.single,false); };
+async function runVideo(names, single, music){
+  $("vidChoose").classList.add("hidden"); $("vidBar").classList.remove("hidden");
   const T=TH(D.theme), W=720, H=1280, f=D.gender==="f", en=D.lang==="en";
   const pm=pickMime(), mime=pm?pm.m:null;
   $("vidModal").classList.add("open"); $("vidBtns").classList.add("hidden"); $("vidOut").classList.add("hidden"); $("vidCanvas").classList.add("hidden");
   $("vidProg").style.width="0"; vidAbort=false; vidBlob=null;
   if(mime===null || !HTMLCanvasElement.prototype.captureStream){ $("vidTitle").textContent="جهازك ما يدعم صناعة الفيديو 😔"; $("vidHint").textContent="جربي من متصفح Chrome أو Safari محدّث، أو استخدمي الصور."; return; }
   $("vidTitle").textContent="🎬 تجهيز الشهادات…"; $("vidHint").textContent="خلّي الصفحة مفتوحة لين يخلص.";
-  initAudio();
   const scale=1.6, items=[];
   try{
     for(let i=0;i<names.length;i++){
@@ -1130,7 +1176,7 @@ async function makeVideo(names, single){
   const burstV=n=>{ for(let i=0;i<n;i++) parts.push({x:Math.random()*W,y:-20-Math.random()*H*.35,vx:(Math.random()-.5)*4,vy:4+Math.random()*6,s:7+Math.random()*10,r:Math.random()*6.28,vr:(Math.random()-.5)*.3,c:CC[(Math.random()*CC.length)|0],sh:Math.random()<.3}); };
   // الصوت
   let dest=null; const stream=cv.captureStream(30);
-  try{ if(ac && pm.audio){ dest=ac.createMediaStreamDestination(); const tr=dest.stream.getAudioTracks()[0]; if(tr) stream.addTrack(tr); } }catch(e){ dest=null; }
+  try{ if(music && ac && pm.audio){ dest=ac.createMediaStreamDestination(); const tr=dest.stream.getAudioTracks()[0]; if(tr) stream.addTrack(tr); } }catch(e){ dest=null; }
   const vt=(fr,t0,d,v)=>{ if(!ac||!dest) return; try{ const o=ac.createOscillator(),gn=ac.createGain(); o.type="triangle"; o.frequency.value=fr; const n=ac.currentTime+t0;
     gn.gain.setValueAtTime(0,n); gn.gain.linearRampToValueAtTime(v,n+.02); gn.gain.exponentialRampToValueAtTime(.0001,n+d); o.connect(gn); gn.connect(dest); if(sound) gn.connect(ac.destination); o.start(n); o.stop(n+d+.05); }catch(e){} };
   let rec;
@@ -1143,6 +1189,7 @@ async function makeVideo(names, single){
   const ensure=async i=>{ if(i<items.length && !bmp[i]) bmp[i]=await bitmap(items[i].base); };
   await ensure(0); await ensure(1);
   $("vidTitle").textContent="🎬 جاري التسجيل…";
+  if(dest) scheduleMusic(dest, total, segT, items.length, single);
   rec.start(250);
   const t0=performance.now(); let lastSeg=-1, finFired=false;
   const bg=()=>{ const gr=g.createRadialGradient(W/2,0,40,W/2,H*.4,H); gr.addColorStop(0,T.bg1); gr.addColorStop(.7,T.bg2); gr.addColorStop(1,T.bg2); g.fillStyle=gr; g.fillRect(0,0,W,H); };
@@ -1191,10 +1238,10 @@ async function makeVideo(names, single){
       bg(); drawSpark(t);
       const si=Math.floor(t/segT);
       if(si<items.length){
-        if(si!==lastSeg){ lastSeg=si; ensure(si+1); setTimeout(()=>{ burstV(single?160:110); [784,988,1319].forEach((fr,k)=>vt(fr,k*.09,.9,.09)); }, 800); }
+        if(si!==lastSeg){ lastSeg=si; ensure(si+1); setTimeout(()=>{ burstV(single?160:110); }, 800); }
         drawCert(si, t-si*segT);
       } else if(!single){
-        if(!finFired){ finFired=true; burstV(240); setTimeout(()=>burstV(180),700); [523,659,784,1047,784,1047].forEach((fr,k)=>vt(fr,k*.13,.6,.1)); }
+        if(!finFired){ finFired=true; burstV(240); setTimeout(()=>burstV(180),700); }
         drawFinal(t-items.length*segT);
       }
       drawParts();
@@ -1209,14 +1256,14 @@ async function makeVideo(names, single){
   const type=(rec.mimeType||mime||"video/webm").split(";")[0]; const ext=type.includes("mp4")?"mp4":"webm";
   vidBlob=new Blob(chunks,{type});
   const nm = single ? fname(names[0]) : "شهادات-"+(D.cls||"الصف").replace(/[\\/:*?"<>|]/g,"");
-  vidFile=new File([vidBlob], nm+"."+ext, {type});
+  vidFile=new File([vidBlob], "certificates-video."+ext, {type}); vidFile._dl=nm+"."+ext;
   $("vidOut").src=URL.createObjectURL(vidBlob); $("vidOut").classList.remove("hidden"); cv.classList.add("hidden");
   $("vidTitle").textContent="✅ الفيديو جاهز!"; $("vidHint").textContent=ext==="mp4"?"أرسليه للقروب أو حطيه في الحالة 🤍":"لو واتساب ما قبله، حمّليه وأرسليه كملف.";
   $("vidProg").style.width="100%"; $("vidBtns").classList.remove("hidden");
 }
 $("vidAll").onclick=()=>makeVideo(D.names.slice(), false);
-$("vidShare").onclick=()=>{ if(vidFile) shareFiles([vidFile], vidFile.name); };
-$("vidDl").onclick=()=>{ if(vidBlob) saveBlob(vidBlob, vidFile.name); };
+$("vidShare").onclick=()=>{ if(vidFile) shareFiles([vidFile]); };
+$("vidDl").onclick=()=>{ if(vidBlob) saveBlob(vidBlob, vidFile._dl||vidFile.name); };
 $("vidClose").onclick=()=>{ vidAbort=true; $("vidModal").classList.remove("open"); try{ $("vidOut").pause(); }catch(e){} };
 
 /* ================= قصاصات ================= */
@@ -1238,8 +1285,8 @@ function initAudio(){ try{ if(!ac) ac=new (window.AudioContext||window.webkitAud
 function tone(f,t0,d,v=.1,type="triangle"){ const o=ac.createOscillator(),g=ac.createGain(); o.type=type; o.frequency.value=f;
   g.gain.setValueAtTime(0,ac.currentTime+t0); g.gain.linearRampToValueAtTime(v,ac.currentTime+t0+.02); g.gain.exponentialRampToValueAtTime(.0001,ac.currentTime+t0+d);
   o.connect(g).connect(ac.destination); o.start(ac.currentTime+t0); o.stop(ac.currentTime+t0+d+.05); }
-function chime(){ if(!sound||!ac) return; [784,988,1319].forEach((f,i)=>tone(f,i*.09,.9,.09)); }
-function fanfare(){ if(!sound||!ac) return; [523,659,784,1047,784,1047].forEach((f,i)=>tone(f,i*.13,.6,.1)); }
+function chime(){ if(!sound||!ac) return; tone(2093,0,1.3,.04,"sine"); tone(3136,.07,1,.025,"sine"); }
+function fanfare(){ if(!sound||!ac) return; [523.25,659.25,783.99,1046.5,1318.5].forEach((f,i)=>tone(f,i*.14,1.6,.05,"sine")); }
 
 /* ================= التشغيل ================= */
 async function launch(code){
