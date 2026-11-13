@@ -1,5 +1,5 @@
 /* أثيل ستوديو: تشغيل التطبيق بدون نت أو بنت ضعيف */
-const V = "ath-cert-v2";
+const V = "ath-cert-v3";
 const CORE = ["/index.html", "/manifest.webmanifest", "/icon-192.png", "/icon-512.png", "/apple-touch-icon.png", "/guide.png"];
 const LIBS = [
   "https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js",
@@ -23,11 +23,27 @@ self.addEventListener("fetch", e => {
   // الصفحة الرئيسية: من النت أول (عشان التحديثات توصل)، ولو ما فيه نت من النسخة المحفوظة
   const appKey = (u.pathname === "/" || u.pathname === "/index.html") ? "/index.html"
                : (u.pathname === "/shawahid/" || u.pathname === "/shawahid/index.html") ? "/shawahid/index.html" : null;
+  // أي صفحة HTML من الموقع: من النت أول دايماً، والمحفوظ بس لو ما فيه نت
+  const isPage = r.mode === "navigate" || u.pathname.endsWith(".html") || u.pathname.endsWith("/");
+  if (u.origin === location.origin && isPage && !(appKey && r.mode === "navigate")) {
+    const key = u.origin + u.pathname;
+    e.respondWith((async () => {
+      const c = await caches.open(V);
+      try {
+        const net = await Promise.race([fetch(r.url, {cache: "no-cache", credentials: "same-origin"}), timeout(6000)]);
+        if (net.ok) c.put(key, net.clone());
+        return net;
+      } catch (err) {
+        return (await c.match(key)) || Response.error();
+      }
+    })());
+    return;
+  }
   if (r.mode === "navigate" && u.origin === location.origin && appKey) {
     e.respondWith((async () => {
       const c = await caches.open(V);
       try {
-        const net = await Promise.race([fetch(r), timeout(6000)]);
+        const net = await Promise.race([fetch(r.url, {cache: "no-cache", credentials: "same-origin"}), timeout(6000)]);
         if (net.ok) c.put(appKey, net.clone());
         return net;
       } catch (err) {
