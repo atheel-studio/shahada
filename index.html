@@ -59,6 +59,20 @@ body{padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bot
 .btn-gold{background:linear-gradient(180deg,#f7c548,#e29a1c);color:#2a1a00;box-shadow:0 4px 14px rgba(240,170,40,.3)}
 .btn-ghost{background:rgba(255,255,255,.07);color:#d3dbe8;border:1px solid rgba(255,255,255,.14)}
 .btn-wa{background:#25D366;color:#fff;box-shadow:0 4px 14px rgba(37,211,102,.3)}
+/* ===== إرسال فردي لأولياء الأمور ===== */
+.waList{max-height:52vh;overflow:auto;margin-top:10px;border:1px solid #eee;border-radius:12px}
+.waRow{display:flex;align-items:center;gap:8px;padding:9px 10px;border-top:1px solid #f1f1f1}
+.waRow:first-child{border-top:none}
+.waRow .nm{flex:1;min-width:0;font-weight:700;font-size:14px;color:#222;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.waRow .nm small{display:block;font-weight:500;font-size:11.5px;color:#999;direction:ltr;text-align:right}
+.waRow.sent{background:#f3fbf6}.waRow.sent .nm::after{content:" ✓";color:#1f9d55}
+.waRow input{width:128px;flex:0 0 128px;font-size:13px;padding:8px;border:1.5px solid #e2e2e2;border-radius:9px;direction:ltr;text-align:left}
+.waGo{border:none;border-radius:10px;padding:9px 12px;font-weight:800;font-size:13.5px;background:#25D366;color:#fff;cursor:pointer;white-space:nowrap}
+.waGo:disabled{background:#cfd8d3}
+.waMsg{width:100%;min-height:118px;font:inherit;font-size:13.5px;line-height:1.8;border:1.5px solid #e2e2e2;border-radius:12px;padding:10px}
+.waTags{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.waTags button{border:1px dashed #c9d9cf;background:#f6fbf8;color:#14663a;border-radius:999px;padding:4px 10px;font-size:12px;font-weight:700;cursor:pointer}
+.phoneTip{font-size:12px;color:#14663a;background:#f1faf4;border-radius:10px;padding:8px 10px;margin-top:6px;line-height:1.7}
 .btn-icon{width:40px;flex:0 0 40px;padding:10px 0}
 .bar .btn{font-size:13px;padding:10px 11px}
 .bar .btn-icon{padding:10px 0}
@@ -312,6 +326,7 @@ canvas#confetti{position:fixed;inset:0;pointer-events:none;z-index:20}
   <h3 id="fCls"></h3>
   <p id="fText"></p>
   <div class="grid" id="grid"></div>
+  <button class="btn btn-wa" id="waOpen">💬 أرسلي لكل ولي أمر برسالة خاصة</button>
   <button class="btn btn-wa" id="shareAll">📤 إرسال كل الشهادات واتساب</button>
   <button class="btn btn-gold" id="vidAll">🎬 فيديو لكل الشهادات (للقروب والحالة)</button>
   <button class="btn btn-ghost" id="dlAll">⬇️ تحميل كل الشهادات صور</button>
@@ -337,6 +352,7 @@ canvas#confetti{position:fixed;inset:0;pointer-events:none;z-index:20}
     <label>الأسماء (اسم في كل سطر)</label>
     <textarea id="iNames" placeholder="مثال:&#10;أثير&#10;ريم&#10;جود"></textarea>
     <div class="cnt" id="namesCnt"></div>
+    <div class="phoneTip">📱 تبين ترسلين كل شهادة لولي أمرها واتساب؟ اكتبي الرقم بعد الاسم: <b>نورة محمد | 0551234567</b>. ولو استوردتي من نور، الأرقام تنضاف لحالها إذا كانت في الملف.</div>
     <label class="btn btn-noor" id="noorBtn">📥 استيراد الأسماء من نور (Excel أو CSV)<input type="file" id="iNoor" accept=".xlsx,.xls,.csv,.txt,.htm,.html,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/csv" hidden></label>
     <div class="noorBox hidden" id="noorBox">
       <div class="noorHead"><b id="noorTitle">✅ لقيت الأسماء</b><button type="button" class="noorX" id="noorClose">✕</button></div>
@@ -433,10 +449,26 @@ canvas#confetti{position:fixed;inset:0;pointer-events:none;z-index:20}
     <img id="shotImg" class="hidden" style="width:100%;border-radius:12px" alt="الشهادة">
     <div class="row hidden" id="shotBtns" style="flex-wrap:wrap">
       <button class="btn btn-wa" id="shotShare" style="flex:1 1 100%">📤 إرسال واتساب</button>
+      <button class="btn btn-wa hidden" id="shotWa" style="flex:1 1 100%;background:#128C7E">💬 واتساب ولي الأمر مباشرة</button>
       <a class="btn btn-gold" id="shotDl">⬇️ تحميل</a>
       <button class="btn btn-light" id="shotVid">🎬 فيديو</button>
     </div>
     <div class="row"><button class="btn btn-light" id="shotClose">إغلاق</button></div>
+  </div>
+</div>
+
+<!-- ===== الإرسال الفردي لأولياء الأمور ===== -->
+<div class="modal" id="waModal">
+  <div class="panel">
+    <h4>💬 إرسال لكل ولي أمر لحاله</h4>
+    <div class="hint">يفتح لك واتساب على رقم ولي الأمر والرسالة مكتوبة، وفيها رابط تهنئة باسم الطالبة. ترسلينها وترجعين هنا للي بعدها. الأرقام تنحفظ في جوالك بس.</div>
+    <label style="display:block;font-size:13px;font-weight:700;color:#555;margin:12px 0 6px">نص الرسالة</label>
+    <textarea class="waMsg" id="waMsg"></textarea>
+    <div class="waTags"><button type="button" data-t="{الاسم}">+ الاسم</button><button type="button" data-t="{الشهادة}">+ نوع الشهادة</button><button type="button" data-t="{الرابط}">+ رابط التهنئة</button><button type="button" id="waReset">↺ النص الأصلي</button></div>
+    <div class="hint" id="waStat" style="margin-top:10px"></div>
+    <div class="waList" id="waList"></div>
+    <div class="hint" style="margin-top:8px">💡 واتساب ما يسمح يرفق صورة تلقائي برابط مباشر. لو تبين ترسلين صورة الشهادة نفسها، استخدمي «📸» وبعدها «📤 إرسال واتساب».</div>
+    <div class="row"><button class="btn btn-light" id="waClose">إغلاق</button></div>
   </div>
 </div>
 
@@ -941,7 +973,33 @@ async function squareLogo(src){
 /* ================= الإعدادات ================= */
 let tmp = {};
 function seg(id, val){ document.querySelectorAll("#"+id+" button").forEach(b=>b.classList.toggle("on", b.dataset.v===val)); }
-function parseNames(t){ return t.split(/[\n\r\t,،]+/).map(s=>s.replace(/^\s*[\d٠-٩۰-۹]+\s*[\.\-\)ـ]?\s*/,"").trim()).filter(Boolean); }
+/* ===== أرقام أولياء الأمور =====
+   الصيغة في مربع الأسماء: «الاسم | 05xxxxxxxx» أو «الاسم 05xxxxxxxx»
+   الرقم يتحول لصيغة دولية (9665xxxxxxxx) عشان رابط wa.me */
+const toEnDigits = s => String(s||"").replace(/[٠-٩]/g,d=>"٠١٢٣٤٥٦٧٨٩".indexOf(d)).replace(/[۰-۹]/g,d=>"۰۱۲۳۴۵۶۷۸۹".indexOf(d));
+function normPhone(v){
+  let d=toEnDigits(v).replace(/[^\d+]/g,""); if(!d) return "";
+  if(d.startsWith("+")) d=d.slice(1); else if(d.startsWith("00")) d=d.slice(2);
+  d=d.replace(/\D/g,"");
+  if(/^05\d{8}$/.test(d)) return "966"+d.slice(1);          // 05xxxxxxxx
+  if(/^5\d{8}$/.test(d)) return "966"+d;                     // 5xxxxxxxx
+  if(/^9665\d{8}$/.test(d)) return d;                        // 9665xxxxxxxx
+  if(/^(971|965|973|974|968)\d{7,9}$/.test(d)) return d;     // أرقام الخليج بالمفتاح الدولي
+  return "";
+}
+const localPhone = p => /^9665\d{8}$/.test(p) ? "0"+p.slice(3) : "+"+p;
+const PHONE_TAIL = /\s*(?:\||｜|:|-|–|—)?\s*((?:\+|00)?[\d٠-٩۰-۹][\d٠-٩۰-۹\s\-]{7,16})\s*$/;
+function splitLine(line){
+  let s=line.replace(/^\s*[\d٠-٩۰-۹]{1,3}\s*[\.\-\)ـ]\s*/,"").replace(/^\s*[\d٠-٩۰-۹]{1,3}\s+(?=[^\d٠-٩۰-۹])/,"").trim();
+  let phone=""; const m=s.match(PHONE_TAIL);
+  if(m){ const p=normPhone(m[1]); if(p){ phone=p; s=s.slice(0,m.index).trim(); } }
+  s=s.replace(/\s*[|｜]\s*$/,"").trim();
+  return {name:s, phone};
+}
+function parseLines(t){ return t.split(/[\n\r\t,،]+/).map(splitLine).filter(x=>x.name); }
+function parseNames(t){ return parseLines(t).map(x=>x.name); }
+function parsePhones(t){ const o={}; parseLines(t).forEach(x=>{ if(x.phone) o[x.name]=x.phone; }); return o; }
+const namesText = d => d.names.map(n=>d.phones&&d.phones[n] ? n+" | "+localPhone(d.phones[n]) : n).join("\n");
 function fillReasons(gender){
   const sel=$("iReason"), cur=sel.value;
   sel.innerHTML = Object.entries(REASONS).map(([k,v])=>'<option value="'+k+'">'+(gender==="m"?v.l.replace("الزميلات","الزملاء"):v.l)+'</option>').join("")+'<option value="custom">نص خاص أكتبه بنفسي</option>';
@@ -960,7 +1018,7 @@ function readForm(){
   const auto = !txt || txt===gen;
   return {...D, gender:tmp.gender, theme:tmp.theme, layout:tmp.layout, lang:tmp.lang, issuer:tmp.issuer,
     logo:tmp.logo, sigT:tmp.sigT, sigP:tmp.sigP, stamp:tmp.stamp,
-    names:parseNames($("iNames").value),
+    names:parseNames($("iNames").value), phones:parsePhones($("iNames").value),
     l1:v("L1"), l2:v("L2"), school:v("School"), cls:v("Cls"), subj:v("Subj"),
     dateFmt:fmt, dateISO:(iso===todayISO()?"":iso), dateAuto:auto, date:auto?"":normDate(txt,tmp.lang),
     title:$("iTitle").value, titleCustom:v("TitleCustom"),
@@ -996,7 +1054,7 @@ function openSettings(){
   tmp = {gender:D.gender, theme:D.theme, layout:D.layout, lang:D.lang, issuer:D.issuer, logo:D.logo, sigT:D.sigT, sigP:D.sigP, stamp:D.stamp, photos:{...PHOTOS}, qr:D.qr||"off"};
   seg("genderSeg",tmp.gender); seg("themes",tmp.theme); seg("layouts",tmp.layout); seg("langSeg",tmp.lang); seg("issuerSeg",tmp.issuer);
   genderLabels(tmp.gender); fillReasons(tmp.gender);
-  $("iNames").value=D.names.join("\n"); $("namesCnt").textContent=D.names.length+" اسم";
+  $("iNames").value=namesText(D); $("namesCnt").textContent=D.names.length+" اسم";
   ["l1","l2","school","cls","subj","teacher","principal","custom","titleCustom"].forEach(k=>$("i"+k[0].toUpperCase()+k.slice(1)).value=D[k]||"");
   $("iTitle").value=D.title; $("iTitleCustom").classList.toggle("hidden",D.title!=="custom");
   $("iDateFmt").value=D.dateFmt||"hn"; $("iDatePick").value=D.dateISO||todayISO(); $("iDate").value=dateText(D);
@@ -1079,6 +1137,8 @@ function normCell(v){ return String(v==null?"":v).replace(/[‎‏‪-‮ ]/g,"
 function isNameHeader(h){ h=h.replace(/\s/g,""); if(/المدرس|المعلم|ولي|الأم|الام|المرشد|المدير|المادة|المستخدم/.test(h)) return false;
   return /^(اسمالطالب|اسمالطالبة|الطالب|الطالبة|الاسم|الإسم|اسم|اسمالطالب\/ة|اسمالطالب\(ة\)|الاسمالرباعي|الاسمالكامل|اسمالطالبالرباعي|اسمالطالبةالرباعي)$/.test(h)||/^اسمالطالب/.test(h)||/^name$|^studentname$|^fullname$/i.test(h); }
 function isClsHeader(h){ h=h.replace(/\s/g,""); return /^(الفصل|الشعبة|فصل|رقمالفصل|اسمالفصل)$/.test(h); }
+// عمود رقم ولي الأمر في تقارير نور (جوال ولي الأمر، رقم الجوال، الهاتف…)
+function isPhoneHeader(h){ h=h.replace(/\s/g,""); return /جوال|هاتف|موبايل|رقمولي|رقمالتواصل|phone|mobile/i.test(h) && !/المدرس|المعلم|المدرسة/.test(h); }
 function isGradeHeader(h){ h=h.replace(/\s/g,""); return /^(الصف|صف|المرحلة|الصفالدراسي)$/.test(h); }
 const BAD_WORDS=/المجموع|العدد|إجمالي|اجمالي|مدرسة|المدرسة|تقرير|الفصل|الصف|التاريخ|إدارة|ادارة|وزارة|توقيع|ملاحظ/;
 function okName(v){ return AR_RE.test(v) && !/\d|[٠-٩]/.test(v) && v.length<=70 && !BAD_WORDS.test(v); }
@@ -1088,12 +1148,16 @@ function findInGrid(g){
   // 1) سطر العناوين
   for(let r=0;r<Math.min(g.length,30);r++){
     const row=g[r]; const ni=row.findIndex(isNameHeader);
-    if(ni>=0){ return {hdr:1, start:r+1, ni, ci:row.findIndex(isClsHeader), gi:row.findIndex(isGradeHeader)}; }
+    if(ni>=0){ return {hdr:1, start:r+1, ni, ci:row.findIndex(isClsHeader), gi:row.findIndex(isGradeHeader), pi:row.findIndex(isPhoneHeader)}; }
   }
   // 2) بدون عناوين: العمود اللي فيه أكثر أسماء
   const score={}; g.forEach(row=>row.forEach((v,i)=>{ if(looksLikeName(v)) score[i]=(score[i]||0)+1; }));
   const best=Object.entries(score).sort((a,b)=>b[1]-a[1])[0];
-  return best&&best[1]>=2 ? {start:0, ni:+best[0], ci:-1, gi:-1} : null;
+  if(!(best&&best[1]>=2)) return null;
+  // بدون عناوين: العمود اللي فيه أكثر أرقام جوالات
+  const ps={}; g.forEach(row=>row.forEach((v,i)=>{ if(normPhone(v)) ps[i]=(ps[i]||0)+1; }));
+  const bp=Object.entries(ps).sort((a,b)=>b[1]-a[1])[0];
+  return {start:0, ni:+best[0], ci:-1, gi:-1, pi:bp&&bp[1]>=2?+bp[0]:-1};
 }
 function extractRows(g,f){
   const out=[]; const seen=new Set();
@@ -1103,7 +1167,7 @@ function extractRows(g,f){
     if(!(f.hdr ? okName(v) : looksLikeName(v))) continue;
     let cls=[f.gi>=0?row[f.gi]:"", f.ci>=0?row[f.ci]:""].filter(Boolean).join(" / ");
     const key=v+"|"+cls; if(seen.has(key)) continue; seen.add(key);
-    out.push({name:v, cls});
+    out.push({name:v, cls, phone:f.pi>=0?normPhone(row[f.pi]):""});
   }
   return out;
 }
@@ -1138,14 +1202,16 @@ function shortName(full,n){
 function noorNames(){
   if(!noor) return [];
   const c=$("noorCls").value; const fmt=+noor.fmt;
-  const list=noor.rows.filter(r=>!c||r.cls===c).map(r=>shortName(r.name,fmt));
-  return [...new Set(list)];
+  const seen=new Set(), out=[];
+  noor.rows.filter(r=>!c||r.cls===c).forEach(r=>{ const n=shortName(r.name,fmt); if(seen.has(n)) return; seen.add(n); out.push({name:n, phone:r.phone||""}); });
+  return out;
 }
 function noorRender(){
   seg("noorFmt",String(noor.fmt));
   const names=noorNames();
-  $("noorTitle").textContent="✅ لقيت "+names.length+" اسم";
-  $("noorList").innerHTML=names.map((n,i)=>"<div><span>"+(i+1)+"</span>"+n.replace(/[<>&]/g,"")+"</div>").join("");
+  const np=names.filter(x=>x.phone).length;
+  $("noorTitle").textContent="✅ لقيت "+names.length+" اسم"+(np?" و"+np+" رقم ولي أمر 📱":"");
+  $("noorList").innerHTML=names.map((n,i)=>"<div><span>"+(i+1)+"</span>"+n.name.replace(/[<>&]/g,"")+(n.phone?" 📱":"")+"</div>").join("");
   $("noorUse").disabled=$("noorAdd").disabled=!names.length;
 }
 $("iNoor").onchange=async e=>{
@@ -1170,9 +1236,9 @@ document.querySelectorAll("#noorFmt button").forEach(b=>b.onclick=()=>{ noor.fmt
 $("noorCls").onchange=()=>{ noorRender(); };
 function noorApply(add){
   const names=noorNames(); if(!names.length) return;
-  const cur=add?parseNames($("iNames").value):[];
-  const all=[...new Set(cur.concat(names))];
-  $("iNames").value=all.join("\n"); $("iNames").dispatchEvent(new Event("input"));
+  const cur=add?parseLines($("iNames").value):[];
+  const map=new Map(); cur.concat(names).forEach(x=>{ const o=map.get(x.name); map.set(x.name, {name:x.name, phone:x.phone||(o&&o.phone)||""}); });
+  $("iNames").value=[...map.values()].map(x=>x.phone?x.name+" | "+localPhone(x.phone):x.name).join("\n"); $("iNames").dispatchEvent(new Event("input"));
   const c=$("noorCls").value || (noor.classes.length===1?noor.classes[0]:"");
   const cv=$("iCls").value.trim();
   if(c && (!cv || cv==="الأول الثانوي (أ)" || cv==="Grade 1 - A")){ const p=c.split(" / "); $("iCls").value=p.length>1?p[0]+" ("+p[1]+")":p[0]; preview(); }
@@ -1183,7 +1249,7 @@ function noorApply(add){
 $("noorUse").onclick=()=>noorApply(false);
 $("noorAdd").onclick=()=>noorApply(true);
 $("noorClose").onclick=()=>{ $("noorBox").classList.add("hidden"); noor=null; };
-$("iNames").oninput=()=>{ $("namesCnt").textContent=parseNames($("iNames").value).length+" اسم"; if($("iPhotosOn").checked) photoList(); preview(); };
+$("iNames").oninput=()=>{ const L=parseLines($("iNames").value), np=L.filter(x=>x.phone).length; $("namesCnt").textContent=L.length+" اسم"+(np?" · 📱 "+np+" رقم":""); if($("iPhotosOn").checked) photoList(); preview(); };
 $("iReason").onchange=()=>{ $("iCustom").classList.toggle("hidden",$("iReason").value!=="custom"); preview(); };
 $("iTitle").onchange=()=>{ $("iTitleCustom").classList.toggle("hidden",$("iTitle").value!=="custom"); preview(); };
 $("iDateFmt").onchange=refreshDate; $("iDatePick").onchange=refreshDate;
@@ -1265,6 +1331,7 @@ $("shotBtn").onclick=async()=>{
     $("shotDl").href=url; $("shotDl").download=fname(name)+".png";
     const jb=await toBlob(cv,"image/jpeg",.93); shotFile=new File([jb], "certificate.jpg", {type:"image/jpeg"});
     $("shotBtns").classList.remove("hidden");
+    $("shotWa").classList.toggle("hidden", !(D.phones&&D.phones[name]));
     $("shotTitle").textContent="📸 "+name;
   }catch(e){ console.error(e); $("shotTitle").textContent="تعذّر تجهيز الصورة، خذي لقطة شاشة بدلها"; }
 };
@@ -1322,6 +1389,55 @@ $("shareAll").onclick=async()=>{
   }catch(e){ console.error(e); toast("صار خطأ، جربي مرة ثانية"); resetShareAll(); }
 };
 function toast(t){ const e=$("toast"); e.textContent=t; e.classList.add("show"); clearTimeout(e._t); e._t=setTimeout(()=>e.classList.remove("show"),3200); }
+
+/* ================= إرسال فردي لأولياء الأمور (wa.me) =================
+   ما فيه أي سيرفر: نبني رابط wa.me برقم ولي الأمر ونص الرسالة،
+   والرابط يفتح تطبيق واتساب على المحادثة مباشرة. */
+function certTitleText(d){ return d.title==="custom" ? (d.titleCustom||TITLES.thanks[0]) : (TITLES[d.title]||TITLES.thanks)[d.lang==="en"?1:0]; }
+function waDefault(d){
+  const f=d.gender!=="m", real=v=>v&&!Object.values(DEF_AR).includes(v)&&!Object.values(DEF_EN).includes(v)?v:"";
+  const t=real(d.teacher), who=[t?(/^أ\.?\s/.test(t)?t:"أ. "+t):"", real(d.school)].filter(Boolean).join(" - ");
+  return "السلام عليكم ورحمة الله 🌸\nولي أمر "+(f?"الطالبة":"الطالب")+" {الاسم}،\nيسعدنا نهنئكم بحصول "+(f?"ابنتكم":"ابنكم")+" على «{الشهادة}» ✨\n\nشوفوا التهنئة من هنا 👇\n{الرابط}"+(who?"\n\n"+who:"");
+}
+function waText(name){
+  const link=qrTarget(name,{...D, qr:"cong"});
+  let t=(D.waMsg&&D.waMsg.trim())?D.waMsg:waDefault(D);
+  t=t.replace(/\{الاسم\}/g,name).replace(/\{الشهادة\}/g,certTitleText(D)).replace(/\{الرابط\}/g,link);
+  return t;
+}
+function waUrl(phone, name){ return "https://wa.me/"+phone+"?text="+encodeURIComponent(waText(name)); }
+function openWa(phone, name){
+  const u=waUrl(phone,name);
+  // ملاحظة: «noopener» يخلي window.open يرجّع null دايم، عشان كذا نفصل الـ opener بأنفسنا
+  const w=window.open(u,"_blank"); if(w){ try{ w.opener=null; }catch(e){} } else location.href=u;   // لو المتصفح منع النافذة
+  const sent=store.get("ath_wasent_"+CODE)||{}; sent[name]=Date.now(); store.set("ath_wasent_"+CODE,sent);
+}
+function waRender(){
+  const sent=store.get("ath_wasent_"+CODE)||{}, L=$("waList"); L.innerHTML="";
+  const ph=D.phones||{}; let withP=0, done=0;
+  D.names.forEach(n=>{
+    const p=ph[n]||"", row=document.createElement("div"); row.className="waRow"+(sent[n]?" sent":"");
+    if(p) withP++; if(sent[n]) done++;
+    row.innerHTML='<div class="nm"></div>'+(p?'':'<input inputmode="tel" placeholder="05xxxxxxxx">')+'<button type="button" class="waGo">💬 واتساب</button>';
+    row.querySelector(".nm").innerHTML=n.replace(/[<>&]/g,"")+(p?"<small>"+localPhone(p)+"</small>":"");
+    const go=row.querySelector(".waGo"), inp=row.querySelector("input");
+    if(inp){ go.disabled=true; inp.oninput=()=>{ go.disabled=!normPhone(inp.value); }; }
+    go.onclick=()=>{
+      let num=p;
+      if(!num){ num=normPhone(inp.value); if(!num){ toast("اكتبي رقم جوال صحيح"); return; }
+        D.phones={...(D.phones||{}), [n]:num}; store.set("ath_data_"+CODE, D); }   // نحفظ الرقم للمرة الجاية
+      openWa(num, n); setTimeout(waRender, 400);
+    };
+    L.appendChild(row);
+  });
+  $("waStat").textContent = "📱 "+withP+" من "+D.names.length+" عندهم رقم · تم الإرسال: "+done+(withP<D.names.length?" · اللي ما لهم رقم، اكتبيه جنب الاسم وأرسلي":"");
+}
+$("waOpen").onclick=()=>{ pause(); $("waMsg").value=(D.waMsg&&D.waMsg.trim())?D.waMsg:waDefault(D); waRender(); $("waModal").classList.add("open"); };
+$("waMsg").oninput=()=>{ D.waMsg=$("waMsg").value; store.set("ath_data_"+CODE, D); };
+document.querySelectorAll("#waModal .waTags [data-t]").forEach(b=>b.onclick=()=>{ const ta=$("waMsg"), i=ta.selectionStart||ta.value.length; ta.value=ta.value.slice(0,i)+b.dataset.t+ta.value.slice(i); ta.dispatchEvent(new Event("input")); ta.focus(); });
+$("waReset").onclick=()=>{ $("waMsg").value=waDefault(D); D.waMsg=""; store.set("ath_data_"+CODE, D); };
+$("waClose").onclick=()=>$("waModal").classList.remove("open");
+$("shotWa").onclick=()=>{ const p=(D.phones||{})[shotName]; if(p) openWa(p, shotName); };
 
 /* ================= الفيديو ================= */
 const baseCache=new Map();
