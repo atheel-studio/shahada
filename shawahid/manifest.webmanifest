@@ -1,0 +1,20 @@
+{
+  "name": "ملف شواهد الأداء الوظيفي - أثيل",
+  "short_name": "شواهد أثيل",
+  "description": "اجمعي شواهد الأداء الوظيفي من جوالك، ويطلع لك ملف PDF مرتب وجاهز.",
+  "lang": "ar",
+  "id": "/shawahid/",
+  "start_url": "/shawahid/?source=app",
+  "dir": "rtl",
+  "display": "standalone",
+  "orientation": "portrait",
+  "scope": "/shawahid/",
+  "background_color": "#F7F1EC",
+  "theme_color": "#5E4744",
+  "categories": ["education", "productivity"],
+  "icons": [
+    {"src": "/shawahid/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+    {"src": "/shawahid/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+    {"src": "/shawahid/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ]
+}
