@@ -328,5 +328,10 @@ details p{font-size:13.5px;color:var(--muted);font-weight:500;margin-top:6px}
   } else els.forEach(function(e){ e.classList.add('in'); });
 })();
 </script>
+<script>
+// تمرير علامات التتبع (utm) من رابط الصفحة إلى روابط المتجر
+(function(){try{var q=new URLSearchParams(location.search),u=[];q.forEach(function(v,k){if(k.indexOf("utm_")===0)u.push(k+"="+encodeURIComponent(v))});if(!u.length)return;
+document.querySelectorAll('a[href*="atheel-studio.com/"]').forEach(function(a){if(a.href.indexOf("cert.")>-1)return;a.href+=(a.href.indexOf("?")>-1?"&":"?")+u.join("&")})}catch(e){}})();
+</script>
 </body>
 </html>
