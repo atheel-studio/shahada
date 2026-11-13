@@ -357,7 +357,7 @@ canvas#confetti{position:fixed;inset:0;pointer-events:none;z-index:20}
     <label>معاينة</label>
     <div class="prevWrap"><div class="prev" id="prevBox"><div class="scaler" id="prevScaler"></div></div></div>
     <label>مدة عرض كل شهادة</label>
-    <select id="iSpeed"><option value="3000">سريع (3 ثواني)</option><option value="4200">عادي (4 ثواني)</option><option value="6000">بطيء (6 ثواني)</option></select>
+    <div class="imgRow"><input type="range" id="iSpeed" min="2000" max="10000" step="500" style="flex:1;padding:0;border:none"><b id="speedLbl" style="min-width:74px;text-align:center"></b></div>
 
     <div class="row">
       <button class="btn btn-gold" id="save">حفظ وتشغيل ✨</button>
@@ -385,11 +385,10 @@ canvas#confetti{position:fixed;inset:0;pointer-events:none;z-index:20}
     <h4 id="vidTitle">🎬 تجهيز الفيديو…</h4>
     <div class="hint" id="vidHint">خلّي الصفحة مفتوحة لين يخلص التسجيل.</div>
     <div id="vidChoose" class="hidden" style="margin-top:12px">
-      <div class="hint" style="margin-bottom:8px">اختاري صوت الفيديو:</div>
-      <div class="row" style="flex-direction:column;margin-top:0">
-        <button class="btn btn-gold" id="vidMusic">🎵 موسيقى هادئة (صندوق موسيقى)</button>
-        <button class="btn btn-light" id="vidMute">🔇 بدون صوت</button>
-      </div>
+      <label style="display:block;font-size:13px;font-weight:700;color:#555;margin-bottom:6px">مدة كل شهادة في الفيديو</label>
+      <div class="imgRow"><input type="range" id="vidSec" min="2000" max="10000" step="500" style="flex:1"><b id="vidSecLbl" style="min-width:74px"></b></div>
+      <div class="hint" id="vidLen" style="margin-top:6px"></div>
+      <div class="row" style="margin-top:12px"><button class="btn btn-gold" id="vidStart">🎬 ابدأ صناعة الفيديو</button></div>
     </div>
     <div class="vbar" id="vidBar"><i id="vidProg"></i></div>
     <canvas id="vidCanvas" width="720" height="1280" class="hidden"></canvas>
@@ -921,13 +920,16 @@ function openSettings(){
   $("iTitle").value=D.title; $("iTitleCustom").classList.toggle("hidden",D.title!=="custom");
   $("iDateFmt").value=D.dateFmt||"hn"; $("iDatePick").value=D.dateISO||todayISO(); $("iDate").value=dateText(D);
   $("iReason").value=D.reason; $("iCustom").classList.toggle("hidden",D.reason!=="custom");
-  $("iSpeed").value=String(D.speed);
+  $("iSpeed").value=String(D.speed); speedLbl();
   ["logo","sigT","sigP","stamp"].forEach(imgPrev); ["iLogo","iSigT","iSigP","iStamp"].forEach(i=>$(i).value="");
   const hasPh=Object.keys(PHOTOS).length>0; $("iPhotosOn").checked=hasPh; $("photosBox").classList.toggle("hidden",!hasPh); if(hasPh) photoList();
   $("modal").classList.add("open"); $("modal").scrollTop=0;
   preview();
 }
 $("setBtn").onclick=openSettings;
+function secTxt(ms){ const v=ms/1000; return AR_DIG(String(v).replace(".","٫"))+(v<=10&&v>=3?" ثواني":" ثانية"); }
+function speedLbl(){ $("speedLbl").textContent=secTxt(+$("iSpeed").value); }
+$("iSpeed").oninput=speedLbl;
 document.querySelectorAll("#genderSeg button").forEach(b=>b.onclick=()=>{ tmp.gender=b.dataset.v; seg("genderSeg",tmp.gender); genderLabels(tmp.gender); fillReasons(tmp.gender); preview(); });
 document.querySelectorAll("#issuerSeg button").forEach(b=>b.onclick=()=>{ tmp.issuer=b.dataset.v; seg("issuerSeg",tmp.issuer); preview(); });
 document.querySelectorAll("#langSeg button").forEach(b=>b.onclick=()=>{
@@ -1145,11 +1147,14 @@ function makeVideo(names, single){
   pause(); vidPending={names, single};
   $("vidModal").classList.add("open"); $("vidBtns").classList.add("hidden"); $("vidOut").classList.add("hidden"); $("vidCanvas").classList.add("hidden");
   $("vidTitle").textContent="🎬 فيديو "+(single?"الشهادة":"الشهادات"); $("vidHint").textContent="";
+  $("vidSec").value=String(single?Math.max(+D.speed||4200,4000):(+D.speed||4200)); vidLenTxt();
   $("vidChoose").classList.remove("hidden"); $("vidBar").classList.add("hidden");
 }
-$("vidMusic").onclick=()=>{ initAudio(); const p=vidPending; if(p) runVideo(p.names,p.single,true); };
-$("vidMute").onclick=()=>{ const p=vidPending; if(p) runVideo(p.names,p.single,false); };
-async function runVideo(names, single, music){
+function vidLenTxt(){ const p=vidPending; if(!p) return; const sec=+$("vidSec").value; $("vidSecLbl").textContent=secTxt(sec);
+  const tot=Math.round(p.names.length*sec/1000+(p.single?0:4)); $("vidLen").textContent="طول الفيديو تقريباً: "+AR_DIG(tot)+" ثانية"; }
+$("vidSec").oninput=vidLenTxt;
+$("vidStart").onclick=()=>{ const p=vidPending; if(p) runVideo(p.names,p.single,false,+$("vidSec").value); };
+async function runVideo(names, single, music, segMs){
   $("vidChoose").classList.add("hidden"); $("vidBar").classList.remove("hidden");
   const T=TH(D.theme), W=720, H=1280, f=D.gender==="f", en=D.lang==="en";
   const pm=pickMime(), mime=pm?pm.m:null;
@@ -1168,7 +1173,7 @@ async function runVideo(names, single, music){
   }catch(e){ console.error(e); $("vidTitle").textContent="صار خطأ أثناء التجهيز، جربي مرة ثانية"; return; }
   await document.fonts.load("700 60px 'Aref Ruqaa'"); await document.fonts.load("800 30px 'Tajawal'");
   const cv=$("vidCanvas"), g=cv.getContext("2d"); cv.classList.remove("hidden");
-  const segT = single ? 5.2 : clamp((+D.speed||4200)/1000, 2.8, 4.6), finT = single ? 0 : 4.2;
+  const segT = Math.max(2, (segMs||+D.speed||4200)/1000), finT = single ? 0 : 4.2;
   const total = names.length*segT + finT;
   // القصاصات والنجوم
   const CC=[T.gold2,T.gold,"#ffffff","#3fd3a0","#f7c548",T.t1];
