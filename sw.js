@@ -1,5 +1,5 @@
 /* أثيل ستوديو: تشغيل التطبيق بدون نت أو بنت ضعيف */
-const V = "ath-cert-v4";
+const V = "ath-cert-v5";
 const CORE = ["/index.html", "/manifest.webmanifest", "/icon-192.png", "/icon-512.png", "/apple-touch-icon.png", "/guide.png"];
 const LIBS = [
   "https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js",
@@ -31,6 +31,8 @@ self.addEventListener("fetch", e => {
       const c = await caches.open(V);
       try {
         const net = await Promise.race([fetch(r.url, {cache: "no-cache", credentials: "same-origin"}), timeout(6000)]);
+        // رابط فيه تحويل (مثل /t ← /t/): نخلي المتصفح يتحول بنفسه
+        if (net.redirected) return Response.redirect(net.url, 301);
         if (net.ok) c.put(key, net.clone());
         return net;
       } catch (err) {
@@ -44,6 +46,7 @@ self.addEventListener("fetch", e => {
       const c = await caches.open(V);
       try {
         const net = await Promise.race([fetch(r.url, {cache: "no-cache", credentials: "same-origin"}), timeout(6000)]);
+        if (net.redirected) return Response.redirect(net.url, 301);
         if (net.ok) c.put(appKey, net.clone());
         return net;
       } catch (err) {
