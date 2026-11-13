@@ -129,6 +129,12 @@ h3.sec{font-size:15px;color:var(--brand2);margin:20px 4px 8px;font-weight:800}
 .pv .pg{transform-origin:top right;margin-bottom:10px;box-shadow:0 4px 14px rgba(0,0,0,.15)}
 .foot{text-align:center;font-size:12px;color:#b3a29d;margin-top:26px;line-height:1.9}
 .foot a{color:#8c716c}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.two label{margin-top:8px}
+.magic{border:1px dashed #d9b98f;background:#fff9ef;color:#8a5a12;border-radius:999px;padding:6px 12px;font-size:12.5px;font-weight:700;cursor:pointer;margin-top:6px}
+.box2{border:1px solid var(--line);border-radius:14px;padding:4px 12px 12px;margin-top:12px;background:#fdfaf8}
+.box2 h5{font-size:14.5px;margin:10px 0 2px;color:var(--brand)}
+.el .t small i{font-style:normal;color:#b39a90}
 #stage{position:fixed;top:0;left:-10000px;width:794px;pointer-events:none}
 </style>
 </head>
@@ -165,6 +171,8 @@ h3.sec{font-size:15px;color:var(--brand2);margin:20px 4px 8px;font-weight:800}
   <h3 class="sec">عناصر التقييم</h3>
   <div id="els"></div>
   <button class="btn b-light b-full" id="addEl" style="width:100%;margin-top:4px">➕ إضافة عنصر خاص</button>
+  <h3 class="sec">صفحات إضافية للملف</h3>
+  <div class="el" id="pagesCard"><div class="n">📑</div><div class="t"><b>السيرة الذاتية، والرؤية والرسالة، وأهداف المادة</b><small id="pagesSub">وقائمة الشواهد والأوزان</small></div><div class="go">‹</div></div>
 
   <div class="foot">بياناتك وصورك محفوظة في جوالك بس، وما تنرفع لأي مكان.<br>تحتاجين مساعدة؟ <a href="/shawahid/guide.png" target="_blank">📘 دليل الاستخدام</a><br>أثيل ستوديو ✨</div>
 </div>
@@ -175,6 +183,12 @@ h3.sec{font-size:15px;color:var(--brand2);margin:20px 4px 8px;font-weight:800}
   <div class="sh"><h4 id="elTitle"></h4><button class="x" data-close>✕</button></div>
   <div class="hint" id="elHint"></div>
   <div id="evList"></div>
+  <div class="box2">
+    <h5>🔗 رابط شواهد إضافية لهذا العنصر (اختياري)</h5>
+    <input id="elLink" inputmode="url" dir="ltr" placeholder="https://drive.google.com/…">
+    <div class="hint">مثل مجلد في قوقل درايف حقك فيه شواهد أكثر أو فيديوهات. يطلع له باركود في صفحة العنصر، والمديرة تمسحه وتشوفها.</div>
+    <div class="imgRow" style="margin-top:8px"><label style="margin:0;flex:1">وزن العنصر في نموذج التقييم</label><input id="elW" inputmode="numeric" style="width:90px;text-align:center" placeholder="١٠"><b>%</b></div>
+  </div>
   <div class="row"><button class="btn b-main" id="addEv">➕ إضافة شاهد</button></div>
   <div class="row" style="margin-top:8px"><button class="btn b-light" id="renEl">✏️ تعديل اسم العنصر</button><button class="btn b-light hidden" id="delEl">🗑️ حذف العنصر</button></div>
 </div></div>
@@ -191,8 +205,22 @@ h3.sec{font-size:15px;color:var(--brand2);margin:20px 4px 8px;font-weight:800}
   <div class="hint">صورة الشهادة، أو التقرير، أو لقطة من الحصة، أو لقطة شاشة. تتصغّر تلقائي عشان ما تاخذ مساحة.</div>
   <label>وصف مختصر (اختياري)</label>
   <textarea id="evD" placeholder="مثال: حضرت دورة «استراتيجيات التعلم النشط» المقدمة من مكتب التعليم، وطبقت منها استراتيجية فكر زاوج شارك مع طالباتي."></textarea>
+  <button type="button" class="magic" id="evMagic">✨ اكتبي لي وصف جاهز</button>
   <label>التاريخ (اختياري)</label>
   <div class="imgRow"><input id="evDate" placeholder="مثال: ١٥ / ٣ / ١٤٤٨ هـ"><button class="btn b-light" id="evToday" type="button">اليوم</button></div>
+  <label>🔗 رابط (اختياري)</label>
+  <input id="evLink" inputmode="url" dir="ltr" placeholder="https://…">
+  <div class="hint">فيديو، أو ملف في درايف، أو رابط من مدرستي. يطلع له باركود في صفحة الشاهد.</div>
+  <label>شكل صفحة الشاهد</label>
+  <div class="seg" id="repSeg"><button data-v="0">صور ووصف</button><button data-v="1">📝 تقرير رسمي</button></div>
+  <div id="repBox" class="box2 hidden">
+    <label>نوع التقرير</label><select id="repType"></select>
+    <div class="two"><div><label>المستفيدون</label><input id="repWho" placeholder="مثال: طالبات ٤/أ"></div><div><label>المكان</label><input id="repWhere" placeholder="مثال: الفصل"></div></div>
+    <label>الأهداف</label><textarea id="repGoals" placeholder="هدف في كل سطر"></textarea>
+    <label>النتائج والأثر</label><textarea id="repRes" placeholder="نتيجة في كل سطر"></textarea>
+    <button type="button" class="magic" id="repMagic">✨ عبّي التقرير بنص جاهز</button>
+    <div class="hint">أكثر من ٤٠ نوع تقرير، والنوع يتغير تلقائي حسب المثال اللي تختارينه. الوصف اللي فوق يطلع في التقرير كـ«وصف التنفيذ»، والنص الجاهز تقدرين تعدلينه براحتك.</div>
+  </div>
   <div class="row"><button class="btn b-main" id="evSave">✅ حفظ الشاهد</button></div>
 </div></div>
 
@@ -210,13 +238,43 @@ h3.sec{font-size:15px;color:var(--brand2);margin:20px 4px 8px;font-weight:800}
   <label>المكتب (اختياري)</label><input id="iOffice" placeholder="مثال: مكتب التعليم بشمال الرياض">
   <label id="lPrin">اسم مديرة المدرسة</label><input id="iPrin">
   <label>العام الدراسي</label><input id="iYear" placeholder="١٤٤٨هـ">
-  <label>نبذة عني / رسالتي في التعليم (اختياري)</label>
-  <textarea id="iAbout" placeholder="مثال: أؤمن أن كل طالبة تقدر تتعلم، ورسالتي أبني بيئة صفية آمنة ومحفزة…"></textarea>
   <label>شعار المدرسة أو الوزارة (اختياري)</label>
   <div class="imgRow"><img id="logoPrev" class="hidden" alt=""><label class="btn b-light" style="margin:0;flex:1">🖼️ اختيار صورة<input type="file" id="iLogo" accept="image/*" hidden></label><button class="btn b-light" id="logoDel" type="button">حذف</button></div>
   <label>صورتك الشخصية (اختياري)</label>
   <div class="imgRow"><img id="meImgPrev" class="hidden" alt="" style="border-radius:50%"><label class="btn b-light" style="margin:0;flex:1">📷 اختيار صورة<input type="file" id="iMe" accept="image/*" hidden></label><button class="btn b-light" id="meDel" type="button">حذف</button></div>
   <div class="row"><button class="btn b-main" id="infoSave">✅ حفظ</button></div>
+</div></div>
+
+<!-- pages sheet -->
+<div class="modal" id="mPages"><div class="sheet">
+  <div class="sh"><h4>📑 صفحات إضافية</h4><button class="x" data-close>✕</button></div>
+  <div class="hint">كل صفحة تطلع في الملف لما تعبين بياناتها. اتركيها فاضية لو ما تبينها.</div>
+  <div class="box2">
+    <h5>👩‍🏫 السيرة الذاتية</h5>
+    <div class="two"><div><label>المؤهل العلمي</label><input id="cQual" placeholder="بكالوريوس لغة عربية"></div><div><label>سنوات الخبرة</label><input id="cExp" placeholder="١٠ سنوات"></div></div>
+    <label>البريد الإلكتروني (اختياري)</label><input id="cMail" dir="ltr" inputmode="email">
+    <label>الدورات التدريبية (دورة في كل سطر)</label><textarea id="cCourses" placeholder="التعلم النشط&#10;التقويم البنائي"></textarea>
+    <label>الجوائز والإنجازات (واحد في كل سطر)</label><textarea id="cAwards" placeholder="شهادة شكر من مكتب التعليم ١٤٤٧هـ"></textarea>
+  </div>
+  <div class="box2">
+    <h5>🌟 رؤيتي ورسالتي وقيمي</h5>
+    <label>رؤيتي</label><textarea id="vVision" style="min-height:70px"></textarea>
+    <label>رسالتي في التعليم</label><textarea id="vMission" style="min-height:80px"></textarea>
+    <label>قيمي (افصلي بينها بفاصلة)</label><input id="vValues">
+    <button type="button" class="magic" id="vMagic">✨ نص جاهز للفاضي</button>
+  </div>
+  <div class="box2">
+    <h5>🎯 أهداف المادة</h5>
+    <textarea id="gGoals" placeholder="هدف في كل سطر" style="min-height:120px"></textarea>
+    <button type="button" class="magic" id="gMagic">✨ أهداف جاهزة</button>
+  </div>
+  <div class="box2">
+    <h5>✅ قائمة الشواهد والأوزان</h5>
+    <label class="chk"><input type="checkbox" id="pCheck"> إضافة صفحة فيها كل العناصر: الوزن، وعدد الشواهد، ومتوفر أو غير متوفر</label>
+    <label class="chk"><input type="checkbox" id="pW"> إظهار أوزان العناصر</label>
+    <div class="hint">الأوزان الافتراضية حسب نموذج تقييم المعلم المتداول، وتقدرين تعدلين وزن أي عنصر من داخل العنصر.</div>
+  </div>
+  <div class="row"><button class="btn b-main" id="pagesSave">✅ حفظ</button></div>
 </div></div>
 
 <!-- look sheet -->
@@ -269,6 +327,8 @@ h3.sec{font-size:15px;color:var(--brand2);margin:20px 4px 8px;font-weight:800}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script>/* qrcode-generator 1.4.4 (MIT) */
+var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],f={},c=function(t,r){o=function(t){for(var r=new Array(t),e=0;e<t;e+=1){r[e]=new Array(t);for(var n=0;n<t;n+=1)r[e][n]=null}return r}(i=4*e+17),l(0,0),l(i-7,0),l(0,i-7),s(),h(),d(t,r),e>=7&&v(t),null==a&&(a=p(e,n,u)),w(a,r)},l=function(t,r){for(var e=-1;e<=7;e+=1)if(!(t+e<=-1||i<=t+e))for(var n=-1;n<=7;n+=1)r+n<=-1||i<=r+n||(o[t+e][r+n]=0<=e&&e<=6&&(0==n||6==n)||0<=n&&n<=6&&(0==e||6==e)||2<=e&&e<=4&&2<=n&&n<=4)},h=function(){for(var t=8;t<i-8;t+=1)null==o[t][6]&&(o[t][6]=t%2==0);for(var r=8;r<i-8;r+=1)null==o[6][r]&&(o[6][r]=r%2==0)},s=function(){for(var t=B.getPatternPosition(e),r=0;r<t.length;r+=1)for(var n=0;n<t.length;n+=1){var i=t[r],a=t[n];if(null==o[i][a])for(var u=-2;u<=2;u+=1)for(var f=-2;f<=2;f+=1)o[i+u][a+f]=-2==u||2==u||-2==f||2==f||0==u&&0==f}},v=function(t){for(var r=B.getBCHTypeNumber(e),n=0;n<18;n+=1){var a=!t&&1==(r>>n&1);o[Math.floor(n/3)][n%3+i-8-3]=a}for(n=0;n<18;n+=1){a=!t&&1==(r>>n&1);o[n%3+i-8-3][Math.floor(n/3)]=a}},d=function(t,r){for(var e=n<<3|r,a=B.getBCHTypeInfo(e),u=0;u<15;u+=1){var f=!t&&1==(a>>u&1);u<6?o[u][8]=f:u<8?o[u+1][8]=f:o[i-15+u][8]=f}for(u=0;u<15;u+=1){f=!t&&1==(a>>u&1);u<8?o[8][i-u-1]=f:u<9?o[8][15-u-1+1]=f:o[8][15-u-1]=f}o[i-8][8]=!t},w=function(t,r){for(var e=-1,n=i-1,a=7,u=0,f=B.getMaskFunction(r),c=i-1;c>0;c-=2)for(6==c&&(c-=1);;){for(var g=0;g<2;g+=1)if(null==o[n][c-g]){var l=!1;u<t.length&&(l=1==(t[u]>>>a&1)),f(n,c-g)&&(l=!l),o[n][c-g]=l,-1==(a-=1)&&(u+=1,a=7)}if((n+=e)<0||i<=n){n-=e,e=-e;break}}},p=function(t,r,e){for(var n=A.getRSBlocks(t,r),o=b(),i=0;i<e.length;i+=1){var a=e[i];o.put(a.getMode(),4),o.put(a.getLength(),B.getLengthInBits(a.getMode(),t)),a.write(o)}var u=0;for(i=0;i<n.length;i+=1)u+=n[i].dataCount;if(o.getLengthInBits()>8*u)throw"code length overflow. ("+o.getLengthInBits()+">"+8*u+")";for(o.getLengthInBits()+4<=8*u&&o.put(0,4);o.getLengthInBits()%8!=0;)o.putBit(!1);for(;!(o.getLengthInBits()>=8*u||(o.put(236,8),o.getLengthInBits()>=8*u));)o.put(17,8);return function(t,r){for(var e=0,n=0,o=0,i=new Array(r.length),a=new Array(r.length),u=0;u<r.length;u+=1){var f=r[u].dataCount,c=r[u].totalCount-f;n=Math.max(n,f),o=Math.max(o,c),i[u]=new Array(f);for(var g=0;g<i[u].length;g+=1)i[u][g]=255&t.getBuffer()[g+e];e+=f;var l=B.getErrorCorrectPolynomial(c),h=k(i[u],l.getLength()-1).mod(l);for(a[u]=new Array(l.getLength()-1),g=0;g<a[u].length;g+=1){var s=g+h.getLength()-a[u].length;a[u][g]=s>=0?h.getAt(s):0}}var v=0;for(g=0;g<r.length;g+=1)v+=r[g].totalCount;var d=new Array(v),w=0;for(g=0;g<n;g+=1)for(u=0;u<r.length;u+=1)g<i[u].length&&(d[w]=i[u][g],w+=1);for(g=0;g<o;g+=1)for(u=0;u<r.length;u+=1)g<a[u].length&&(d[w]=a[u][g],w+=1);return d}(o,n)};f.addData=function(t,r){var e=null;switch(r=r||"Byte"){case"Numeric":e=M(t);break;case"Alphanumeric":e=x(t);break;case"Byte":e=m(t);break;case"Kanji":e=L(t);break;default:throw"mode:"+r}u.push(e),a=null},f.isDark=function(t,r){if(t<0||i<=t||r<0||i<=r)throw t+","+r;return o[t][r]},f.getModuleCount=function(){return i},f.make=function(){if(e<1){for(var t=1;t<40;t++){for(var r=A.getRSBlocks(t,n),o=b(),i=0;i<u.length;i++){var a=u[i];o.put(a.getMode(),4),o.put(a.getLength(),B.getLengthInBits(a.getMode(),t)),a.write(o)}var g=0;for(i=0;i<r.length;i++)g+=r[i].dataCount;if(o.getLengthInBits()<=8*g)break}e=t}c(!1,function(){for(var t=0,r=0,e=0;e<8;e+=1){c(!0,e);var n=B.getLostPoint(f);(0==e||t>n)&&(t=n,r=e)}return r}())},f.createTableTag=function(t,r){t=t||2;var e="";e+='<table style="',e+=" border-width: 0px; border-style: none;",e+=" border-collapse: collapse;",e+=" padding: 0px; margin: "+(r=void 0===r?4*t:r)+"px;",e+='">',e+="<tbody>";for(var n=0;n<f.getModuleCount();n+=1){e+="<tr>";for(var o=0;o<f.getModuleCount();o+=1)e+='<td style="',e+=" border-width: 0px; border-style: none;",e+=" border-collapse: collapse;",e+=" padding: 0px; margin: 0px;",e+=" width: "+t+"px;",e+=" height: "+t+"px;",e+=" background-color: ",e+=f.isDark(n,o)?"#000000":"#ffffff",e+=";",e+='"/>';e+="</tr>"}return e+="</tbody>",e+="</table>"},f.createSvgTag=function(t,r,e,n){var o={};"object"==typeof arguments[0]&&(t=(o=arguments[0]).cellSize,r=o.margin,e=o.alt,n=o.title),t=t||2,r=void 0===r?4*t:r,(e="string"==typeof e?{text:e}:e||{}).text=e.text||null,e.id=e.text?e.id||"qrcode-description":null,(n="string"==typeof n?{text:n}:n||{}).text=n.text||null,n.id=n.text?n.id||"qrcode-title":null;var i,a,u,c,g=f.getModuleCount()*t+2*r,l="";for(c="l"+t+",0 0,"+t+" -"+t+",0 0,-"+t+"z ",l+='<svg version="1.1" xmlns="http://www.w3.org/2000/svg"',l+=o.scalable?"":' width="'+g+'px" height="'+g+'px"',l+=' viewBox="0 0 '+g+" "+g+'" ',l+=' preserveAspectRatio="xMinYMin meet"',l+=n.text||e.text?' role="img" aria-labelledby="'+y([n.id,e.id].join(" ").trim())+'"':"",l+=">",l+=n.text?'<title id="'+y(n.id)+'">'+y(n.text)+"</title>":"",l+=e.text?'<description id="'+y(e.id)+'">'+y(e.text)+"</description>":"",l+='<rect width="100%" height="100%" fill="white" cx="0" cy="0"/>',l+='<path d="',a=0;a<f.getModuleCount();a+=1)for(u=a*t+r,i=0;i<f.getModuleCount();i+=1)f.isDark(a,i)&&(l+="M"+(i*t+r)+","+u+c);return l+='" stroke="transparent" fill="black"/>',l+="</svg>"},f.createDataURL=function(t,r){t=t||2,r=void 0===r?4*t:r;var e=f.getModuleCount()*t+2*r,n=r,o=e-r;return I(e,e,function(r,e){if(n<=r&&r<o&&n<=e&&e<o){var i=Math.floor((r-n)/t),a=Math.floor((e-n)/t);return f.isDark(a,i)?0:1}return 1})},f.createImgTag=function(t,r,e){t=t||2,r=void 0===r?4*t:r;var n=f.getModuleCount()*t+2*r,o="";return o+="<img",o+=' src="',o+=f.createDataURL(t,r),o+='"',o+=' width="',o+=n,o+='"',o+=' height="',o+=n,o+='"',e&&(o+=' alt="',o+=y(e),o+='"'),o+="/>"};var y=function(t){for(var r="",e=0;e<t.length;e+=1){var n=t.charAt(e);switch(n){case"<":r+="&lt;";break;case">":r+="&gt;";break;case"&":r+="&amp;";break;case'"':r+="&quot;";break;default:r+=n}}return r};return f.createASCII=function(t,r){if((t=t||1)<2)return function(t){t=void 0===t?2:t;var r,e,n,o,i,a=1*f.getModuleCount()+2*t,u=t,c=a-t,g={"██":"█","█ ":"▀"," █":"▄","  ":" "},l={"██":"▀","█ ":"▀"," █":" ","  ":" "},h="";for(r=0;r<a;r+=2){for(n=Math.floor((r-u)/1),o=Math.floor((r+1-u)/1),e=0;e<a;e+=1)i="█",u<=e&&e<c&&u<=r&&r<c&&f.isDark(n,Math.floor((e-u)/1))&&(i=" "),u<=e&&e<c&&u<=r+1&&r+1<c&&f.isDark(o,Math.floor((e-u)/1))?i+=" ":i+="█",h+=t<1&&r+1>=c?l[i]:g[i];h+="\n"}return a%2&&t>0?h.substring(0,h.length-a-1)+Array(a+1).join("▀"):h.substring(0,h.length-1)}(r);t-=1,r=void 0===r?2*t:r;var e,n,o,i,a=f.getModuleCount()*t+2*r,u=r,c=a-r,g=Array(t+1).join("██"),l=Array(t+1).join("  "),h="",s="";for(e=0;e<a;e+=1){for(o=Math.floor((e-u)/t),s="",n=0;n<a;n+=1)i=1,u<=n&&n<c&&u<=e&&e<c&&f.isDark(o,Math.floor((n-u)/t))&&(i=0),s+=i?g:l;for(o=0;o<t;o+=1)h+=s+"\n"}return h.substring(0,h.length-1)},f.renderTo2dContext=function(t,r){r=r||2;for(var e=f.getModuleCount(),n=0;n<e;n++)for(var o=0;o<e;o++)t.fillStyle=f.isDark(n,o)?"black":"white",t.fillRect(n*r,o*r,r,r)},f};t.stringToBytes=(t.stringToBytesFuncs={default:function(t){for(var r=[],e=0;e<t.length;e+=1){var n=t.charCodeAt(e);r.push(255&n)}return r}}).default,t.createStringToBytes=function(t,r){var e=function(){for(var e=S(t),n=function(){var t=e.read();if(-1==t)throw"eof";return t},o=0,i={};;){var a=e.read();if(-1==a)break;var u=n(),f=n()<<8|n();i[String.fromCharCode(a<<8|u)]=f,o+=1}if(o!=r)throw o+" != "+r;return i}(),n="?".charCodeAt(0);return function(t){for(var r=[],o=0;o<t.length;o+=1){var i=t.charCodeAt(o);if(i<128)r.push(i);else{var a=e[t.charAt(o)];"number"==typeof a?(255&a)==a?r.push(a):(r.push(a>>>8),r.push(255&a)):r.push(n)}}return r}};var r,e,n,o,i,a=1,u=2,f=4,c=8,g={L:1,M:0,Q:3,H:2},l=0,h=1,s=2,v=3,d=4,w=5,p=6,y=7,B=(r=[[],[6,18],[6,22],[6,26],[6,30],[6,34],[6,22,38],[6,24,42],[6,26,46],[6,28,50],[6,30,54],[6,32,58],[6,34,62],[6,26,46,66],[6,26,48,70],[6,26,50,74],[6,30,54,78],[6,30,56,82],[6,30,58,86],[6,34,62,90],[6,28,50,72,94],[6,26,50,74,98],[6,30,54,78,102],[6,28,54,80,106],[6,32,58,84,110],[6,30,58,86,114],[6,34,62,90,118],[6,26,50,74,98,122],[6,30,54,78,102,126],[6,26,52,78,104,130],[6,30,56,82,108,134],[6,34,60,86,112,138],[6,30,58,86,114,142],[6,34,62,90,118,146],[6,30,54,78,102,126,150],[6,24,50,76,102,128,154],[6,28,54,80,106,132,158],[6,32,58,84,110,136,162],[6,26,54,82,110,138,166],[6,30,58,86,114,142,170]],e=1335,n=7973,i=function(t){for(var r=0;0!=t;)r+=1,t>>>=1;return r},(o={}).getBCHTypeInfo=function(t){for(var r=t<<10;i(r)-i(e)>=0;)r^=e<<i(r)-i(e);return 21522^(t<<10|r)},o.getBCHTypeNumber=function(t){for(var r=t<<12;i(r)-i(n)>=0;)r^=n<<i(r)-i(n);return t<<12|r},o.getPatternPosition=function(t){return r[t-1]},o.getMaskFunction=function(t){switch(t){case l:return function(t,r){return(t+r)%2==0};case h:return function(t,r){return t%2==0};case s:return function(t,r){return r%3==0};case v:return function(t,r){return(t+r)%3==0};case d:return function(t,r){return(Math.floor(t/2)+Math.floor(r/3))%2==0};case w:return function(t,r){return t*r%2+t*r%3==0};case p:return function(t,r){return(t*r%2+t*r%3)%2==0};case y:return function(t,r){return(t*r%3+(t+r)%2)%2==0};default:throw"bad maskPattern:"+t}},o.getErrorCorrectPolynomial=function(t){for(var r=k([1],0),e=0;e<t;e+=1)r=r.multiply(k([1,C.gexp(e)],0));return r},o.getLengthInBits=function(t,r){if(1<=r&&r<10)switch(t){case a:return 10;case u:return 9;case f:case c:return 8;default:throw"mode:"+t}else if(r<27)switch(t){case a:return 12;case u:return 11;case f:return 16;case c:return 10;default:throw"mode:"+t}else{if(!(r<41))throw"type:"+r;switch(t){case a:return 14;case u:return 13;case f:return 16;case c:return 12;default:throw"mode:"+t}}},o.getLostPoint=function(t){for(var r=t.getModuleCount(),e=0,n=0;n<r;n+=1)for(var o=0;o<r;o+=1){for(var i=0,a=t.isDark(n,o),u=-1;u<=1;u+=1)if(!(n+u<0||r<=n+u))for(var f=-1;f<=1;f+=1)o+f<0||r<=o+f||0==u&&0==f||a==t.isDark(n+u,o+f)&&(i+=1);i>5&&(e+=3+i-5)}for(n=0;n<r-1;n+=1)for(o=0;o<r-1;o+=1){var c=0;t.isDark(n,o)&&(c+=1),t.isDark(n+1,o)&&(c+=1),t.isDark(n,o+1)&&(c+=1),t.isDark(n+1,o+1)&&(c+=1),0!=c&&4!=c||(e+=3)}for(n=0;n<r;n+=1)for(o=0;o<r-6;o+=1)t.isDark(n,o)&&!t.isDark(n,o+1)&&t.isDark(n,o+2)&&t.isDark(n,o+3)&&t.isDark(n,o+4)&&!t.isDark(n,o+5)&&t.isDark(n,o+6)&&(e+=40);for(o=0;o<r;o+=1)for(n=0;n<r-6;n+=1)t.isDark(n,o)&&!t.isDark(n+1,o)&&t.isDark(n+2,o)&&t.isDark(n+3,o)&&t.isDark(n+4,o)&&!t.isDark(n+5,o)&&t.isDark(n+6,o)&&(e+=40);var g=0;for(o=0;o<r;o+=1)for(n=0;n<r;n+=1)t.isDark(n,o)&&(g+=1);return e+=Math.abs(100*g/r/r-50)/5*10},o),C=function(){for(var t=new Array(256),r=new Array(256),e=0;e<8;e+=1)t[e]=1<<e;for(e=8;e<256;e+=1)t[e]=t[e-4]^t[e-5]^t[e-6]^t[e-8];for(e=0;e<255;e+=1)r[t[e]]=e;var n={glog:function(t){if(t<1)throw"glog("+t+")";return r[t]},gexp:function(r){for(;r<0;)r+=255;for(;r>=256;)r-=255;return t[r]}};return n}();function k(t,r){if(void 0===t.length)throw t.length+"/"+r;var e=function(){for(var e=0;e<t.length&&0==t[e];)e+=1;for(var n=new Array(t.length-e+r),o=0;o<t.length-e;o+=1)n[o]=t[o+e];return n}(),n={getAt:function(t){return e[t]},getLength:function(){return e.length},multiply:function(t){for(var r=new Array(n.getLength()+t.getLength()-1),e=0;e<n.getLength();e+=1)for(var o=0;o<t.getLength();o+=1)r[e+o]^=C.gexp(C.glog(n.getAt(e))+C.glog(t.getAt(o)));return k(r,0)},mod:function(t){if(n.getLength()-t.getLength()<0)return n;for(var r=C.glog(n.getAt(0))-C.glog(t.getAt(0)),e=new Array(n.getLength()),o=0;o<n.getLength();o+=1)e[o]=n.getAt(o);for(o=0;o<t.getLength();o+=1)e[o]^=C.gexp(C.glog(t.getAt(o))+r);return k(e,0).mod(t)}};return n}var A=function(){var t=[[1,26,19],[1,26,16],[1,26,13],[1,26,9],[1,44,34],[1,44,28],[1,44,22],[1,44,16],[1,70,55],[1,70,44],[2,35,17],[2,35,13],[1,100,80],[2,50,32],[2,50,24],[4,25,9],[1,134,108],[2,67,43],[2,33,15,2,34,16],[2,33,11,2,34,12],[2,86,68],[4,43,27],[4,43,19],[4,43,15],[2,98,78],[4,49,31],[2,32,14,4,33,15],[4,39,13,1,40,14],[2,121,97],[2,60,38,2,61,39],[4,40,18,2,41,19],[4,40,14,2,41,15],[2,146,116],[3,58,36,2,59,37],[4,36,16,4,37,17],[4,36,12,4,37,13],[2,86,68,2,87,69],[4,69,43,1,70,44],[6,43,19,2,44,20],[6,43,15,2,44,16],[4,101,81],[1,80,50,4,81,51],[4,50,22,4,51,23],[3,36,12,8,37,13],[2,116,92,2,117,93],[6,58,36,2,59,37],[4,46,20,6,47,21],[7,42,14,4,43,15],[4,133,107],[8,59,37,1,60,38],[8,44,20,4,45,21],[12,33,11,4,34,12],[3,145,115,1,146,116],[4,64,40,5,65,41],[11,36,16,5,37,17],[11,36,12,5,37,13],[5,109,87,1,110,88],[5,65,41,5,66,42],[5,54,24,7,55,25],[11,36,12,7,37,13],[5,122,98,1,123,99],[7,73,45,3,74,46],[15,43,19,2,44,20],[3,45,15,13,46,16],[1,135,107,5,136,108],[10,74,46,1,75,47],[1,50,22,15,51,23],[2,42,14,17,43,15],[5,150,120,1,151,121],[9,69,43,4,70,44],[17,50,22,1,51,23],[2,42,14,19,43,15],[3,141,113,4,142,114],[3,70,44,11,71,45],[17,47,21,4,48,22],[9,39,13,16,40,14],[3,135,107,5,136,108],[3,67,41,13,68,42],[15,54,24,5,55,25],[15,43,15,10,44,16],[4,144,116,4,145,117],[17,68,42],[17,50,22,6,51,23],[19,46,16,6,47,17],[2,139,111,7,140,112],[17,74,46],[7,54,24,16,55,25],[34,37,13],[4,151,121,5,152,122],[4,75,47,14,76,48],[11,54,24,14,55,25],[16,45,15,14,46,16],[6,147,117,4,148,118],[6,73,45,14,74,46],[11,54,24,16,55,25],[30,46,16,2,47,17],[8,132,106,4,133,107],[8,75,47,13,76,48],[7,54,24,22,55,25],[22,45,15,13,46,16],[10,142,114,2,143,115],[19,74,46,4,75,47],[28,50,22,6,51,23],[33,46,16,4,47,17],[8,152,122,4,153,123],[22,73,45,3,74,46],[8,53,23,26,54,24],[12,45,15,28,46,16],[3,147,117,10,148,118],[3,73,45,23,74,46],[4,54,24,31,55,25],[11,45,15,31,46,16],[7,146,116,7,147,117],[21,73,45,7,74,46],[1,53,23,37,54,24],[19,45,15,26,46,16],[5,145,115,10,146,116],[19,75,47,10,76,48],[15,54,24,25,55,25],[23,45,15,25,46,16],[13,145,115,3,146,116],[2,74,46,29,75,47],[42,54,24,1,55,25],[23,45,15,28,46,16],[17,145,115],[10,74,46,23,75,47],[10,54,24,35,55,25],[19,45,15,35,46,16],[17,145,115,1,146,116],[14,74,46,21,75,47],[29,54,24,19,55,25],[11,45,15,46,46,16],[13,145,115,6,146,116],[14,74,46,23,75,47],[44,54,24,7,55,25],[59,46,16,1,47,17],[12,151,121,7,152,122],[12,75,47,26,76,48],[39,54,24,14,55,25],[22,45,15,41,46,16],[6,151,121,14,152,122],[6,75,47,34,76,48],[46,54,24,10,55,25],[2,45,15,64,46,16],[17,152,122,4,153,123],[29,74,46,14,75,47],[49,54,24,10,55,25],[24,45,15,46,46,16],[4,152,122,18,153,123],[13,74,46,32,75,47],[48,54,24,14,55,25],[42,45,15,32,46,16],[20,147,117,4,148,118],[40,75,47,7,76,48],[43,54,24,22,55,25],[10,45,15,67,46,16],[19,148,118,6,149,119],[18,75,47,31,76,48],[34,54,24,34,55,25],[20,45,15,61,46,16]],r=function(t,r){var e={};return e.totalCount=t,e.dataCount=r,e},e={};return e.getRSBlocks=function(e,n){var o=function(r,e){switch(e){case g.L:return t[4*(r-1)+0];case g.M:return t[4*(r-1)+1];case g.Q:return t[4*(r-1)+2];case g.H:return t[4*(r-1)+3];default:return}}(e,n);if(void 0===o)throw"bad rs block @ typeNumber:"+e+"/errorCorrectionLevel:"+n;for(var i=o.length/3,a=[],u=0;u<i;u+=1)for(var f=o[3*u+0],c=o[3*u+1],l=o[3*u+2],h=0;h<f;h+=1)a.push(r(c,l));return a},e}(),b=function(){var t=[],r=0,e={getBuffer:function(){return t},getAt:function(r){var e=Math.floor(r/8);return 1==(t[e]>>>7-r%8&1)},put:function(t,r){for(var n=0;n<r;n+=1)e.putBit(1==(t>>>r-n-1&1))},getLengthInBits:function(){return r},putBit:function(e){var n=Math.floor(r/8);t.length<=n&&t.push(0),e&&(t[n]|=128>>>r%8),r+=1}};return e},M=function(t){var r=a,e=t,n={getMode:function(){return r},getLength:function(t){return e.length},write:function(t){for(var r=e,n=0;n+2<r.length;)t.put(o(r.substring(n,n+3)),10),n+=3;n<r.length&&(r.length-n==1?t.put(o(r.substring(n,n+1)),4):r.length-n==2&&t.put(o(r.substring(n,n+2)),7))}},o=function(t){for(var r=0,e=0;e<t.length;e+=1)r=10*r+i(t.charAt(e));return r},i=function(t){if("0"<=t&&t<="9")return t.charCodeAt(0)-"0".charCodeAt(0);throw"illegal char :"+t};return n},x=function(t){var r=u,e=t,n={getMode:function(){return r},getLength:function(t){return e.length},write:function(t){for(var r=e,n=0;n+1<r.length;)t.put(45*o(r.charAt(n))+o(r.charAt(n+1)),11),n+=2;n<r.length&&t.put(o(r.charAt(n)),6)}},o=function(t){if("0"<=t&&t<="9")return t.charCodeAt(0)-"0".charCodeAt(0);if("A"<=t&&t<="Z")return t.charCodeAt(0)-"A".charCodeAt(0)+10;switch(t){case" ":return 36;case"$":return 37;case"%":return 38;case"*":return 39;case"+":return 40;case"-":return 41;case".":return 42;case"/":return 43;case":":return 44;default:throw"illegal char :"+t}};return n},m=function(r){var e=f,n=t.stringToBytes(r),o={getMode:function(){return e},getLength:function(t){return n.length},write:function(t){for(var r=0;r<n.length;r+=1)t.put(n[r],8)}};return o},L=function(r){var e=c,n=t.stringToBytesFuncs.SJIS;if(!n)throw"sjis not supported.";!function(){var t=n("友");if(2!=t.length||38726!=(t[0]<<8|t[1]))throw"sjis not supported."}();var o=n(r),i={getMode:function(){return e},getLength:function(t){return~~(o.length/2)},write:function(t){for(var r=o,e=0;e+1<r.length;){var n=(255&r[e])<<8|255&r[e+1];if(33088<=n&&n<=40956)n-=33088;else{if(!(57408<=n&&n<=60351))throw"illegal char at "+(e+1)+"/"+n;n-=49472}n=192*(n>>>8&255)+(255&n),t.put(n,13),e+=2}if(e<r.length)throw"illegal char at "+(e+1)}};return i},D=function(){var t=[],r={writeByte:function(r){t.push(255&r)},writeShort:function(t){r.writeByte(t),r.writeByte(t>>>8)},writeBytes:function(t,e,n){e=e||0,n=n||t.length;for(var o=0;o<n;o+=1)r.writeByte(t[o+e])},writeString:function(t){for(var e=0;e<t.length;e+=1)r.writeByte(t.charCodeAt(e))},toByteArray:function(){return t},toString:function(){var r="";r+="[";for(var e=0;e<t.length;e+=1)e>0&&(r+=","),r+=t[e];return r+="]"}};return r},S=function(t){var r=t,e=0,n=0,o=0,i={read:function(){for(;o<8;){if(e>=r.length){if(0==o)return-1;throw"unexpected end of file./"+o}var t=r.charAt(e);if(e+=1,"="==t)return o=0,-1;t.match(/^\s$/)||(n=n<<6|a(t.charCodeAt(0)),o+=6)}var i=n>>>o-8&255;return o-=8,i}},a=function(t){if(65<=t&&t<=90)return t-65;if(97<=t&&t<=122)return t-97+26;if(48<=t&&t<=57)return t-48+52;if(43==t)return 62;if(47==t)return 63;throw"c:"+t};return i},I=function(t,r,e){for(var n=function(t,r){var e=t,n=r,o=new Array(t*r),i={setPixel:function(t,r,n){o[r*e+t]=n},write:function(t){t.writeString("GIF87a"),t.writeShort(e),t.writeShort(n),t.writeByte(128),t.writeByte(0),t.writeByte(0),t.writeByte(0),t.writeByte(0),t.writeByte(0),t.writeByte(255),t.writeByte(255),t.writeByte(255),t.writeString(","),t.writeShort(0),t.writeShort(0),t.writeShort(e),t.writeShort(n),t.writeByte(0);var r=a(2);t.writeByte(2);for(var o=0;r.length-o>255;)t.writeByte(255),t.writeBytes(r,o,255),o+=255;t.writeByte(r.length-o),t.writeBytes(r,o,r.length-o),t.writeByte(0),t.writeString(";")}},a=function(t){for(var r=1<<t,e=1+(1<<t),n=t+1,i=u(),a=0;a<r;a+=1)i.add(String.fromCharCode(a));i.add(String.fromCharCode(r)),i.add(String.fromCharCode(e));var f,c,g,l=D(),h=(f=l,c=0,g=0,{write:function(t,r){if(t>>>r!=0)throw"length over";for(;c+r>=8;)f.writeByte(255&(t<<c|g)),r-=8-c,t>>>=8-c,g=0,c=0;g|=t<<c,c+=r},flush:function(){c>0&&f.writeByte(g)}});h.write(r,n);var s=0,v=String.fromCharCode(o[s]);for(s+=1;s<o.length;){var d=String.fromCharCode(o[s]);s+=1,i.contains(v+d)?v+=d:(h.write(i.indexOf(v),n),i.size()<4095&&(i.size()==1<<n&&(n+=1),i.add(v+d)),v=d)}return h.write(i.indexOf(v),n),h.write(e,n),h.flush(),l.toByteArray()},u=function(){var t={},r=0,e={add:function(n){if(e.contains(n))throw"dup key:"+n;t[n]=r,r+=1},size:function(){return r},indexOf:function(r){return t[r]},contains:function(r){return void 0!==t[r]}};return e};return i}(t,r),o=0;o<r;o+=1)for(var i=0;i<t;i+=1)n.setPixel(i,o,e(i,o));var a=D();n.write(a);for(var u=function(){var t=0,r=0,e=0,n="",o={},i=function(t){n+=String.fromCharCode(a(63&t))},a=function(t){if(t<0);else{if(t<26)return 65+t;if(t<52)return t-26+97;if(t<62)return t-52+48;if(62==t)return 43;if(63==t)return 47}throw"n:"+t};return o.writeByte=function(n){for(t=t<<8|255&n,r+=8,e+=1;r>=6;)i(t>>>r-6),r-=6},o.flush=function(){if(r>0&&(i(t<<6-r),t=0,r=0),e%3!=0)for(var o=3-e%3,a=0;a<o;a+=1)n+="="},o.toString=function(){return n},o}(),f=a.toByteArray(),c=0;c<f.length;c+=1)u.writeByte(f[c]);return u.flush(),"data:image/gif;base64,"+u};return t}();qrcode.stringToBytesFuncs["UTF-8"]=function(t){return function(t){for(var r=[],e=0;e<t.length;e++){var n=t.charCodeAt(e);n<128?r.push(n):n<2048?r.push(192|n>>6,128|63&n):n<55296||n>=57344?r.push(224|n>>12,128|n>>6&63,128|63&n):(e++,n=65536+((1023&n)<<10|1023&t.charCodeAt(e)),r.push(240|n>>18,128|n>>12&63,128|n>>6&63,128|63&n))}return r}(t)},function(t){"function"==typeof define&&define.amd?define([],t):"object"==typeof exports&&(module.exports=t())}(function(){return qrcode});</script>
 <script>
 "use strict";
 const VALID = new Set(["9ef6fc5c160311591882", "a33bcbdecd0fb8520b96", "59433c8a68202063518f", "c6a8aa6b009c31ba3a1a", "5d798aa48c72286e2041", "779c973147401a0686b0", "40366711cd646924da85", "c8b39df3dbd6bd8344e3", "b35d1bedc27436c885e0", "fc6b87befe7bf967be8a", "8d00edaa0a1385d8b59f", "91a07a47ab7f3446f0e2", "671422f89cfe7f9ad355", "9d8d4357d20de56a5d41", "6439a22ba01b3057b40b", "89f9aa855602fdce1014", "e83738369e6f0618a8b6", "cb146284393de243655f", "51f9e30a9a3d20b6d2ea", "6bdc75211cf6ed2fa800", "538194f9def814836ea9", "39f3bc8ea026f03069e9", "3ab98f6900431b7e666b", "89781a87108e8ca9f593", "6ce8fa9ab16b21860941", "6820c53038b95d07d1bb", "9ce730fccbdedb9e2b09", "40ef09dea91578acb37b", "010cccb152343a9bc0c1", "8afe432de9f4679875d4", "3c34267483ffccbe3997", "f5decdb6468055df0c9b", "079073cb4062dd88012f", "b1dc8617f5084961f859", "a0d784eb1a121c03dc50", "1db24689f4390d231de3", "5418dd5872626771e511", "539eff52fbdbf5a34b94", "cf3e702b6ef76210417e", "529eb23cf4906c022605", "95ab03fcb9e6aa5e017e", "88b67e0b456121b6ef89", "8e3122a23fd03b22898d", "bdb6022bf3d361bafdc4", "150280c5be2aea49d2ad", "4b0a3a058ce499e5126e", "0390630c33e0793f6522", "8831127b8b8c537d766b", "358c194b0c2143bd293c", "163becdc0ac3a36014a3", "8dd796bbabdf1f8550d9", "3e47e3e876a9cd9a042f", "2e05c7008547a5553cfb", "d114bd80814b4a958ad8", "a466ab6101ae085cf2fb", "b9ba0fe2a74ffa568231", "74485f41ce81915c7fd8", "d86f5a0db40b1109aebc", "2c0e630a6129ddbb79c3", "504294bcce057ffb058c", "225be8acfceb7bca737b", "d225cfd0a8b249ddad10", "87acdeffd2100f8b8761", "935ae5923814fec2bc22", "01baa7980ee275cf42ee", "90f5daea36c636e303e3", "ebe911d44d0f393d08a1", "b5c899b2517f62eb8666", "c9945ed6894ce31aa1fe", "ac9d4f860d7111fe894c", "1859d4c63092cafe95cc", "9e3bdfd5f070ea09be01", "e56d084a011e49003bd1", "46d0a56ff8176793c8a1", "1bed9d5e1395d05eba0d", "97bd6cd943a096f7bfe7", "b1faa7dd4566c65ed6e5", "cfb808365fe50ac8977d", "60088e7735402cce9737", "faa41c54faf233a28ff0", "b85b6a35891f6477b0db", "b00bc43d58fdb5e7dc42", "8675b9ad8f05f6da9223", "0ecd051ee54d51df9eb9", "dd68ab241ab578c5567f", "91d63b9b424f0955e3da", "41460003e1c7c341ec09", "f8effb940ec6c35325bc", "cac2166991f7f6f4848e", "8d8121f90bc5543f9500", "b1bc821ded6e50f8d700", "2ed39a8d084b58f7e685", "a041f3b34cd6d856c9b7", "2defc86d8d119a3a0540", "2d2ac4b49c4750441677", "d2a57f404923f4473ac5", "8a52000f42fbfa2f3454", "90a03e2a9b132a29b57d", "bb311eea34f944d9393a", "afd9d5af328a7b1201a2", "6b4fe40e98a335c0f9c5", "80fb87a8133628fda5cf", "e3daced9ae1168d1bcf3", "3e0215c90c1c469b8c83", "f16c284a4eddc78cf912", "776e60c39272f6d1b622", "1872ab607baca73e1422", "6a36122f1caa0c9b49fa", "3042552665acf2216422", "ef34f4604b41686d7bb4", "21857a3b2d5c6ea5dd2d", "3f4563ed620dbb6328cd", "7cd04fd23e4c11a695bb", "6b42c116d0a673675adf", "fdc65435b114b27d4fc2", "1ae0fbf7137b67437ea8", "e050c0cb0cfc5a7695ae", "711aabee9b73402dd56b", "811555e0396eba9f7b05", "ca3f8b574cdad6ee0d23", "4eabd7fb0d1d60e07963", "e5e3f2eb8f415b2b08e9", "bb173b40198fcc7b0c0f", "68975e8965e290206ed2", "ad2db8e9d3585665fa6b", "fe68114f83f25578f677", "4451cf19fa7b6e3a2615", "3f96f039ea5fd4ac9802", "fc0e50dd7f0097371453", "3a232b5ec22c3e94b9fd", "d62861c30be85eeac035", "db9a5cfcf8d382aee5f1", "3dca5b8c97906225ae4f", "9517fb854740c7a8888b", "0de78b76a5826a5f2fdc", "e649d0af870a316fef94", "09b81c3372a57d640e0b", "9b6b57111a937b7741da", "07090908183332138e93", "7a3ab5a0fb99c8b3e40a", "d40af38ba3b06fa9bb93", "5a41b62de4cee50f29f9", "54fe6dc5483f23cb2ab6", "3f3c5bea87aa5c44418d", "a388ecc4bf04699ef571", "3cda4019e42152834d49", "785971598241e10b17bb", "982b5cb615203a3b9b8d", "3e09540f39fdd1f75634", "592716a41e637cb52586", "d5902f9315995a58f94d", "a2b022030bd5869919b6", "2adfbf488e4edaf6bb23", "ca08d6ce16f00f29f528", "0b3079bca8df384f5b76", "c6579991c379808390cb", "491ecd0f7c5d5bb9a535", "6fc37e91c66cb6c24154", "7819667c2b449aac277a", "272b72496c0fb972bd34", "e53d1a43db4e27058b52", "8fe8419f2bce998f21aa", "c876cc482aa089bf73f6", "fec31d3f522a82db6813", "fb86735d71c28e771b3c", "a58faab3557c97468fa9", "b51f8d5b1af93c76bc56", "776477d0f3e6aafc44bf", "8e1762a0df6fd77c76e5", "b6f5b8e9c0e583761544", "595489aadd7756a9a408", "b64b54134cc1af73934a", "02c01b95c0ff2c52dfc7", "67d3c9d571083e6813d7", "ca03835e5801f1c3a20d", "4e7ee7791cb3b2afaf89", "67df9a513c63101b0a18", "642162ff0e9b09558258", "f1e5606a74278697fd79", "fe2b76105a2115247f19", "b389bdb8f662ac2b5746", "accb22fb7420190fa261", "7a8c6a022d44bc0e50b2", "43c7b2811bf0e224829c", "4294bd006cc9e0ba4c27", "a928dbbe43ed8ae87067", "eaea827dd77ea4869055", "b9fcf7409ecd3991459c", "11fc0755bcad08ddc1c4", "b718b626966bea448c16", "60a507b3c9e883181007", "8456480a9c6ea666605c", "57936b3d858421fa9ec9", "762247b55cc7d6d7eddc", "0e8ad95cbcc1ba156d9a", "6bbe7dd535cc3f287c35", "53b4a5cf906dfffd938e", "b26375c8c051938fc295", "7ff22cdb4ec3b18cf237", "fd612eb157c8784dd1c8", "63c2e4c833706b0d7816", "49ffb3ca899266da753b", "f118beb28caac08fb4e2", "70bda96249757e5c2f71", "d05bd88923a49a653aac", "70e29924f36c40e56ff2", "0adfbb128c0027b25a8a", "425d86a5ddec80d59702", "4453156ec98a650f53ba", "3cebe73693c8fb6516f7", "55191283ac4a29cd82b7", "2dac18f99210f25c0fee", "3a0c6cc56f3e89201653", "dc8c66cd8cc4e3866bbb", "5bce38b6b584750183b5", "99a642130d0caf400f7d", "55ac8ffb1f58f6ed90f7", "7efa639d282869f7518f", "badbeacba7f5ad25f02c", "a37f073dfcf710ec0f6d", "9878755733f261b75f2a", "4c953336a66ba7724633", "faa1881a235ee8304431", "d4ae7f641a1043bdf072", "08a863b42bdaa0cf74ee", "13845c562756aa7cc17e", "6ee6ce13b10129683331", "7b2b5e845d00885f4127", "b7c0010b2b1bda734657", "2e3280d2806cec70d0cc", "daf072bfadf0817f0d16", "8e7d052c51deb7ceb305", "75c53182e67e9aa21ffc", "03c70d6a61357595e270", "437e0f25aac470427f87", "0ff2a44e753688cf79a9", "7a9e1844d2f8191eb7d4", "1138aec3239fd2f2d667", "edd6b1571894ee10452d", "b631fd5dd8161cab883c", "1c906d45df8a17994f1a", "dc8fe59d8dde57268bfe", "95be0c171dd90ede07a7", "b3eb399fba7999e299c0", "60050015a5a245732a71", "392043dcf75e50de46a4", "0c1556cc4b242bf0b66e", "4c29bdcdcc2016d43bbe", "15f1db63719c390506c9", "52df65f3196307c43f70", "05faadd930f56e6eacf3", "9ce6c3b349934edc5e67", "0764fb2cc06e2b5899e2", "d464822ae85d21f1d52f", "ac039a64f7974827006e", "9be60600da9769603216", "681389eda16a1c691360", "acb66b890110d8092e46", "4f4bd5ae1addc9fa0b22", "b8fcb9aa702611c0e938", "9a2ed0603a7ae2d8c4c2", "cc1f71f4308f0df73633", "7a389eb6753963ec6957", "16768abb5767b707104e", "d7c3c99fcf7814ab9f98", "ff43d945db523830b4c0", "e660ce4a316070116127", "64d395ef5e3847731ca3", "a1b7bfd8a6fc3ee5d560", "2c317e63856d030f4a88", "164b550fb621c5d6ec61", "39ce19255ecfdf1b7966", "7248b440342b3e692ef8", "ed6781140cfa088591ad", "4a9a5ad1cff0640016d9", "b57e9edc44b1bfea1413", "b69da8ceee211850d462", "696d05051c46f7564ca7", "16a214779accc6023eba", "7ed76ff2d800af7ca443", "61fe38f91581b526cb37", "c765e64e22eef05f9623", "f4cae3ab8c81bd31af52", "64cc9e4a87a359b34565", "dadf8981500e13c84a2d", "9338551966db22153244", "b02de96ce6733dea9db7", "fd4779e33ea3620d6245", "9339d9fb9fe4faaea782", "b75419774c420aff8256", "4a25312b49e6e3fbf948", "fa958b000a684adc389f", "9900b2567293781d43c5", "8ff4cb091f8e142ed37b", "480609e85bd00c93ec16", "257211df348361285d7b", "63e218a937c61afa8790", "18b65c0954a56f4b9d20", "d52ba146005c2021426d", "2812b8c1e443c24e3b0b", "53f1c2593290694d4e31", "84829cdc5c3e0ef7be4a", "497cd9d46b23fa2662e0", "f6ee5b8eb30203806fa6", "c9cf341cd254892858a9", "1480f87943906aaca867", "e6906f0e382310db57d5", "6e99b54fed824938aa1f", "cc66687b3bf585cc33bb", "9c74c29c993b0294c240", "9fcf7d71d645fd4dcf0a", "b1f2e7b0cf441171c47e", "d04316040b32fffa3ad5", "5ddc6548372aea5ae52e", "d4ba8ac7500c7ba650b2", "563c68100de982f1b8ef", "0a4c328a8c23b56600e3", "12986d528c8150ad25a7", "982f94dc4a46a7436dbd", "06947ba9d0185b17710e", "e70b19a4101dfffaa51a", "afbb55b4672803f95b58", "f66f1a39c0ec1b5706cc", "e040254071131ddb3f73", "93e555149765a76a838d", "2bddd6aab6fb2996561f", "4ecfd49fa866a6eb2aa3", "6a4e46c4e7fcd6717574", "d0ad83c9982a29964b87", "5d4a44d56e90a5ad370f", "250d39ec3621ddc5c4a3", "ea9f36ef7ca7cba94cf3", "8c101f987294a12a15e2", "c12b766d8b5aeaa49cd5", "e8f92ddefe7c04d22af8", "c1b2554ccfc02e493af4", "1ce1df2e0f569ee3922e", "4dec09530ee81b063ca1", "70a3cc8a817b3452739d", "9616641dd9b28ae961ee", "b1b4760c93df8b642f3d", "1a08e786aa025eb6c2fa", "2608c9f9b5ca3a9db365", "2e01a02e1802f0a2ee68", "bf61b05a3e0e698b416a", "b3bcb85c5079bd38921d", "d5dbbeb060eae38e9531", "8571f3b9e999642fb2e5", "180df9fa5aec59c73568", "82199e466fdb7f74c9de", "a7041ba4ca8197011f46", "833f84bdd58d5375d0da", "8cbdf854aaac96156ba8", "3b540f5ed0f59302d45e", "949d218bf0f7d810c191", "904fafb224444348a6b3", "1a50ef95986f22d76f39", "71eeb81b27eac28467b6", "84955f0c3a357c28ead5", "98b9f9d13f12eae8d3f7", "c6950f67da21c2b2745c", "87af77bdf725a4883bb3", "7cb26d3f8661b4d4e492", "4afce988e003cb40bfeb", "051cf6adff1acf32bb26", "274fc84e5b5a8a999337", "465b305f10ca6b88abc0", "57e880c2faea156f3ba4", "21b59dad857a400c1977", "7ba6d0cf50569e5274d0", "1099e2d6f66e0e77e975", "e17281db0ffa6b8ea228", "0490cd0155d48224fe2c", "d3fdcd304df0f89e0068", "21b272742ecce549fdbb", "8ba987cf6f9f00b1793a", "da33bc8de914a0e4f9de", "1cc2333d20f8face13cc", "4b9c9d4f0951138f3b73", "f85bedad47dd3024de94", "ee849fca9e5755e8f59e", "0e586cd88585ba437d90", "7028ae873e502b300bee", "9f0cd3a30856535d0a89", "64bfc2305fc667ba14e1", "2c4b549939c776fcc30f", "e21601d7eb3969bf2d70", "28b2636bf371d98faaf4", "6a16b6f8d0c56cd9f835", "fa2e607e5ed780f7f7fd", "4ba68b57c5eadc41c5bd", "3ba7275570f2b3297577", "0e083467dd01770fdcf8", "92728f22837c64d51151", "68bdf52bb3621d811ef1", "eb7825ed514e8ff2e781", "41c0a7c8be94bbce39bf", "6ea813057636c9d9af28", "96b327c5546061d14d0e", "63d0c9c7776181f24ecc", "719638ce9f49257b109d", "ab95a5ea3a48ace15d0d", "d386745359b607d69be9", "f0677f92ee82ef0a0a6a", "d3075faa05868b190127", "4d0833fd76dee942e664", "5ef9cd8c3dbb4d1ae3c4", "fff327d5120386a3e797", "1d0304bc2f57a7d39fc0", "300b74ae96a5de424057", "874938b283df2610ddd6", "80fbf2011ed26d7e2731", "59068342e7192446752e", "6a88ac66bba2db532c66", "e051567e344508a268d6", "104ca95260ad87434265", "e795f5dce9609d067839", "763d5f8be52c8373d0c5", "888be8ea7836035cd514", "b23cca03e96952882af7", "c9b20f31c0dd48f540f2", "635d3df91c4d9321cd42", "f25614e0937215405e62", "53218da45173d4d8fd7b", "1e6eb442cc6bc7592bfd", "d6bd329f471676f99d0a", "8014e1d6f27f355931c0", "7fd30e7768f60e601aa2", "14bd4a0f61ad1d6ce2a7", "7dbe02bdaaa4dc9832ab", "4d3090fe5e74377f8a2c", "ecf34701db0ecf622a03", "c5e00f75c5ecad5b0423", "bd70cb2f6bf6ad7747b5", "9499e75946906d2692d7", "b3349c7d579d2aa10e46", "5263fada44617f88f770", "5285e699a01f172787c3", "6b2505de10e1bff57435", "465b163a4145616ee00e", "0af0917cced0b309edd3", "a12a06c06500ff9220f0", "a2988d2f98d3c69a148f", "bb6cadfb83780741d71c", "5b37a7ba1e1aad1864f7", "4d9baff47c3d35a113ac", "c3adae84669c5c20edbe", "1499039cbf2c002b4800", "ffcd7ad745042fc8e975", "ca0f453d4807c9d8693a", "5f0b4fea98d0a0e55ab5", "7c541e2ff97be760c3de", "7f2fdc2bf2dc501e3971", "d2582a6b1c004fa0face", "e306bcfe15013fa84fb3", "062c31d0e5c119a11740", "c66c9b385e35d1186b9b", "d62e82cf7c88b7b8c651", "245dca7ff7757f8db16a", "8823c57e8f11558d7025", "983aa1d744d5b495b7e8", "b3fdc5bcf8fb18f88e54", "b445133eae972f304df7", "7f512107bbdea09139bc", "69fb826a2430ba01c1e6", "5be2346eb051b9a58372", "e68452818084745413e6", "289a3d46722806469ec6", "d5dd83b0a64c617a4ed4", "1665d62aa629047add6f", "d1618af315ce7f46b000", "81150dd0520b0b578c08", "f7676239f74e89aefcaa", "5484c720c24b317893b7", "62bb0148ec6e815e22b8", "8dc29fbf3c0f31a70466", "6444573cc529c9574781", "75582a6805e4519b06aa", "745f8956f9ba02b92e53", "12b7b4b8ac0b0b19a7ba", "d712ca3181848d93385e", "fc7094e02137feb1eaf3", "ac40edc3221fe51c0352", "8693d88dc4f4e0220291", "fb05d58111e5415a43f0", "6fc21be2473c46dbd4c9", "10f7541faaf0165f0167", "5e456380f1ccb8dbb16a", "837254941f42928bf390", "bed1720f9981ca9643cd", "a5b6285c66bc904878c8", "b9a077e04643fee53e3f", "bd443a4597aedc245ad9", "2f3b39c00399e5c26121", "313c97ef48ff389d1258", "277892567f139117076b", "7ef9c939f7189509ad0c", "568350f2e8951cfb1929", "65abbadd8eb600806cb6", "d922ea499001570ba4cd", "263d621e7e83d3c643a0", "e131ae13ff947321ee54", "80ff9e85b1d0077d0c36", "384e5c3a96c93e753906", "65137b61623e8e6b3eeb", "cf8114d3a97ba00d3989", "138eb4ad586f59b91000", "7252e03ad85dc4fca07c", "24630928a10b9732031c", "5ba746d1c1014a43450d", "bbbf6ff74302ccdd8099", "9fb0a3fd970f69217590", "884c36dea71b09ae3181", "f0020b501282cd179df2", "1270cca7f64877d0396f", "9eaf2a80fcbdc2ef1596", "c0bbfb20746503dbabf1", "16fe4ab01c1c629e11a6", "8f31b36c1ea820d360a7", "057c635701ea349d7903", "25b269e83a9deb1d01c9", "c1aa10738128ef7a1100", "a5b5cf7446909d10b595", "e7494b2d7ff18090ab3d", "401154d1e2f96fe8c9e7", "c28c447595e81e52e205", "a6c49876674acaf17f86", "e8c8ec996a48a299caf7", "2a9c9a41ad82e216d0a6", "f21aa68910406ac674f5", "47ebfd5bcc40983d95ee", "f02b2d2e74a3ba7327f5", "0413a9088e996084afe8", "afd9e1952fdf57fcd520", "d1835fe5dc516150cca0", "547f5b605b3e38dbbab9", "9ee52fbfd37181d4541d", "849d9b20109bd9684855", "9f03e65e34f0aa151f71", "9ece712d0cef94ed06b4", "f9dbde07b435b22015eb", "607052d1e22ce154e829", "df0eb022a68c2780bdc6", "c1360943f50283d807f8", "f1dc75e695f23703d0ed", "1c46d24a2dcd89627ff0", "ccc7f88cd69edf86e53c", "0fd3e544ab8b8d8a6773", "cf217ee67a85b6b21575", "214cb7c324f72f55f33f", "1ba6312cb54c7f873ace", "7012d5ad7c4a2763dae0", "ba32b4f5c85913114ae1", "a0d1c6e41543b4b87c35", "8f785e2a13e6aa7f81cf", "da457b8db396614f4284", "83ab6d2596c3b523a059", "b24e72ba6c92f38c43c9", "2fae7b36737ed9465bf1", "f303e6096aff7f67f337", "525a5d37327537e77659", "672cf2da8071c6ee8592", "51d6fd52c20acbdacd24", "bcd7dbd25ec6476f8d0f", "4f7151bd03ec37cb396a", "0e0c9e4e83be56afc6c1", "090da8ee5e3240df4597", "169d32576f01ae896865", "7442d4af1d93139dd1d5", "ad5c450c1455b97562a7", "f09f9c6605f8d3a8b21c", "32c40e567f327add4b5b", "56799ef41ed4dc691ef8", "33a3bdbb5ccbf3523a85", "eaf15a81b747c0f76ed9", "243025163010be84b791", "ced302e85280b79dae00", "b375af579cd9836b4ea2", "d8b2b2331979014e4702", "06f207e3916f4aaeddcb", "7168e6488e050fc87891", "46fe6edc5296d5dfc2d1", "faa285387d69d1b7f79a", "873539a62f83e7cf42c0", "ff0678fbdd425d0eb55a", "a8d703f2e6a7311b0f8a", "e44fed8bb23a210f635f", "03765f29da648fe79a41", "ada25174ab50c01e595f", "0270be7b2b8dfcbd3e79", "23ac1c439b67266728aa", "3dcbc68258c9ca02c8d2", "4f0e807ce2305bf4d088", "870c0406bbe8c9fc761d", "f2a0d133dfeff41c0d2b", "3a34cc9599cd1a87a1c3", "3add0936257cbe7ecf62", "ef802e3345f37c04339c", "9c6373326d4a765f3e28", "1db44bd803eeb876e6ac", "6d5fb073e7832bf63f43", "48aab477f0d1bc2b6d6e", "b058d604780c0ca020d8", "9194bd56b7eb20ca5740", "e74043434d04f189fb94", "6f1ac04030cf67e087fd", "6fc721d1331929321c7b", "cec33cd9296cf856d9ac", "860a5f8e8b9c03bcfdd0", "3f176a8e51d726a00714", "45b9f937a26eeec02061", "8e74df192f05592e2e9f", "c03745f9ba7ef5b65a2b", "52abe77de96b039439d9", "365b47cf41d567629355", "afefc6410a5db90c6783", "0aa1157b00855963a411", "2c85481dea0301980dec", "ebe4859d251d42f4063f", "a0edc32f0e58690c9c0f", "566dedbd18cf493be43b", "b527a4f14d1331ac6015", "0b7c9843bc5925c25785", "37def7ef4a43079a19bb", "c0ad93c210005363f197", "463547c3bd275162badd", "de9abdedd7a304527e8f", "9919ed6590c7b8f61b2e", "01c989f8bcdb7f800404", "e04d7c64872e5e2b5a67", "4902296969fe34a9301a", "cbc9f11660efc91b93d9", "78fd2c4318b427a1fdd2", "179753db5154f2ef4ed0", "303ada49d5ffc9d3c2cd", "63ca577f20166c79c50c", "7c730d3f2d49c9e1fc98", "be99d274d2782ef969f4", "be2025f9f4cf17efd549", "76f3499a8ec6302f77aa", "22129e4767726d7f9396", "4a185c6549a17faae310", "bee6e5aea59a8f786903", "90740e895989ecdb2fb2", "be7dd6d203cb1e4c6c98", "3d21962c16574c2df94b", "01c2a2327f979771bf79", "70e1df7b07416552e808", "a7f54de78148ebbd6596", "e08c3f88bfd43c3ab00f", "0813ebc038a55e09d485", "ad6797d983b7a2063833", "da9d91595990a511877d", "78f5748a059f024a7867", "b825d6c10e8e83f2a8c2", "c41f682846a0b2b49b5b", "112a2bd7d4ad878a7bf7", "a10a9945ed6f9cb66baa", "b3b9fbf5f2c79e17c846", "d29604cb1770727d37b2", "1357d9582fe459dc4968", "ffc29103719e1cc43334", "d197bf035dd42b44271a", "42cafa6940f170621f79", "db2aa0219a166c3d74df", "c4db101c1a379cb0182c", "34a4e794cc5dca38043c", "304c756125282debdba2", "3be90ae888a0583d3c1c", "dacd2e15461f096322db", "809c2fab3475f78e0137", "160f12d9e0aa16df1541", "68f444c22bc89ed3061c", "736e92f84da5679de98c", "c7b82095e72f1fedd56b", "34a60048c3494ee8494d", "117da7fa629641d37b56", "5e52a5882b0879e5bd87", "355ce70e4c1cf8e44374", "72f86470d3df3a3e824d", "cc86778cf22cc9832908", "e0ad1266485689be8532", "81b06ebce39cb3f4235e", "b70bc6abbe7d55654994", "ac92df93e630adac42fc", "282436743b165a920813", "061b5906c47f396d614a", "280f85fdf04d6f154f54", "1917c94064a958ec2cab", "af668bd14b8df04e43d4", "eb5acfed41d8f3ee9b59", "4bfbd3b4aa73e4367859", "d41aa4e00234b18d3292", "4acd248fc102e5a92b03", "f23c64c415be0455bf7b", "c06fe5c7a83d7a00a782", "d0cea7d472cd55f32072", "59e6b531a9fd6b2aebd6", "87067d4b41f8ddb8423f", "f360dfa1faee05aa01ad", "c24dd74b4115c3f96c2e", "6fad52762f8e76022d84", "eeda33f723eda18735e2", "2d06f0d67f70327b222d", "505e201f7a9623d69dc4", "9d0be701e52f2f8b0644", "323e103836ac817c8c5a", "f76cc54b6fe90aa683fa", "8261852b56056a66793e", "6418c4f3498d93b3247d", "28ffa4ba6aa5241f6ab6", "ef197c3ae5dec7fa77e7", "1ea558cc0a13f19f53e4", "8547f780b6bc50d27de8", "529dd20882325ed2aaff", "f5687dbbd6074cc9d23c", "224496dbe8ae9af3de8f", "bb4b53ea9c4de4937427", "2c8d96cf489ff7e4a88d", "d837fb1e0f81a1d64f33", "7589f2c456277ef810dc", "70df59c6d8f19c8578b6", "707e80936d0bc71f06db", "b6868fd631e9397f0908", "071156b03d7832eb9e62", "61a3827a8f509753b672", "d2705b2ffc4c492d2514", "d92704e211142f189206", "6a4eefb66c0a7fa05639", "d3a6b534fe51110c224e", "e5ebf3b9952f959e93c6", "2bb5eb6b9a0fbb280239", "6fdfd353a61a0f086142", "31f0857f63bdb2bbc7dd", "43587342a03017191347", "91b6868b300d77fefd09", "7c62a38990d12239b07f", "0eb7ef626d2f20df041d", "80672c8b1547f82802a2", "c15e04487510c5502af5", "fa1a8ff86c5089bd8da7", "9e4bcdb3bbf974aa31d5", "c5c5904a89bf3335c013", "c2e6386aad14dc89919d", "b394d6579461a80af568", "e7cfea61622bafb88f45", "6e5e04288537f412252d", "dba0cbbcd066f84aac4a", "7e71132c033a96ad9254", "3db6a3adb7a42e53831f", "cda33698e75f06893fec", "054d24aaa7bee009beb8", "841cbbe248772188fff3", "35bb2333b54a88a745d4", "ddb4d9a3e26cd9d7d365", "f91dcfdbac0861172b65", "7c0f0ea8351f1ef90f08", "94d2acafb8e4f379026a", "ebc60da4632240f48eda", "f6f1e684df2e05505437", "267ee45d7bdc5eaa4489", "1a3039e74b6b511c99c1", "fe209a22422405b08aee", "a77f26ed434c7c4cdbc9", "bd54419ed92444016928", "ecc17ef4ef50b5ea0365", "3b05229c9a1dc5fdc152", "217f6640dc9a375b6002", "c370b80c10149f1fee46", "781b51798c3abc4c6268", "887d3059c37fa414d1a7", "21a1bdd1280ff25a1f25", "08d1f2277d12df0cf39c", "277dd14edeb6f26a7928", "d71a2e56dd1532c63789", "1473deefca7173607e5a", "de417fd0231c7b757d50", "9be5d368c3aa44ab274d", "43e771519d1e6363fef6", "eb476b7714a0bc656602", "454a2964417e84979165", "2bbde3c6343ef3709179", "1bb7568b62299ea9baba", "996ead7d1150e9ba8773", "da65e6746acefc5963d5", "8302b0d3ae89a33a9bef", "7f949a6132a0648d5238", "183f09985969292490a7", "3838a4524b25af728858", "7a5f900b2291a5ce9e75", "6ca05958677fbc6dcb65", "b9ea6c45bbf9c908e7fe", "00c2ec4fe832945926b7", "7f7219316cc87cfe6ee8", "2cdeddfb92e0ada0df5b", "5ae4219a7878e41fc495", "2360ed799a12a2dd4461", "e2a80e24c886f4c91829", "6de8e70eef65c7214528", "522324c0b58786f7f9df", "21f5052193c2530e2431", "08c7c68e8a3a68b5ed40", "5136f375ffd06f6556e6", "208b4687ea23671bc960", "59243a29c16b33ccabd3", "fffd015c0ef268ede5be", "7ccad2f71ffaa502a84e", "fef7688174c143e78899", "2ceec5ca59f5358154ae", "c8efe90bed1a3a523d8d", "c0572cae519de0efa9d1", "12397e6dbcbba19baf3d", "63e7e2429c6fbb534afa", "cfda6d309108c52a8afb", "827fcf398d49e2ecf6d3", "fe2eaf6ed25743fce346", "da6942a5fbdda838a09a", "8c76e9c07d2eba079761", "c5f5ea40ab0f0c9d9efc", "f5aa003648b25ca20d13", "c0868da33fdcf23e0c57", "98e929f479bdfbe86d29", "0abbc711ce1612d56d4e", "28da7703dbc3de6dcfe7", "bb399de0ff214b9f2dff", "5b43805ea9991fa3c80c", "4a971670986bb55c6975", "c02630adfde14c1d44a3", "9e5d9de0b185b2d9611a", "594b9ceffa5dd3ccffca", "c7e7243e13e802b2fc27", "4b9a538ed53eb91f21b3", "2d5a9ecf24c719873f84", "81a4cf552bf2276ea235", "c2ec95ae39b370a8199a", "2ff106cc3eb68f32fdc3", "e3843fd2947ddbd06136", "c92faf5cb01ccaaf54d5", "24a386f09353aab64087", "a3c46cc42c0fc5d6666e", "c9ec916cdbd1ab6bf920", "7bba353e9be859ec51c5", "9a7495a0a3ec5ebf7277", "47264de08010ef7a4610", "96d2e173d1c98eaf0cc9", "dd596ea2167accac64a3", "d87f4d28b3fa9ed1ee61", "e13c6dd85c9c3c63da24", "3b1d79dd47501694fc67", "66aa7dd329b75ee2ba80", "4eb0869ed5510ead2a40", "32cf9c27de21be41e0fc", "8a32eb9ccd6e871ba2db", "217fef55731c949f3d4b", "2bff30c012da636307f2", "756c78f68e14f0141803", "222108307fb71f192de4", "ba8ab33e6c3f31789668", "0b90d54b5221a0aa3531", "5d2d04a1249c9b724ca6", "f93da80e1c46573f311a", "bbdc3dfdb29eebac6227", "d3e99dbf8cc9298fa6b8", "1c573840066690b04d36", "8e8bff74a163fe2db8dc", "587e5aaecddc38805791", "ddf6f5345a4e6cbff844", "66d9932613b371412097", "866d89a8665bbfbf379d", "f5f8faf49f1d4e4bf8a0", "bf82db92389d03f8c1bd", "ae532c84138cccb755b8", "4db4eda0a2b0ae6fcc54", "f7293e243594acc73cd7", "af9c248da0702766396a", "7458b61528ab3980702b", "02631133ebd403d23291", "e84ae6823fd1c1fd5761", "56d58f1de99d8bed5e39", "d0e534e8b416875da5a0", "0743906afec63a1bd709", "fe58358a70dc5abce2ed", "59268ec46589ca585c25", "602293ff323441cdc75b", "b5131f6500649f43ecfc", "239194abe8e41b434bbd", "54c3d8c39d8e263f24c0", "a8e81defc17c0ad2d4e2", "ea553343f8a2840461bc", "6e7d547216202c35ac8d", "8615bcbe0de4230a5b5d", "57e90c1360eee6494603", "433fa2aeb9a03d40dfe9", "27e9f1e62cc81f22b09d", "46f9c4c5a713c67e0b64", "202ce52f3cc92263b692", "16925da69bdcb77e07df", "7443efbbbc11aa00f438", "55d0b6158eaf4cbb5d1d", "f5836bc302a8662d12a5", "568d453971dda9c294e2", "4bc2a12d4e51edb864ea", "d044ffeb01aaf7c0bba2", "4f5802fe72d1281f7397", "f94ce73f69c97b46fc5d", "2387525c63029cea9625", "931547bad9c3d17d54de", "406b369eaf8d26546bd0", "1e44e0ee4d4416a9598c", "66f5d78831966dbbd168", "de9a46489f4e8111d00a", "6480a2774b7f122e9872", "64305de3b0fca8cbbebb", "19f0844f45ac0378e2da", "7f8a23b159da83e627c1", "8f23a6e971ae3c201e78", "e1f3af6f77a386c020f8", "cbe3af51d537b48ddfc6", "6f4a3986417ff31f4148", "da5aace1b50571476940", "0912184ef909bbbed6ee", "6cf3f3fd2294c9901a81", "e493a4ec8749992510e2", "d42b5456c3dac22614a4", "32b961cb9790a2ba5d7b", "a2ce6ae39a30f84139a5", "45278d66758f2b5557f8", "d0ff354a2e2ad30a0d16", "927649461d202a79231c", "e5ac282deb574e05bd06", "b64b083897d86a43628b", "1adc91ccc5088e09be78", "a9e43bc4365814634dfb", "4085a26d84e1a0ba2d5c", "ffd6b3136ebd9936e959", "29f8e1512abde6bfcd45", "f8cd2ac8bec8a857c859", "97971c127bb9152dfdb5", "b6e5aa0549b12d5ffed5", "98c4605a3f60b78dcca0", "45aebc716632aebc9ccc", "eeae0fe9e5317dbc9048", "750af0a5df9788dd17df", "d8e8984086ad8eea43ae", "eda02e403b2cba384228", "b910e42acd6566bdc75e", "aad619fe7af4f361c2d7", "f4f1e7b57175051bc91e", "86ccd9b7439a0e9f88d7", "a6639ddb89064b6e0473", "3b708066c2354746ce93", "d2043b6ce12cb8531e38", "eac58e563d6b42daedaf", "6a01d059487071891871", "0637f910329d85569e70", "6226abed590dc5633428", "35f7e3489fb7c2b5de7f", "cc465717dbc360c5e392", "3723d0a1349bc17ffeec", "4b3b0d168a097d196c85", "321eb98bb5ab7dd05b6a", "f6e66b1b93326dc2a04f", "85ceb1acc89d686a89ea", "8bc9d4ce18ca9cb6b9bf", "1166bdcb7e6f5ae7a8ad", "71d4e6359c5f37a5e3da", "61482387c1a3c6196910", "d7b850642a0bb502edac", "a239ba822c9ef4a6a78e", "ffa1498ddc84063cb3e4", "612de364b3c1f6b8583f", "35a75996014e3689c872", "d2a0176283098ff584fb", "93b16e67bd8fae2cfaa7", "c2e4f826edd7e90275d4", "8e2abb1a6f5a9af4cd9c", "9c02e1eab636d7153cc3", "a67a33be505ae16ec3d0", "ca5493a2672c04487782", "2e656e138009661fdfbb", "82356d710e0f681c353e", "10ae2285faa3ab7a78b6", "23a7be8ea074ddf6d026", "62157c35bd6b61fb43d0", "d577b1879a01e69ab6a9", "9e031ad4defdfb793c02", "3d806d6ac01c97e2af0b", "fb635755ec1a3009d838", "59130b08354d589bfd4c", "890894b5412fadab707c", "f6b11ecd45675c08f2a6", "2141fb6cde7bb244a08c", "71095c55723a0d17bd04", "460c000f150431391790", "0836131821a28ac2c97f", "708bb2d07f97c742dadd", "bef66a535a2443ccb1d8", "f9b67cda1c7a12626acd", "45fa9be01a053d552e09", "e7b0b8e8c6be3838ff66", "cd418fe27a221532d7ac", "5cc599e118b22658f9cd", "f7d1755d0ee243ed0a31", "fa1bfca2cb0f1cabeae8", "ebca434000400123a513", "e25676578e497a7b96de", "a12053db1eb300f2399b", "cf1cc9965b0c6d6a04d4", "595f1899881d082f0d0b", "b48bc920a66680a417cf", "4ddbad6d713116dd460e", "fb221c026ebb168f089b", "85011531b414b3c3dec7", "c6cce6d637d5de37bb59", "4af068a6e5d34522f921", "a77b5ca58e8fb5ed73b1", "1de9b77a3e103d9d637a", "eac60c2f9d1471e9c70a", "31d1021ef82fc8dbe628", "3533b36e3c7f4d44ba46", "c4d21983ac6a4b79c1bf", "7ed19e38ae397b7235af", "b063b36a3aa4469070b0", "08e6f325a67f37eb90ab", "2e1cd38972cde1860f93", "262886ca0bf0be2b9d73", "c9213d0a2266ebb381bf", "e07347fd3e098f4a2241", "8447f4be9987914a37c7", "282e605b8cacda7870a5", "0bc82902b184baaa6736", "94120739729d980fa916", "fab0b3fac521ba0a374d", "0d61f9549eb3b0855321", "f439e629c8d0201d38e0", "8b734c7f2dee462772d2", "5bb219a56a46a0fd235c", "79df884d1caa1dc75d3a", "d91f9448d577946c29ea", "5b1ed15a8af902944a50", "da194144dcd550bf2d4e", "327cddd825413d6b39a4", "f55632ca83343a278029", "ccd70a8f3afcf301eec1", "0f05e0e6d021960faae9", "7441edde0f4656b48374", "336751e6e07034a32c0b", "16d47715416aec34b9bc", "3f3c828ff1196808f917", "51286179a47c16959dc1", "af4af33e211689bf1ef8", "cc014aad44b229afd4ec", "9b5b8cccb6f09eddc120", "a8b9ada1b04835bd5166", "d227b30a9a311a8bce07", "e0f5a228dc1a06b118dc", "b2a33fabda6c051921cd", "1a9092e1763169c8e5f4", "a204e4ff71e70a51681e", "a34cca71d75cd0ffab56", "439fca570988af496504", "aa418086a00c5cc9e2ee", "15937908ac299b3f1bbe", "973c91cbedad9d9776e6", "72e93f5d51ff4c29db7b", "1100d7f7fe81947490b4", "7cd30c8b25ed15a17e37", "bc27fb54dacb1f6d9371", "5aa103be69d5af7027a0", "e54dc9a8d43dd554b434", "8c25e97e2be4a74d973b", "57459faef27facd3a00c", "bf71d036122f4991cea7", "f3ba6faf04f2d478836d", "0840ca60c697c8be1d02", "4e41208770f95776a9d8", "c0b1a7efdec7a5a0803a", "d19a2ba0e0b79d42be2c", "c9275c93aff32dd84f77", "7cada72fca296c882aad", "8d31378d28dce06aba38", "100b83b0a7eef0a3fda0", "d2c8070eef3251dadf3a", "06492b0e3ee9cfa5ea3a", "0c3c3bf473b2b91a6e7a", "beb9b51c3dc0201b89bc", "ef581178acb3c321705c", "71e2356c405dfc744896", "909b4a99a2f495305648", "6ce0f0716fd197a39cb3", "6a49938cb08212cf61fb", "7b8f5b6fb0b190f7c878", "aa6dff5ea49d61fd7413", "25c6ebe4502af2148ae2", "6af7b69fd451e6162ddb", "6ec3d190fccb0f9cad29", "ee3f84d8ce90f154a552", "3654ad9811c87e9d4b74", "271a826c743518bbcd11", "6f9fd7c2396e3ed610e4", "7722e447061d2b2685df", "71a99251cf056880a017", "a7a2702e38ee6b1ece16", "e41c0cd89b0a28257589", "096d94bf40e991730d07", "fd7f7e465310986308b1", "35e7d0fcbca616d12181", "fc78be9b9abcd7d1aa42", "6133870d46aa443b361e", "220588b75ec13fc8fb39", "84c68fcbb1f5d08eec14", "fcde6c92cbcc00fb3a5c", "d77191a46528a9a71b3c", "88d14a5fa422b4bf6672", "39bed77b80f6a3605d00", "8e3c8b693b631a509aaf", "c41bdf83348be3931859", "56155b36eaec7cfbe79b", "bcc1d88aed1de085aecc", "2a88d2a48fad876ae66c", "cf0176729b26ea0eb2a5", "26748237f93cf2c359a9", "c6f8ff2e85e8abeb5bbc", "23ca39cb2f8f7f02c0bb", "8ce24bbad942f3a2f0b0", "cb8d19212795dabaed17", "de25a72eaed268e7b170", "ec10cf79c1c25d057c43", "dbc38e28d87a5faa2702", "7e44ac096d4b64ce1745", "8788f41c48b55e53d19f", "adc2093cf67adfbe6a4e", "995173a2dc0fd460f298", "84fd4d8168891e963ac1", "29f3d6b117323da330e6", "b22c5c02d8d121b98805", "d00cafc485291c132e52", "c3bfa5b572cb19dbe1e8", "7eeea3e7d9c14bdf20ef", "3391001d4d226c1fe321", "932e5bdf7b4313f95adb", "ba7c207888d58c888333", "4b0869d7812e2fc6d1fa", "24c19aa45eff9f6ca0ad", "6a6053c80b65e669747a", "e5073153e0e56366dd4f", "9b133d9967a5dbc1cbe3", "5040907d132d47ba4acc", "5a4af89654c148fbb2b8", "394cf3ce1e8207e0b3c6", "0b95650970165e2a48b0", "c481017e3b4239fb61a1", "f16b810a08245f660d6e", "55200fa9194de8965846", "615d33038f396620ad7e", "f3dff33693c0d63bdebc", "750191014aa47af26200", "3e9d28788cd35bedc316", "5dbe60181bfcac04fc89", "cd45f9c33149f6c95506", "e316e9d060a6cb85243b", "54680ab48df558dda212", "8ecc4ac41eba999f8cec", "c9d3e66ab1e7e444b3b3", "ab7930a2191e8f8cb827", "813180315a40b97b3743", "34451f76a863e008490d", "da6b9dc539f975d40957", "c9dcd49865d93789f40f", "e31d63ddfdb501d890c7", "3e7fb32ea6688ce0a571", "dc482524f533c29af7d6", "acfa9ab04625bf641d19", "5b1591e8a81ac120f9c6", "6bacb42f86aff5f4065e", "ef5430d2c4dd01187bad", "9c13d8c41d14bf9a74d3", "a6e21ad59c49787b5f09", "e91478d962a234186789", "dc250e6839668991b1ea", "092436b184365bd0df63", "2395dacc2e26707c3ffc", "76b33bd4e5db2d46037d", "ece2d3503d6a9a77dc90", "cb54fd05258e991a6e81", "69238590f63f6e43e884", "04f679e96db065f48527", "14698ea1e661dd773e12", "f0566fedc82ce5026f65", "34e434c60af34f7a7f9f", "09d03091395d33544c8a", "ed7ef2b1461db4ac3b5c", "854e7e61962f999e682f", "269df5eaae4d2442734f", "91a79555e17a1bdad00c", "7b910105a025e43c95d6", "69d5432a8c896657f19a", "dfc1cf617a6be6f7fb59", "273c1aa4f410dd2517d1", "5a67e9eff9214aaa1baa", "5fd4eec899059175a1da", "5625a142e757d4a56a00", "534f43761021d596d415", "b42ea3ca92db0ee379f2", "37f8679fb4e262acfb67", "2e67c4be964e91b4e169", "43e729716891460d1dae", "5b4af45cbcc84373e29d", "42fec855642ddbee3043", "eb111c4e68a795c03cad", "41587f401a341dd354cd", "c5dae59309c3d013a570", "9188b5cc461bc2ab0d27", "bf5b03fbd9639233eee9", "3d04a61ec403989df317", "70537820d9da08d27944", "d71686feeb1241c280d7", "c40e054ac5e42fadb42f", "e872a6c417198dc15149", "ce6eb2d1ded12c6e3322", "35f91ed0f0560db3bec0", "61665fc345753517c289", "efd20316f7e8d5234d54", "5c6e58c1c74fa3ed47ba", "007f8a93591c734d3ad5", "0a48cb12ae5875040867", "086c84ed12d0f6a8c351", "c72338163968f3bf3a24", "4880adaa5354adce92b0", "a5c453aab33f6ee36b04", "7f36077007a3423f684d", "6944807e8b9c29c5dad1", "92ab68c5c110e6931846", "ce5ef32cfe92fdd615a8", "af7e0751cda69d43ac9a", "c3bcccb7ef5a728f4a7b", "2234068e8aa81d63c21f", "7f98c894dae72c2147e1", "dae315f0fa48f5e060d0", "d2e845a0609c482d50fc", "d33583fa687021357da0", "2517b3d980683d9712e6", "38cd94091096c032b70f", "ee70868fd2959a97f996", "6a0ef43de130718c8ba4", "6a459373d52f181ea081", "efff786b67761504ffe8", "5c9b50452410761e6479", "221d876a3c12056dc3f1", "8ebe1469ea6148fe6881", "51f6302ced3a81d24ffc", "833efda9af5ad617fe9b", "840cedd643f093ad1384", "0e55b270a14f55ebb1f4", "dca1b43d374c79211c40", "9b54ba7807c4b44ea83b", "f441d73599fd09ea1f9c", "8f49c7efbc91bc71c536", "f8d6b072408478b714e1", "9e71dd804d6131374844", "c4248fd26d976c926d04", "f29cb8062f8140d39cee", "8e8d2767345ce32bdaf0", "c3c076857efad4cdcdb3", "ce1724425cb81f84f855", "06ddf3ec5d70316d5cd9", "580ec563e17a4049f580", "63e62d51717885fbbb48", "5cf05470d6e369e49a8f", "9c7e32acaaa79ea55710", "5329c6a2f9713fe2c460", "92c79264b5efa6340cf9", "ddf10cb30f93db13b907", "b6da3f6189e1366f0707", "33fd44490aad0c1e97bc", "5c3e4059ce8ec1baf38b", "9744083c514036c1627f", "532cc48fa459b8acf67e", "26251d64eececc3c8e1c", "9f57827b58ac2c41f950", "f413a16c809a42395331", "af9fb89055064922bf14", "d744efc3c8020188bae0", "c0d240938ba812a5fdd2", "6f77d27dbbe72612af28", "d1c51167773cc92cb680", "b9d48c00dc1f5b415f4e", "bf0d2e2d3e983038f72a", "2ab4dd57d5774acae54b", "087cb1bae573ed500d40", "bdc0b03f17b3a6646d3a", "5d5c72758ed70ffcde20", "986a7eac6e40683d52dc", "b12dc3f1693fed6079ed", "a5c427604c181ef80c58", "151370a6fb88266dda3c", "1c3203c464fe40c12084", "52d3431d5f2909968c88", "dc2e0db71c14d35f11e6", "6e0d3ba775c29ad15033", "33039464c33b12d61c3b", "2c42a4f460c75751e8df", "65dc82a60b666da0041b", "c05b3a7984266a163b0c", "17029c477aa5427e29c4", "96466ee59c7631360a22", "8d95031b3baa2fa8ad33", "f093114e16ae8d4a6379", "a71b8d2cbff2530c9074", "1cdf24d8f0be472b3652", "ffc4e7b07dbb57293c42", "2c5aabc2c4ad78099162", "a2dd6cea7ffb560d8a62", "b446f1df53a7a6374470", "38f3985c6a42450dbe68", "8c7924e424b557e46b36", "b201dfda71f522b4443e", "cd81e98c83bb76605556", "3c173d2d96d0eed47496", "dced8434f881e52c4d63", "903d816c26076b62d168", "c57f2e49d89ea2063c44", "ee754515dda1e9f27da7", "a151532931e1b2099d7e", "ef0d12d70c04e58ae728", "526037145d80f652cc54", "446792db28a29a5a45b7", "46098b1184bed8d3fdc0", "182efb6d13be3b2435b7", "3676c0ab8373213e14f9", "6eae6fa6961ab144b35e", "e75a2c3fecfa92aa2bb3", "9c763bf24f907c28a8ae", "dccdbf5a3799c3510a42", "2597168452fcac19d61b", "b43c4a6d7105fe2b2c45", "af62621ccba37a22f12b", "fbad35de1958f86eb143", "426c750270427421b01d", "f6b8f3c8637c7f059667", "3b25885a76a40c27f444", "8ef8a9b09894393ef79f", "b4bb4c70c9171f652681", "1e4340d41690486346c5", "dfe284c8ffda1f468e07", "a6b8285e9e437485993c", "40c8227a185ce8037d98", "c134723cdaefa1217124", "12d312f2d9e7571d1768", "07030318e73dd83f12e8", "aedb9f69ceb8f1420d04", "badc788921044d3c0795", "df2c9faaa80d0c9e3093", "61f6e25d9945b8999652", "893e334d9651441bbb71", "abb712bc05efc0596434", "5387e8ba09a98cc0ca3c", "f011be5251056a11308f", "650496cf9cdeeb9fb4fa", "5fede0e18a934ae6b070", "b52e29b81d69a23201e4", "4e571c914ba29c604845", "95daf315583f6ba22301", "5bd3b4300d29739467f9", "e67d98f9cd29b1cf05c0", "07fa81eb585250c495ac", "79dcdfe81588a9809bfa", "b532f1c03b4c96e9146d", "c51354596ab8c9193ceb", "b55840babcffd67f30e7", "3ddea2089e2c347fe8ca", "f714d19fa596db824eb4", "fbc107c44b19e29b36fd", "a8dcfacc7fbb0f5e4bdf", "240fbbb52b24afa8e460", "40629c57f7f27fe2cdb7", "8721856f7835234df1a9", "b4f08c265b08a679e52f", "36d93c69c262bbd3a7f0", "e22d5430086c48f3cf37", "be4eb8de475b96a5b604", "5001ef8f8745124bbb5b", "9f76910e3af0e4f04d42", "2249ca92a856040e25ed", "66a76ced343605f41c6c", "e80915da765413cb92af", "731c4ed9090814dcf98e", "6d098d59142e2928c792", "94243d70aa37e4dab3cc", "22b68f32bcece09767aa", "a5cbc2a78b386e5f15d9", "ce8f1832cf671cd04371", "55cb5873499388ca14a7", "ce047120e21ecb37075e", "e54c8f63bf7188b87077", "7707a03c76310bd63d4c", "63ad515afbbd2faf6f79", "7ca6c25de8c8d249173d", "9840689bd04e29393568", "3e71b5f69441c2ff3262", "fea3d54469135ce6f425", "37f98160cfd19d94f15d", "69139ca97d3bd2f33a40", "73a79d87503eed82166b", "851613aef962c3b610d4", "352d0fda6d04222c59d1", "4c33a26c0706355c108d", "46188ec391c6036ae137", "d7fc609e0b8aa4226e46", "c829aade05c24479faeb", "2474306029564723745a", "5b3ed895105387a66598", "f8f3c42286e2a104471c", "b20ef79ca10b1ee4eb11", "dda600319180263507ee", "3f44886944d80fea0433", "dc65b92bbc0ac1d08a45", "f260c27211ef023b9448", "37a170fa64b8ea8c987c", "0b7014e01c95458e7412", "7deb1de7aa624e5ceeeb", "c0d9faee12459af89df9", "7b8a571b8f9cd6a314cf", "5aef6671458d84be5104", "88d9b71f9c54a24c480c", "69394f5ea9e85d9c9d59", "7a9dcb3aa771fa131f14", "8bd0aaded76b1f3d842a", "6336587a2660c2cf9a2e", "5f95f8c195e1ffdfd49e", "b05710b4bb65c776013e", "e4cc75b988b6927cd23a", "6472fad72d7a1c6e51c3", "61cfcd95cacd23113412", "cdd3a57da251d8393d0f", "77f1bd72c0f9c34e5ce6", "6270a7d601f95228698d", "2516f9d40dbe8ca7b9c8", "4255226e09701e756616", "0ce2760854ee7895e7b8", "2fa6eb533b8aef3908b6", "6cde0dfb4e179ef3cd16", "7ce9c3d55c57fac91687", "4ef69e6ff60ea7637c45", "7d3fe361ae617a2e759f", "1f3a8820435cfee19cb0", "82b9f51df54255695579", "63d009ceb42586fc1770", "809a2abdb4709d2f0352", "4acccd028b5902d8ef81", "3816b1aeaf69c9d1c0f0", "309ecc2094936ad85285", "f042e8054acd673a4682", "e4cef676415a1f508d69", "17e7bfa9d57784b84aff", "f38a34399c7d3aadd4de", "47eaefb85eea121e295a", "9cf73abf7df757393c93", "d5249bc78f5257eb4944", "dbf90f5464ce5d589a4b", "1d2ed4066feaf8a8812f", "079b2985f0bfe5e88504", "53a35e51f3bca43ee0a7", "7347298438eaa9908e8d", "833230c55cba871c9dc1", "247efec709728ba300f6", "dead4350c70350d8d988", "eef62b96a2ecaa26da19", "f3cd6f526aecaadb3ba4", "ece3774ffca953c4af5f", "d6f1f5a4f1cc25f72be3", "805261ff1bec09be3650", "5a1f24a08ad62d161a78", "000e047d9d87dbcf50ff", "cf42eec878cd5d17fec7", "476ac15fd57d56633955", "f13ef78dd1d6b1a0b7dd", "88fcab1b1915e92b5d46", "42b7e7f0be7b3552f377", "0653a31f3e2f5923aad5", "49c1c184ab2484569550", "1f67b2724e16326b67bb", "a81519c4f594377acbcd", "874b1df1afc7cfb038f7", "1a8a0dddd105b8aef8db", "481700f466ebdd02e569", "d0d39a957a9b9d784a3c", "56ab2c4a8890064a9216", "567b0cf0dc85305e658d", "6c805c6353a7eae03c9a", "819148d3a504a7fd3525", "ed3dd9426f98b7d373d7", "99c3d33743930be41e94", "9316bd4fc02cfbeaa94b", "1139302db36a3ebb5e46", "0a9b4c59ccae9df39d07", "b4561cebf555d78db4f4", "03fab2bad6ae1fd2aed0", "8a16afaa344f846a4150", "48821f0ec156979a893a", "7bd04124dd9f2ae8bdaa", "4ad797a9a308d35d4398", "a368caa0598cdb92a460", "05bd0953f4cc31241651", "30aa2efc085468787db0", "85af7baa5e1b1ab366b4", "9c9b6210d5f94d0aa18b", "3cb3aa5ec1c52ab238f1", "e3d8dcc2078ee8898b36", "01330283d0bc0e2ae340", "36ba02445e71c82afecf", "9c86a3582a1c81a61a3e", "27fd2db41018928950ac", "77413075f452322da054", "e2ec4137ad537fe2ca7c", "b8310c66d5ebdd17ee7a", "3e5019512cda170113cb", "180a6002f03cd6e4e0c5", "e6ed058350cf21310f04", "82231a88a887da4ebbf9", "27e23e30e8a1dcf48adf", "614717da148b20d1696f", "655d2aa2b85380b02cef", "990717bc42f9546a7af3", "7ed36bb65bf3c4df8f1f", "7b49b5d4461878b6a76f", "f23e0938182b7ac0e397", "a6a50617fd62490bc5a2", "3632f64dece084d5688b", "08acf95ba7f34825039b", "07f4bfb14048b225a47e", "aa0612fd87d399eb7c16", "aaa80f41b420b1fb1248", "2463cf216a55aa7e03bb", "1c75170e2851b394d298", "54bb77b2c247281a44c9", "ead34f0c22300ccf7142", "28361d4e1314e813708d", "b42292e1d9bdf1e81de3", "18cb568b0ca4a85e5578", "a894e2dd385bcc242c16", "04caa1cc905589e06718", "cbfb20c882ae74b68c81", "0a83ae0c0a8826e40c4b", "56575c5594931da6c655", "a9b3ce535965cdecc59c", "07d5e366cc274f501fb7", "9307d71ac45a5bc20785", "ed0a0f06ea2c762a41cb", "8c08f7187fbdc20ca3b5", "f671f61a67e9e9d7046b", "9ecdf39fb99e3bf122da", "9c086a9f63bc8fb969f0", "2b3708d6cff76dba6117", "10a44ed7635abfeb7244", "247f37e3bc4095b8c9b7", "eddd7e20451d248d816a", "7cd01eb6df5745294db9", "8d928c1a3281b5344ebd", "932ee7f96fe50faabc6c", "d3b40fc2b4bc36018ecd", "148f9e0cbb6733d4fdbd", "50063967ff25c9300d33", "44ff7e00a25872670789", "c373e254af5cc4ea6820", "f50b501052d67ffc1c21", "4e5c9e8a0c355f9dd1ab", "865dfd95bc2b9938dcd9", "ac3577a385f29d58c2a9", "d88ca36418ddab143204", "e42b7344f57cdd55e34b", "4ec080b70b9b40b58b6f", "ffd382835ea334dae4ac", "06efc01cd70961ef677c", "f563f4850056a9bba932", "498ba9542717320828ef", "7d40c9cc7fbca7a0d77f", "c08a1cba657a0ad3bbd2", "45441fa419e3c60c993b", "8a2994af3eb115ab4885", "46592afae78035a251fc", "3124f909b7bc95dcd459", "12d7b364161c66dba62f", "f64d56d18b96af359ca1", "ee1c2e52f85f4e9a6793", "9b1a1453b049689eeabb", "623055b37ccfe4ff4933", "6012132bf23f038868dc", "d218af49d6e2b4bb3a30", "7992f9917a283badfe77", "dbba8ed7dc9f11708381", "e8c976fec909cd6ca0db", "8802f6343b441e98b6a8", "ad7ac4e5ae46b8acf252", "adc64ac43dd4f760edc1", "c29eb7313f07f554c98b", "0ac226a8c7a79a511795", "fcef395f733cd56f96e8", "4f5dfb093dbda38162e8", "3c54cd95c0486751f650", "632ebe96fd69b1defcb1", "bd471af25b77c50dcdc2", "61943354e596bda425cc", "84a2979f4c548ab92130", "835383cf5538f827ac3b", "d6f3e2fc196d238d8ab6", "324bfac86f7724925c72", "267fbd0bc82afe2480ac", "eb1d8f2affb713795f80", "ff8004734f2fb771e08d", "5df773057c960e2e351c", "c539a13a98599f08b093", "c29ac0a134fef9b2a719", "a1fa157054cc9e7f9536", "47e99bbdc448e21ee801", "434403445839bd288ced", "9ab9c8b3b83962c7f64e", "9f4f3e1313f8ca0b6341", "facea894e05d343b5674", "b29af98764f04fdc7836", "fb7d8c936130bb27ff8d", "bfb92601beff879cbe0d", "47a440bca2b1fab12521", "68040de21dccb07fff65", "99b598d0bd3aec34f0ed", "216353c8e16497b1579e", "2eb4da2518fa344aa826", "fb6eb953fa0b5190cbb1", "5d257195943af78ecf39", "306efc2aa6f0a25be28a", "8b77e849989a22658edd", "055f5b853e2c04262b82", "f02e2a334c398d5b36dd", "c4e68ff5723fe5f8e1f4", "faf59ea2e4dc1619ad16", "89b9881a6190d545a16d", "1bda0b9fc3b5ba6779fe", "e281b6cfe1cee4b1d781", "a90a2050a16bdfa34ae6", "1dab0e0be14ca5731a74", "41e4ddb3dc06099c7e3e", "5a3a6e0eeebb8e6bca8f", "32f43fcf0746eba4b027", "32a20e0121a095d6a9bc", "3511154fe379d7285585", "951e55b99b7684c6d6ce", "50cea298f98ca78d045f", "be2fed79bb4f14ee7b84", "49bf1219b49cc5f818ab", "6860db45c69a9e0a3f9d", "ac78b32906835b1ecfbd", "dd7331c3e4e00aa11eda", "4a4e0c2c5f08a2f0b3ba", "a57fce24d9378db5599e", "4dda1f0f07159cc4aa64", "cfd6fce74045d9c9e96c", "e5cfa67dfd71ecfce518", "5349c5ff97b11ab3d923", "7da64b29765f452a0eed", "4dbab5a34435e9bc3a80", "0653661e578574114b24", "3eb34addde714f47bab1", "a926375c383340ac519b", "2202d4d19d064bda8e73", "33e7b9f56ac856d9762b", "c2987aee1e9082937395", "9e906ae0f3375aa6272b", "f4df7ecea8b4ce6c4538", "fdc0e2109721d08b9835", "031680682b65107d02b1", "0653bd01a6eb1f46e569", "de13c1833ddbb22bc79d", "19c9e2bb9e1ab91f4412", "85ba29fb98f5c6d769df", "fd8b0f3a7d714cf2246d", "5c9ecd7f2301483e845e", "de7acf399b104b78c3ca", "2407245ca62b7d0485e2", "15ad5ab2dace20a9c6c5", "8d35312ae5938efc3c37", "9fab26fcb150180a231c", "c12e037c634f8ec1462e", "c2d07dc3d66282b8101d", "e14ae2a8b3c659434565", "6c0a1b51664771ef4bd4", "3194a8863e3a85284a73", "5ad6a78f4bf150ad9304", "74b21727ebd45abad23b", "8dfd615db9e565a2868d", "5f8b8102a9fab1617084", "4c4f394f062ef24866a9", "40197dbd99e34eae7863", "90bb2c151e23d9a645a8", "d0aa548327b1a3d20cb8", "ae0b1cb94fc52f2c65c1", "a53572c2b38532a01d24", "225585337d76f6f883b4", "5040ac73de61995edaf2", "399e50985141f8c8d722", "a70ba292b28b17f5969d", "6c3bfa25c8b350e0b794", "82ac4e6ad6ff968e4213", "1ec93f08fa4f54c42bb2", "12232af40ab0215c4566", "f57d470a9b22b78ea67d", "b6a114247c8d26787e43", "204ce1addf45299c3f3e", "ed4d566dd1d6c7182b47", "2694228aa4b69b07ef53", "e7848fddd267de62591d", "95fc6fb040338f884cf5", "0e3f62f9ccea6033d512", "316288874dcd4c40345b", "d0f0ea0a86469e8f69d8", "ce5975a452706fadd38f", "ecc8e66ffed06683404a", "e5723cf4b0e1f7b32fbc", "fb15f272113b08e2ebcc", "5269482d6bf76fb5bc28", "8276fd7418ce24cdd57a", "c97a35d490193e77afa1", "cc9761c72b44573a05d9", "def6c1798f57a420c43c", "9f9c9bbed8fee79c65ff", "1d54d3fe62b5985e8b37", "72ee3f6bc4c9460660f9", "9ae9ce36e5ae4ad4ce88", "f6faf2bf16e6a87b9a3e", "629fe38117bbc1ccc05d", "171c3c18d3b0c2b1d945", "00d03cef17be2ffa34fd", "6530a9ec256c1867f76c", "36277be327f45347e932", "31102c0235f5997c386e", "d96910373f58dcf651d5", "141e46973559dfe207f6", "28119f9637739215f5a9", "6634f5400d1b056c27bb", "82952d9318ee8e9fad2b", "a30419e0aaa8bca2c93a", "a2d2e646b2f14b223393", "0798a5af771e0a7c79f4", "3c2e5719c85e38b4bb6e", "5344573997e6907dcd00", "f7d006c8eb8014e93ade", "068e88f911c445e78cb2", "b7ac85af57f98b64a5d3", "6a58480232022c1d289a", "a8559e40c9c29e4bbeaf", "bdf6a92f134f0964e580", "b12636b81b4d3f6e5987", "5e5b1bb90c9653f7e253", "f64094549a82127ebaeb", "48011713ad58112ee3c5", "f2cad1576b638fed0e09", "467fcb48d09bd112050f", "e1c059c0129b33b5afb7", "e559c6ee8bb658ccfd5f", "4f2a720a41708032139b", "65a4d24aeab307b2d066", "03e27bdef615d4970362", "7109eb2aa6f33257aae7", "9e1aead6fc379c5ee9be", "44ccaa5b8b3b3a92571a", "23bf3732de4105755321", "03c5aa4fee0075d72d96", "9b301f1f4cf4443fa9d3", "6d7acdecceb892fa8b2b", "922b201b44e7ce69d895", "42a32f782d850419c7bf", "dc74c428d0aa73fb4c28", "a5378780f40262516e1b", "64f831a6a7d436e75371", "dfac825df7936ff7680f", "516b9cb3b92cc20e5b8d", "5a747d68fab3b24aeea3", "cf39da6ae7e9874e820d", "f8c848e71b20b6eaeea2", "cead108e9af8368461f1", "ad24311a2a8f15b4e105", "3eedf3ed3055199dc5b2", "67aa7169739c1d0c70a0", "1f56b1c71fd01b2c94af", "bc2e3f9e0e034ebbf5ba", "70dbd254ebfebc185ed2", "e7ee121c0bc40fe177ac", "edcbff5716c28af5c53e", "370c195419ffe5b53944", "85bb39c12640c1a6c148", "70b832dd05293483b844", "7accac8f5ef12c4a79b3", "2a5f7c0e982fb6d0f294", "0a6b25bacba2cdeccde4", "155e92bc7b9467f4b1bd", "d61abc364743f7def85f", "52cb214ac2c26a6110c1", "c89ac4b7495ad73409be", "0ebb5c152d4e33abd61d", "5db1aafb34f881c82cd0", "66a94e518446d0f6b75e", "86fd26c9d86a86736f6b", "f156f0ca356db0ab420c", "3d4318c9ed962e997087"]);
@@ -301,7 +361,7 @@ async function checkCode(raw){ const c=normCode(raw); if(!c) return null; const 
 /* ===== العناصر ===== */
 const ELEMENTS = [
  {k:"duty", pd:"الالتزام بالدوام والمهام والتكليفات وأخلاقيات مهنة التعليم.", t:"أداء الواجبات الوظيفية", h:"التزامك بالدوام والمهام والتكليفات وأخلاقيات المهنة.",
-  s:["الالتزام بالدوام الرسمي","المناوبة والإشراف اليومي","حصص الانتظار","المشاركة في اللجان المدرسية","تنفيذ التكليفات الإدارية","الالتزام بميثاق أخلاقيات مهنة التعليم","المشاركة في الفعاليات المدرسية"]},
+  s:["الالتزام بالدوام الرسمي","المناوبة والإشراف اليومي","حصص الانتظار","المشاركة في اللجان المدرسية","تنفيذ التكليفات الإدارية","الالتزام بميثاق أخلاقيات مهنة التعليم","المشاركة في الفعاليات المدرسية","الإذاعة المدرسية","المناسبات الوطنية"]},
  {k:"prof", pd:"النمو المهني والمشاركة الفاعلة في المجتمع التعليمي.", t:"التفاعل مع المجتمع المهني", h:"نموّك المهني ومشاركتك مع زميلاتك والمجتمع التعليمي.",
   s:["حضور دورة تدريبية","تقديم ورشة أو دورة لزميلاتي","مجتمعات التعلم المهنية","تبادل الزيارات الصفية","تنفيذ درس تطبيقي","حضور ملتقى أو مؤتمر تعليمي","ساعات تطوعية"]},
  {k:"parents", pd:"التواصل مع الأسر وإشراكهم في تعلم {S}.", t:"التفاعل مع أولياء الأمور", h:"تواصلك مع الأسر وإشراكهم في تعلم {S}.",
@@ -323,6 +383,228 @@ const ELEMENTS = [
  {k:"assess", pd:"تنويع أدوات وأساليب التقويم.", t:"تنوع أساليب التقويم", h:"أدوات التقويم المتنوعة اللي تستخدمينها.",
   s:["التقويم القبلي","التقويم التكويني","الاختبارات القصيرة","ملف الإنجاز","سلالم التقدير","التقويم الذاتي والأقراني","المهام الأدائية والمشاريع","أوراق العمل"]}
 ];
+const WEIGHTS={duty:10,prof:10,parents:10,strat:10,results:10,plan:10,tech:10,env:5,class:5,analysis:10,assess:10};
+const EL_REP={duty:"activity",prof:"course",parents:"parents",strat:"strat",results:"plan",plan:"general",tech:"tech",env:"activity",class:"general",analysis:"analysis",assess:"general"};
+const REPORTS={
+ strat:{n:"تقرير تنفيذ استراتيجية", where:"الفصل",
+  goals:"تفعيل دور {S} في الموقف التعليمي.\nتنمية مهارات التفكير والتعاون والتواصل.\nتحقيق أهداف الدرس بطريقة ممتعة وفعّالة.",
+  desc:"طُبّقت استراتيجية «{T}» في حصة {SUBJ}، وتم توضيح المهمة وخطوات العمل لـ{S}، ثم نُفّذ النشاط في مجموعات، وعُرضت النتائج مع تقديم التغذية الراجعة.",
+  res:"ارتفاع مستوى تفاعل {S} ومشاركتهم.\nتحقق أهداف الدرس بصورة واضحة.\nتعزيز روح التعاون والعمل الجماعي."},
+ tech:{n:"تقرير توظيف تقنية / وسيلة تعليمية", where:"الفصل",
+  goals:"تقريب المفاهيم وتوضيحها لـ{S}.\nزيادة دافعية {S} وتشويقهم للتعلم.\nمراعاة أنماط التعلم المختلفة.",
+  desc:"تم توظيف «{T}» في تدريس مادة {SUBJ}، واستُخدمت لعرض المحتوى وتنفيذ أنشطة تفاعلية شارك فيها {S}.",
+  res:"تحسن فهم {S} للمفاهيم المستهدفة.\nزيادة التفاعل والانتباه أثناء الحصة."},
+ course:{n:"تقرير حضور دورة / ورشة", where:"",
+  goals:"تطوير الممارسات المهنية في التدريس.\nاكتساب مهارات واستراتيجيات حديثة.\nنقل أثر التدريب إلى الميدان.",
+  desc:"تم حضور «{T}»، وتناولت محاور تطبيقية مرتبطة بالممارسات التدريسية، مع المشاركة في الأنشطة والنقاشات المصاحبة.",
+  res:"تطبيق ما تم اكتسابه داخل الفصل.\nمشاركة الخبرات مع {COL} في مجتمع التعلم المهني."},
+ lesson:{n:"تقرير درس تطبيقي / زيارة تبادلية", where:"",
+  goals:"تبادل الخبرات بين {COL}.\nنشر الممارسات التدريسية المتميزة.\nتحسين جودة التدريس.",
+  desc:"تم تنفيذ «{T}» بحضور عدد من {COL}، وعُرض فيه أسلوب تطبيق الاستراتيجيات وإدارة الصف، ثم نوقشت الملاحظات والمقترحات.",
+  res:"الاستفادة من الملاحظات في تطوير الأداء.\nتعزيز ثقافة التعلم المهني المشترك."},
+ parents:{n:"تقرير تواصل مع أولياء الأمور", where:"",
+  goals:"بناء شراكة فاعلة مع الأسرة.\nإطلاع أولياء الأمور على مستوى أبنائهم.\nإشراك الأسرة في دعم التعلم.",
+  desc:"تم «{T}»، وجرى خلاله التواصل مع أولياء الأمور وإطلاعهم على مستوى {S} ومناقشة سبل الدعم والمتابعة.",
+  res:"تحسن التواصل والتعاون مع الأسر.\nمتابعة أفضل لمستوى {S} وسلوكهم."},
+ plan:{n:"تقرير خطة علاجية / إثرائية", where:"الفصل",
+  goals:"معالجة جوانب الضعف لدى {S} المحتاجين للدعم.\nإثراء {S} المتميزين وتنمية قدراتهم.\nرفع مستوى التحصيل الدراسي.",
+  desc:"تم تنفيذ «{T}» بعد تشخيص مستويات {S}، وتضمنت أنشطة وتدريبات مناسبة لكل مستوى، مع متابعة التقدم بشكل دوري.",
+  res:"تحسن ملحوظ في مستوى {S} المستهدفين.\nارتفاع نتائج التقويم مقارنة بالتشخيص القبلي."},
+ activity:{n:"تقرير نشاط / فعالية", where:"المدرسة",
+  goals:"تنمية شخصية {S} ومهاراتهم.\nتعزيز القيم والانتماء.\nإثراء البيئة المدرسية.",
+  desc:"تم تنفيذ «{T}» بمشاركة {S}، وتضمن فقرات وأنشطة متنوعة هادفة.",
+  res:"تفاعل إيجابي من {S}.\nتحقق أهداف النشاط بنجاح."},
+ analysis:{n:"تقرير تحليل نتائج", where:"",
+  goals:"تشخيص مستويات {S} بدقة.\nتحديد جوانب القوة والاحتياج.\nبناء خطط علاجية وإثرائية مناسبة.",
+  desc:"تم «{T}» وتصنيف {S} حسب مستوياتهم، وتحليل نتائج كل مهارة لتحديد المهارات المتقنة وغير المتقنة.",
+  res:"تحديد {S} المحتاجين للدعم والمتميزين.\nبناء خطط مبنية على نتائج التحليل."},
+ duty_att:{n:"تقرير الالتزام بالدوام الرسمي", where:"المدرسة",
+  goals:"الالتزام بأنظمة العمل ولوائحه.\nالقدوة الحسنة لـ{S} في الانضباط.\nاستثمار وقت الدوام في تحقيق نواتج التعلم.",
+  desc:"تم الالتزام بالحضور والانصراف في المواعيد الرسمية، وأداء الحصص كاملة في أوقاتها، دون تأخير أو غياب بغير عذر خلال الفترة.",
+  res:"انتظام سير الحصص والعملية التعليمية.\nتعزيز ثقافة الانضباط داخل المدرسة."},
+ duty_watch:{n:"تقرير المناوبة والإشراف اليومي", where:"ساحات المدرسة",
+  goals:"المحافظة على سلامة {S} وانضباطهم.\nمتابعة السلوك أثناء الفسحة والدخول والانصراف.\nتهيئة بيئة مدرسية آمنة.",
+  desc:"تم تنفيذ المناوبة والإشراف اليومي وفق الجدول المعتمد، ومتابعة {S} في الساحات والممرات أثناء الفسحة ووقت الانصراف، ومعالجة الملاحظات أولاً بأول.",
+  res:"انضباط {S} في أوقات الفسح والانصراف.\nعدم تسجيل حالات تستدعي التدخل."},
+ duty_wait:{n:"تقرير حصص الانتظار", where:"الفصل",
+  goals:"استثمار وقت الحصة بما يفيد {S}.\nالمحافظة على الانضباط الصفي في غياب المعلم الأساسي.",
+  desc:"تم تنفيذ حصص الانتظار المكلّف بها، واستثمارها في أنشطة هادفة ومراجعة ومسابقات تعليمية قصيرة لـ{S}.",
+  res:"استثمار وقت الحصة دون هدر.\nمحافظة {S} على الانضباط والهدوء."},
+ duty_comm:{n:"تقرير المشاركة في اللجان المدرسية", where:"المدرسة",
+  goals:"الإسهام في تنظيم العمل المدرسي.\nتحقيق التكامل بين فرق العمل.",
+  desc:"تمت المشاركة في «{T}»، وحضور اجتماعاتها، وتنفيذ المهام الموكلة ضمن خطتها.",
+  res:"إنجاز مهام اللجنة في وقتها.\nتعزيز العمل الجماعي في المدرسة."},
+ duty_task:{n:"تقرير تنفيذ تكليف", where:"المدرسة",
+  goals:"تنفيذ التكليفات الإدارية بدقة.\nدعم سير العمل المدرسي.",
+  desc:"تم تنفيذ «{T}» وفق التوجيهات، وإنجاز المطلوب في الوقت المحدد.",
+  res:"إنجاز التكليف بجودة وفي وقته."},
+ duty_ethic:{n:"تقرير الالتزام بأخلاقيات المهنة", where:"المدرسة",
+  goals:"تمثّل قيم مهنة التعليم وأخلاقياتها.\nبناء علاقات مهنية إيجابية مع {COL} و{S}.",
+  desc:"تم الالتزام بميثاق أخلاقيات مهنة التعليم في التعامل مع {S} و{COL} والأسر، والمحافظة على أسرار العمل وحقوق الآخرين.",
+  res:"بيئة عمل يسودها الاحترام والتعاون.\nثقة الأسر والإدارة في الأداء المهني."},
+ radio:{n:"تقرير الإذاعة المدرسية", where:"ساحة المدرسة",
+  goals:"تنمية مهارات الإلقاء والثقة بالنفس لدى {S}.\nغرس القيم والمعارف بأسلوب مشوق.",
+  desc:"تم الإشراف على «{T}»، وتدريب {S} على الفقرات وتوزيع الأدوار، وتقديمها في الطابور الصباحي.",
+  res:"مشاركة فاعلة من {S}.\nتحسن مهارات الإلقاء والتحدث أمام الجمهور."},
+ national:{n:"تقرير مناسبة وطنية", where:"المدرسة",
+  goals:"تعزيز الانتماء والولاء للوطن.\nإبراز منجزات الوطن لـ{S}.",
+  desc:"تم تنفيذ فعاليات «{T}» بمشاركة {S}، وتضمنت فقرات وأنشطة وطنية متنوعة.",
+  res:"تفاعل كبير من {S}.\nتعزيز قيم المواطنة والانتماء."},
+ workshop:{n:"تقرير تقديم ورشة / دورة", where:"المدرسة",
+  goals:"نقل الخبرات والممارسات المتميزة إلى {COL}.\nالإسهام في التنمية المهنية داخل المدرسة.",
+  desc:"تم تقديم «{T}» لـ{COL}، وتناولت الجانب النظري والتطبيقي، مع أنشطة عملية ونقاش مفتوح.",
+  res:"تطبيق {COL} لما تم عرضه في الفصول.\nتعزيز ثقافة التعلم المهني المشترك."},
+ plc:{n:"تقرير مجتمع تعلم مهني", where:"المدرسة",
+  goals:"تبادل الخبرات بين {COL}.\nمناقشة التحديات التعليمية وإيجاد حلول لها.\nتحسين الممارسات التدريسية.",
+  desc:"تمت المشاركة في «{T}»، ومناقشة موضوع اللقاء وتبادل التجارب والممارسات الناجحة، والخروج بتوصيات للتطبيق.",
+  res:"تطبيق التوصيات في الفصل.\nتحسن الممارسات المهنية."},
+ visit:{n:"تقرير تبادل الزيارات الصفية", where:"الفصل",
+  goals:"الاطلاع على الممارسات المتميزة لـ{COL}.\nتبادل الملاحظات البنّاءة.\nتطوير الأداء التدريسي.",
+  desc:"تم تنفيذ «{T}»، وحضور حصة لإحدى {COL} ورصد الممارسات المتميزة، ثم مناقشة الملاحظات والاستفادة منها.",
+  res:"الاستفادة من الممارسات المتميزة.\nتحسين أساليب التدريس."},
+ conf:{n:"تقرير حضور ملتقى / مؤتمر", where:"",
+  goals:"الاطلاع على المستجدات التربوية.\nالتواصل مع المختصين وتبادل الخبرات.",
+  desc:"تم حضور «{T}»، والاستماع إلى الجلسات وأوراق العمل المقدمة، والمشاركة في النقاشات.",
+  res:"اكتساب معارف وأفكار جديدة.\nنقل الخبرات إلى {COL} في المدرسة."},
+ volunteer:{n:"تقرير ساعات تطوعية", where:"",
+  goals:"تعزيز ثقافة العمل التطوعي.\nخدمة المجتمع المدرسي والمحلي.",
+  desc:"تمت المشاركة في «{T}»، وتنفيذ المهام التطوعية المطلوبة، وتوثيق الساعات في المنصة الوطنية للعمل التطوعي.",
+  res:"الإسهام في خدمة المجتمع.\nأن نكون قدوة لـ{S} في العطاء."},
+ par_meet:{n:"تقرير اجتماع أولياء الأمور", where:"المدرسة",
+  goals:"تعزيز الشراكة بين المدرسة والأسرة.\nإطلاع أولياء الأمور على مستوى {S}.\nمناقشة سبل الدعم والمتابعة.",
+  desc:"تم عقد «{T}»، وعرض مستوى {S} الدراسي والسلوكي، ومناقشة الملاحظات والمقترحات مع أولياء الأمور.",
+  res:"تفاعل إيجابي من أولياء الأمور.\nخطة متابعة مشتركة بين المدرسة والأسرة."},
+ par_report:{n:"تقرير إرسال مستوى {S} للأسر", where:"",
+  goals:"إطلاع الأسر أولاً بأول على المستوى.\nتعزيز المتابعة المنزلية.",
+  desc:"تم «{T}» عبر القنوات الرسمية، وتضمن مستوى كل طالب في المهارات والملاحظات والتوصيات.",
+  res:"متابعة أفضل من الأسر.\nتحسن مستوى {S} المتابَعين."},
+ par_call:{n:"تقرير متابعة ولي أمر", where:"المدرسة",
+  goals:"معالجة الملاحظات الدراسية أو السلوكية بالتعاون مع الأسرة.\nوضع خطة متابعة مشتركة.",
+  desc:"تم التواصل مع ولي الأمر ومناقشة الملاحظات، والاتفاق على إجراءات المتابعة في المدرسة والمنزل.",
+  res:"تحسن ملحوظ بعد المتابعة.\nتعاون إيجابي من الأسرة."},
+ par_survey:{n:"تقرير استبانة رضا أولياء الأمور", where:"",
+  goals:"قياس رضا الأسر عن العملية التعليمية.\nالاستفادة من آرائهم في التطوير.",
+  desc:"تم تطبيق «{T}» إلكترونياً، وتحليل النتائج والملاحظات الواردة.",
+  res:"نسبة رضا مرتفعة.\nتحديد فرص تحسين بناءً على الآراء."},
+ remedial:{n:"تقرير خطة علاجية", where:"الفصل",
+  goals:"معالجة جوانب الضعف لدى المتعثرات.\nإتقان المهارات الأساسية.\nرفع مستوى التحصيل.",
+  desc:"تم تنفيذ «{T}» بعد تشخيص المستويات وتحديد المهارات غير المتقنة، وتضمنت تدريبات فردية وجماعية ومتابعة دورية.",
+  res:"تحسن مستوى المتعثرات.\nإتقان عدد من المهارات المستهدفة."},
+ enrich:{n:"تقرير خطة إثرائية", where:"الفصل",
+  goals:"تنمية قدرات المتميزات.\nتحفيز التفكير الإبداعي.",
+  desc:"تم تنفيذ «{T}» للمتميزات، وتضمنت أنشطة ومهام إثرائية تتجاوز المقرر وتنمي مهارات التفكير العليا.",
+  res:"زيادة دافعية المتميزات.\nإنتاج أعمال إبداعية متميزة."},
+ gifted:{n:"تقرير رعاية الموهوبين", where:"المدرسة",
+  goals:"اكتشاف الموهوبات ورعايتهن.\nتنمية مواهبهن وقدراتهن.",
+  desc:"تم تنفيذ «{T}»، وترشيح الموهوبات ومتابعة مشاركتهن في البرامج والمسابقات.",
+  res:"مشاركة الموهوبات في برامج نوعية.\nتحقيق إنجازات في المسابقات."},
+ compare:{n:"تقرير مقارنة النتائج قبل وبعد", where:"",
+  goals:"قياس أثر الخطط والبرامج المنفذة.\nتوثيق التحسن في مستوى {S}.",
+  desc:"تمت مقارنة نتائج {S} في التقويم القبلي والبعدي بعد تنفيذ الخطط، وتمثيلها برسم بياني.",
+  res:"ارتفاع متوسط درجات {S}.\nتحسن نسبة الإتقان في المهارات المستهدفة."},
+ honor:{n:"تقرير تكريم المتفوقين", where:"المدرسة",
+  goals:"تحفيز المتفوقات وتشجيعهن على الاستمرار.\nإثارة روح التنافس الإيجابي.",
+  desc:"تم «{T}» بتوزيع شهادات الشكر والهدايا، والإشادة بتميزهن أمام زميلاتهن.",
+  res:"ارتفاع دافعية {S} للتفوق.\nتعزيز الثقة بالنفس."},
+ reading:{n:"تقرير برنامج دعم القراءة", where:"الفصل",
+  goals:"تحسين مهارات القراءة والفهم القرائي.\nتنمية حب القراءة لدى {S}.",
+  desc:"تم تنفيذ «{T}»، وتضمن قراءة يومية موجهة، وأنشطة فهم قرائي، ومتابعة فردية للمحتاجين.",
+  res:"تحسن الطلاقة القرائية.\nزيادة الإقبال على القراءة."},
+ contest:{n:"تقرير مسابقة صفية", where:"الفصل",
+  goals:"تعزيز التعلم بأسلوب ممتع.\nتشجيع روح التنافس الإيجابي.",
+  desc:"تم تنفيذ «{T}» بين مجموعات {S}، وتضمنت أسئلة وتحديات في محتوى الدروس، وتكريم الفائزين.",
+  res:"تفاعل عالٍ من {S}.\nتثبيت المفاهيم بطريقة ممتعة."},
+ curriculum:{n:"تقرير توزيع المنهج والخطة الفصلية", where:"",
+  goals:"تنظيم تدريس المقرر وفق الزمن المتاح.\nضمان تغطية جميع الموضوعات.",
+  desc:"تم إعداد «{T}» لمادة {SUBJ}، وتوزيع الموضوعات على الأسابيع الدراسية، ومتابعة التنفيذ دورياً.",
+  res:"تنفيذ المنهج وفق الخطة الزمنية.\nعدم وجود تأخر في الدروس."},
+ prep:{n:"تقرير تحضير الدروس", where:"",
+  goals:"التخطيط الجيد لكل حصة.\nتحديد الأهداف والاستراتيجيات والتقويم.",
+  desc:"تم إعداد «{T}» لمادة {SUBJ}، متضمناً الأهداف والاستراتيجيات والوسائل وأساليب التقويم لكل درس.",
+  res:"وضوح سير الحصص.\nتحقق أهداف الدروس."},
+ madrasati:{n:"تقرير توظيف منصة مدرستي", where:"منصة مدرستي",
+  goals:"توظيف المنصة في دعم التعلم.\nتفعيل الواجبات والاختبارات الإلكترونية.",
+  desc:"تم توظيف منصة مدرستي في رفع الدروس والواجبات والاختبارات، ومتابعة إنجاز {S} وتقديم التغذية الراجعة.",
+  res:"ارتفاع نسبة إنجاز الواجبات.\nتعزيز التعلم الذاتي لدى {S}."},
+ teachaid:{n:"تقرير إعداد وسيلة تعليمية", where:"الفصل",
+  goals:"تبسيط المفاهيم وتقريبها.\nزيادة تفاعل {S}.",
+  desc:"تم إعداد «{T}» واستخدامها في تدريس درس من دروس مادة {SUBJ}، بمشاركة {S} في التطبيق.",
+  res:"فهم أفضل للمفاهيم.\nتفاعل ملحوظ من {S}."},
+ etest:{n:"تقرير اختبار إلكتروني", where:"",
+  goals:"قياس تعلم {S} بطريقة سريعة ودقيقة.\nتقديم تغذية راجعة فورية.",
+  desc:"تم إعداد «{T}» وتطبيقه على {S}، وتحليل النتائج آلياً لتحديد مستوى الإتقان.",
+  res:"تحديد المهارات المتقنة وغير المتقنة.\nسرعة في المتابعة والمعالجة."},
+ classroom:{n:"تقرير تهيئة البيئة الصفية", where:"الفصل",
+  goals:"تهيئة بيئة صفية آمنة وجاذبة.\nتحفيز {S} على التعلم.",
+  desc:"تم «{T}» وترتيب المقاعد والأركان واللوحات التعليمية والتحفيزية بما يخدم التعلم.",
+  res:"بيئة صفية منظمة ومحفزة.\nارتياح {S} وزيادة دافعيتهم للتعلم."},
+ reward:{n:"تقرير التعزيز والتحفيز", where:"الفصل",
+  goals:"تعزيز السلوكيات الإيجابية.\nزيادة دافعية {S}.",
+  desc:"تم تطبيق «{T}»، ورصد النقاط والنجوم لـ{S} بشكل مستمر، وتكريم المتميزين أسبوعياً.",
+  res:"تحسن السلوك والانضباط.\nزيادة المشاركة الصفية."},
+ rules:{n:"تقرير قواعد السلوك الصفي", where:"الفصل",
+  goals:"ضبط السلوك داخل الفصل.\nإشراك {S} في وضع القواعد والالتزام بها.",
+  desc:"تم «{T}» بالمشاركة مع {S}، وتعليقها في الفصل، ومتابعة الالتزام بها.",
+  res:"انضباط صفي أفضل.\nالتزام {S} بالقواعد المتفق عليها."},
+ diag:{n:"تقرير الاختبار التشخيصي", where:"الفصل",
+  goals:"تحديد المستوى الحقيقي لـ{S}.\nبناء الخطط على نتائج دقيقة.",
+  desc:"تم تطبيق «{T}» في بداية الفصل، وتصحيحه وتصنيف {S} حسب مستوياتهم في المهارات الأساسية.",
+  res:"تصنيف {S} إلى مستويات.\nبناء خطط علاجية وإثرائية مناسبة."},
+ nafes:{n:"تقرير تحليل نتائج نافس", where:"",
+  goals:"تحليل نتائج الاختبارات الوطنية.\nتحديد المهارات التي تحتاج تعزيزاً.",
+  desc:"تم «{T}» وتحليل نتائج {S} في كل مجال ومهارة، ومقارنتها بالمتوسطات.",
+  res:"تحديد المهارات الضعيفة بدقة.\nخطة تدريب مركزة على نماذج نافس."},
+ formative:{n:"تقرير التقويم التكويني", where:"الفصل",
+  goals:"متابعة تعلم {S} أثناء الدرس.\nتقديم تغذية راجعة فورية.",
+  desc:"تم توظيف أساليب «{T}» خلال الحصص، مثل الأسئلة الشفهية وبطاقات الخروج والمهام القصيرة.",
+  res:"معالجة الأخطاء فوراً.\nتحسن مستوى الفهم."},
+ rubric:{n:"تقرير سلالم التقدير", where:"",
+  goals:"تقويم الأداء بمعايير واضحة.\nتحقيق العدالة في التقويم.",
+  desc:"تم إعداد «{T}» وتطبيقها في تقويم أداء {S} في المهام والمشاريع.",
+  res:"تقويم دقيق وعادل.\nوضوح معايير النجاح لـ{S}."},
+ selfeval:{n:"تقرير التقويم الذاتي والأقراني", where:"الفصل",
+  goals:"تنمية مهارة التأمل الذاتي.\nتعزيز التعلم من الأقران.",
+  desc:"تم تطبيق «{T}»، حيث قيّم {S} أعمالهم وأعمال زملائهم وفق معايير محددة.",
+  res:"وعي أكبر بنقاط القوة والتحسين.\nتحمل مسؤولية التعلم."},
+ perf:{n:"تقرير المهام الأدائية والمشاريع", where:"",
+  goals:"ربط التعلم بالتطبيق العملي.\nتنمية مهارات البحث والإبداع.",
+  desc:"تم تكليف {S} بـ«{T}»، ومتابعة التنفيذ، وتقويم المنتجات النهائية بسلالم تقدير.",
+  res:"منتجات متميزة من {S}.\nتعلم عميق ومستدام."},
+ worksheet:{n:"تقرير أوراق العمل", where:"الفصل",
+  goals:"تعزيز المهارات المكتسبة.\nمراعاة الفروق الفردية.",
+  desc:"تم إعداد «{T}» متدرجة المستوى، وتطبيقها على {S} وتصحيحها وتقديم التغذية الراجعة.",
+  res:"تثبيت المهارات.\nمتابعة مستوى كل طالب."},
+ general:{n:"تقرير عام", where:"",
+  goals:"تحقيق أهداف «{T}».\nتحسين نواتج التعلم.",
+  desc:"تم تنفيذ «{T}» وفق الخطة المعدة، بمشاركة {S}.",
+  res:"تحقق الأهداف المرجوة."}
+};
+const SUG_REP={"الالتزام بالدوام الرسمي":"duty_att","المناوبة والإشراف اليومي":"duty_watch","حصص الانتظار":"duty_wait","المشاركة في اللجان المدرسية":"duty_comm","تنفيذ التكليفات الإدارية":"duty_task","الالتزام بميثاق أخلاقيات مهنة التعليم":"duty_ethic","المشاركة في الفعاليات المدرسية":"activity","الإذاعة المدرسية":"radio","المناسبات الوطنية":"national",
+ "حضور دورة تدريبية":"course","تقديم ورشة أو دورة لزميلاتي":"workshop","مجتمعات التعلم المهنية":"plc","تبادل الزيارات الصفية":"visit","تنفيذ درس تطبيقي":"lesson","حضور ملتقى أو مؤتمر تعليمي":"conf","ساعات تطوعية":"volunteer",
+ "اجتماع أولياء الأمور":"par_meet","التواصل عبر منصة مدرستي":"parents","إرسال تقارير مستوى {S}":"par_report","رسائل شكر وتحفيز للأسر":"parents","استدعاء ولي أمر للمتابعة":"par_call","استبانة رضا أولياء الأمور":"par_survey","مشاركة الأسرة في نشاط صفي":"parents",
+ "خطة علاجية للمتعثرات":"remedial","خطة إثرائية للمتميزات":"enrich","رعاية الموهوبات":"gifted","مقارنة النتائج قبل وبعد":"compare","تكريم المتفوقات":"honor","برنامج دعم القراءة":"reading","مسابقة صفية":"contest",
+ "توزيع المنهج":"curriculum","تحضير الدروس":"prep","الخطة الفصلية":"curriculum","الأهداف ومؤشرات الأداء":"prep","سجل متابعة تنفيذ الخطة":"curriculum","خطة أسبوعية":"prep",
+ "منصة مدرستي":"madrasati","السبورة الذكية":"tech","وسيلة تعليمية من إعدادي":"teachaid","عرض تقديمي تفاعلي":"tech","تطبيق تعليمي":"tech","اختبار إلكتروني":"etest","كتاب أو درس تفاعلي":"tech",
+ "تنظيم الفصل":"classroom","ركن تعليمي":"classroom","لوحات تحفيزية":"classroom","قوانين الصف":"rules","مراعاة الفروق الفردية":"plan","بيئة صفية آمنة وجاذبة":"classroom",
+ "لوحة التعزيز والتحفيز":"reward","قواعد السلوك الصفي":"rules","توزيع الأدوار والمهام":"general","إدارة الوقت في الحصة":"general","سجل متابعة السلوك":"reward","نظام النجوم والنقاط":"reward",
+ "الاختبار التشخيصي":"diag","تحليل نتائج الاختبارات":"analysis","تصنيف مستويات {S}":"analysis","رسم بياني للنتائج":"compare","تحليل نتائج نافس":"nafes","تقرير مستوى الفصل":"analysis",
+ "التقويم القبلي":"diag","التقويم التكويني":"formative","الاختبارات القصيرة":"formative","ملف الإنجاز":"general","سلالم التقدير":"rubric","التقويم الذاتي والأقراني":"selfeval","المهام الأدائية والمشاريع":"perf","أوراق العمل":"worksheet"};
+function repFor(e, title){ const def=elDef(e.k); if(def){ const i=def.s.findIndex(x=>gS(x,D.g)===title); if(i>=0&&SUG_REP[def.s[i]]) return SUG_REP[def.s[i]]; } return EL_REP[e.k]||"general"; }
+function fillT(txt, title){ const m=D.g==="m";
+  return gS(String(txt).replace(/لـ\{S\}/g, D.g==="m"?"للطلاب":"للطالبات").replace(/لـ\{COL\}/g, D.g==="m"?"للزملاء":"للزميلات"), D.g).replace(/\{T\}/g, title||"الشاهد").replace(/\{SUBJ\}/g, D.subj||"المادة").replace(/\{COL\}/g, m?"الزملاء":"الزميلات")
+   .replace(/ومشاركتهم/g, m?"ومشاركتهم":"ومشاركتهن").replace(/وتشويقهم/g, m?"وتشويقهم":"وتشويقهن").replace(/وسلوكهم/g, m?"وسلوكهم":"وسلوكهن").replace(/مستوياتهم/g, m?"مستوياتهم":"مستوياتهن").replace(/ومهاراتهم/g, m?"ومهاراتهم":"ومهاراتهن").replace(/وقدراتهم/g, m?"وقدراتهم":"وقدراتهن")
+   .replace(/المحتاجين/g, m?"المحتاجين":"المحتاجات").replace(/المتميزين/g, m?"المتميزين":"المتميزات").replace(/المستهدفين/g, m?"المستهدفين":"المستهدفات").replace(/أبنائهم/g, m?"أبنائهم":"بناتهم"); }
+const VM_DEF={vision_f:"معلمة مُلهِمة تبني جيلاً واعياً مبدعاً، يعتز بدينه ووطنه، وينافس عالمياً.", vision_m:"معلم مُلهِم يبني جيلاً واعياً مبدعاً، يعتز بدينه ووطنه، وينافس عالمياً.",
+  mission:"أسعى إلى تقديم تعليم نوعي في بيئة آمنة ومحفزة، تراعي الفروق الفردية، وتوظف الاستراتيجيات الحديثة والتقنية، بالشراكة مع الأسرة لتحقيق أفضل نواتج التعلم.",
+  values:"الإخلاص، الأمانة، الإتقان، العدل، التعاون، التعلم المستمر"};
+const GOALS_DEF="تنمية حب مادة {SUBJ} لدى {S} وربطها بواقع الحياة.\nإكساب {S} المعارف والمهارات الأساسية في مادة {SUBJ}.\nتنمية مهارات التفكير الناقد وحل المشكلات.\nمراعاة الفروق الفردية ورعاية المتعثرات والموهوبات.\nتوظيف التقنية ومصادر التعلم المتنوعة.\nتعزيز القيم والاتجاهات الإيجابية والانتماء الوطني.\nرفع مستوى التحصيل الدراسي وتحسين نواتج التعلم.";
+function normLink(u){ u=(u||"").trim(); if(!u) return ""; if(!/^https?:\/\//i.test(u)) u="https://"+u.replace(/^\/+/,""); try{ new URL(u); return u; }catch(e){ return ""; } }
+qrcode.stringToBytes=qrcode.stringToBytesFuncs["UTF-8"];
+function qrImg(url, size, col){ try{ const q=qrcode(0,"M"); q.addData(url); q.make(); const n=q.getModuleCount(), c=document.createElement("canvas"), cell=Math.max(4,Math.ceil(size*2/(n+4))); c.width=c.height=(n+4)*cell; const g=c.getContext("2d"); g.fillStyle="#fff"; g.fillRect(0,0,c.width,c.width); g.fillStyle=col||"#111";
+  for(let r=0;r<n;r++) for(let k=0;k<n;k++) if(q.isDark(r,k)) g.fillRect((k+2)*cell,(r+2)*cell,cell,cell);
+  return '<img src="'+c.toDataURL("image/png")+'" style="width:'+size+'px;height:'+size+'px;display:block">'; }catch(e){ return ""; } }
+const shortUrl=u=>{ try{ const x=new URL(u); return (x.hostname.replace(/^www\./,"")+x.pathname).slice(0,46)+((x.hostname+x.pathname).length>46?"…":""); }catch(e){ return u.slice(0,46); } };
+const lines=t=>String(t||"").split(/\n/).map(x=>x.trim().replace(/^[•\-–\*]\s*/,"")).filter(Boolean);
 function gS(t, g){ return t.replace(/\{S\}/g, g==="m"?"الطلاب":"الطالبات").replace(/المتعثرات/g,g==="m"?"المتعثرين":"المتعثرات").replace(/المتميزات/g,g==="m"?"المتميزين":"المتميزات").replace(/الموهوبات/g,g==="m"?"الموهوبين":"الموهوبات").replace(/المتفوقات/g,g==="m"?"المتفوقين":"المتفوقات").replace(/زميلاتي/g,g==="m"?"زملائي":"زميلاتي").replace(/تستخدمينها/g,g==="m"?"تستخدمها":"تستخدمينها").replace(/فصلك/g,"فصلك").replace(/تخطيطك/g,"تخطيطك").replace(/التزامك/g,"التزامك").replace(/خططك/g,"خططك").replace(/تواصلك/g,"تواصلك").replace(/نموّك/g,"نموّك"); }
 
 /* ===== الألوان ===== */
@@ -342,7 +624,9 @@ const COVERS = {classic:"كلاسيك فاخر", light:"فاتح أنيق", mode
 /* ===== البيانات ===== */
 let CODE=null, D=null, curEl=null, curEv=null, tmpPh=[], tmpG="f", tmpTheme="gold", tmpCover="classic", tmpLogo="", tmpMe="";
 function defaults(){ return {g:"f", name:"", subj:"", school:"", grades:"", dept:"", office:"", prin:"", year:defYear(), about:"", logo:"", me:"", theme:"gold", cover:"classic", showEmpty:false, sign:true,
-  els: ELEMENTS.map(e=>({k:e.k, t:e.t, items:[]}))}; }
+  cv:{qual:"",exp:"",mail:"",courses:"",awards:""}, vision:"", values:"", goals:"", pCheck:true, pW:true,
+  els: ELEMENTS.map(e=>({k:e.k, t:e.t, items:[], link:"", w:WEIGHTS[e.k]}))}; }
+function elW(e){ return (e.w===undefined||e.w===null) ? (WEIGHTS[e.k]||"") : e.w; }
 function defYear(){ try{ const y=new Intl.DateTimeFormat("en-US-u-ca-islamic-umalqura",{year:"numeric"}).formatToParts(new Date()).find(p=>p.type==="year").value; return AR_DIG(parseInt(y,10))+"هـ"; }catch(e){ return "١٤٤٨هـ"; } }
 function todayHijri(){ try{ const p=new Intl.DateTimeFormat("en-US-u-ca-islamic-umalqura",{day:"numeric",month:"numeric",year:"numeric"}).formatToParts(new Date()); const v=t=>parseInt(p.find(x=>x.type===t).value,10); return AR_DIG(v("day"))+" / "+AR_DIG(v("month"))+" / "+AR_DIG(v("year"))+" هـ"; }catch(e){ return ""; } }
 async function save(){ try{ await dbPut("kv","pf_"+CODE, D); }catch(e){ toast("⚠️ ما قدرت أحفظ، تأكدي من مساحة الجوال"); } }
@@ -366,11 +650,15 @@ async function render(){
     const e=D.els[i], d=document.createElement("div"); d.className="el"+(e.items.length?" done":"");
     const thumbs=[]; for(const it of e.items){ for(const im of it.imgs){ if(thumbs.length<3) thumbs.push(im); } }
     const urls=await Promise.all(thumbs.map(imgURL));
-    d.innerHTML='<div class="n">'+(e.items.length?"✓":AR_DIG(i+1))+'</div><div class="t"><b>'+esc(e.t)+'</b><small>'+(e.items.length?AR_DIG(e.items.length)+" شاهد":"ما فيه شواهد للحين")+'</small></div><div class="th">'+urls.map(u=>'<i style="background-image:url('+u+')"></i>').join("")+'</div><div class="go">‹</div>';
+    d.innerHTML='<div class="n">'+(e.items.length?"✓":AR_DIG(i+1))+'</div><div class="t"><b>'+esc(e.t)+'</b><small>'+(e.items.length?AR_DIG(e.items.length)+" شاهد":"ما فيه شواهد للحين")+(elW(e)!==""?' <i>· الوزن '+AR_DIG(elW(e))+'٪</i>':'')+(e.link?' <i>· 🔗</i>':'')+'</small></div><div class="th">'+urls.map(u=>'<i style="background-image:url('+u+')"></i>').join("")+'</div><div class="go">‹</div>';
     d.onclick=()=>openEl(i); box.appendChild(d);
   }
   $("lName").textContent = f?"اسم المعلمة":"اسم المعلم"; $("lPrin").textContent = f?"اسم مديرة المدرسة":"اسم مدير المدرسة";
+  const pg=[]; if(hasCV()) pg.push("السيرة الذاتية"); if(hasVM()) pg.push("الرؤية والرسالة"); if(lines(D.goals).length) pg.push("أهداف المادة"); if(D.pCheck) pg.push("قائمة الشواهد");
+  $("pagesSub").textContent = pg.length ? "✓ في ملفك: "+pg.join("، ") : "وقائمة الشواهد والأوزان";
 }
+const hasCV=()=>{ const c=D.cv||{}; return !!(c.qual||c.exp||c.mail||lines(c.courses).length||lines(c.awards).length); };
+const hasVM=()=>!!(D.vision||D.about||D.values);
 function open(id){ $(id).classList.add("open"); }
 function close(id){ $(id).classList.remove("open"); }
 document.querySelectorAll(".modal").forEach(m=>{ m.addEventListener("click",ev=>{ if(ev.target===m || ev.target.closest("[data-close]")) m.classList.remove("open"); }); });
@@ -381,13 +669,15 @@ async function openEl(i){
   $("elTitle").textContent = AR_DIG(i+1)+". "+e.t;
   $("elHint").textContent = def ? gS(def.h, D.g)+" أضيفي شاهد أو أكثر، ولكل شاهد صوره ووصفه." : "عنصر خاص أضفتيه. أضيفي شواهده بنفس الطريقة.";
   $("delEl").classList.toggle("hidden", !!def);
+  $("elLink").value=e.link||""; const w=elW(e); $("elW").value = w===""?"":w;
   const L=$("evList"); L.innerHTML="";
   if(!e.items.length) L.innerHTML='<div class="empty">ما فيه شواهد في هذا العنصر للحين.<br>اضغطي «➕ إضافة شاهد» تحت 👇</div>';
   for(let j=0;j<e.items.length;j++){
     const it=e.items[j], u=it.imgs[0]?await imgURL(it.imgs[0]):"";
     const d=document.createElement("div"); d.className="ev";
-    d.innerHTML='<div class="im" style="'+(u?'background-image:url('+u+')':'')+'">'+(u?"":"📝")+'</div><div class="tx"><b>'+esc(it.t)+'</b><p>'+(it.imgs.length?AR_DIG(it.imgs.length)+" صور · ":"")+esc(it.d||"بدون وصف")+'</p></div><div class="bt"><button data-a="e">✏️</button><button data-a="u">▲</button><button data-a="x">🗑️</button></div>';
+    d.innerHTML='<div class="im" style="'+(u?'background-image:url('+u+')':'')+'">'+(u?"":"📝")+'</div><div class="tx"><b>'+esc(it.t)+'</b><p>'+(it.rep?"📝 تقرير · ":"")+(it.link?"🔗 · ":"")+(it.imgs.length?AR_DIG(it.imgs.length)+" صور · ":"")+esc(it.d||"بدون وصف")+'</p></div><div class="bt"><button data-a="e">✏️</button><button data-a="p" title="صفحة وحدة PDF">📄</button><button data-a="u">▲</button><button data-a="x">🗑️</button></div>';
     d.querySelector('[data-a="e"]').onclick=()=>openEv(j);
+    d.querySelector('[data-a="p"]').onclick=()=>exportOne(i,j);
     d.querySelector('[data-a="u"]').onclick=async()=>{ if(j>0){ [e.items[j-1],e.items[j]]=[e.items[j],e.items[j-1]]; await save(); openEl(i); } };
     d.querySelector('[data-a="x"]').onclick=async()=>{ if(!confirm("حذف الشاهد «"+it.t+"»؟")) return; for(const im of it.imgs) await dbDel("img",im).catch(()=>{}); e.items.splice(j,1); await save(); openEl(i); render(); };
     L.appendChild(d);
@@ -395,6 +685,8 @@ async function openEl(i){
   open("mEl");
 }
 $("addEv").onclick=()=>openEv(-1);
+$("elLink").onchange=async()=>{ const e=D.els[curEl], raw=$("elLink").value.trim(), u=normLink(raw); if(raw&&!u){ toast("الرابط غير صحيح"); return; } e.link=u; $("elLink").value=u; await save(); render(); if(u) toast("✅ انحفظ الرابط، ويطلع باركود في صفحة العنصر"); };
+$("elW").onchange=async()=>{ const e=D.els[curEl], v=$("elW").value.replace(/[٠-٩]/g,d=>"٠١٢٣٤٥٦٧٨٩".indexOf(d)).replace(/[^0-9.]/g,""); e.w = v===""?"":Math.min(100,parseFloat(v)); await save(); render(); };
 $("renEl").onclick=async()=>{ const e=D.els[curEl]; const t=prompt("اسم العنصر:", e.t); if(t&&t.trim()){ e.t=t.trim(); await save(); openEl(curEl); render(); } };
 $("delEl").onclick=async()=>{ const e=D.els[curEl]; if(!confirm("حذف العنصر «"+e.t+"» وكل شواهده؟")) return; for(const it of e.items) for(const im of it.imgs) await dbDel("img",im).catch(()=>{}); D.els.splice(curEl,1); await save(); close("mEl"); render(); };
 $("addEl").onclick=async()=>{ const t=prompt("اسم العنصر الخاص (مثال: النشاط الطلابي):"); if(t&&t.trim()){ D.els.push({k:"c_"+uid(), t:t.trim(), items:[]}); await save(); render(); openEl(D.els.length-1); } };
@@ -405,9 +697,15 @@ function openEv(j){
   $("evHead").textContent = it?"تعديل الشاهد":"شاهد جديد";
   $("evT").value=it?it.t:""; $("evD").value=it?(it.d||""):""; $("evDate").value=it?(it.dt||""):"";
   tmpPh = it?it.imgs.slice():[];
+  $("evLink").value = it?(it.link||""):"";
+  $("repType").innerHTML = Object.entries(REPORTS).map(([k,r])=>'<option value="'+k+'">'+esc(fillT(r.n,""))+'</option>').join("");
+  const r = it&&it.rep ? it.rep : null; tmpRep = r?1:0; seg("repSeg", String(tmpRep));
+  $("repType").value = r ? r.type : repFor(e, it?it.t:"");
+  $("repWho").value = r?(r.who||""):""; $("repWhere").value = r?(r.where||""):""; $("repGoals").value = r?(r.goals||""):""; $("repRes").value = r?(r.res||""):"";
+  $("repBox").classList.toggle("hidden", !tmpRep);
   const used=new Set(e.items.map(x=>x.t));
   $("evSug").innerHTML = def ? def.s.map(s=>gS(s,D.g)).map(s=>'<button type="button" class="chip'+(used.has(s)?' used':'')+'">'+esc(s)+'</button>').join("") : "";
-  $("evSug").querySelectorAll(".chip").forEach(c=>c.onclick=()=>{ $("evT").value=c.textContent; });
+  $("evSug").querySelectorAll(".chip").forEach(c=>c.onclick=()=>{ $("evT").value=c.textContent; $("repType").value=repFor(D.els[curEl], c.textContent); });
   drawPh(); open("mEv");
 }
 async function drawPh(){
@@ -436,9 +734,24 @@ async function addPhotos(ev){
   drawPh(); toast("✅ انضافت الصور");
 }
 $("evToday").onclick=()=>{ $("evDate").value=todayHijri(); };
+let tmpRep=0;
+document.querySelectorAll("#repSeg button").forEach(b=>b.onclick=()=>{ tmpRep=+b.dataset.v; seg("repSeg",String(tmpRep)); $("repBox").classList.toggle("hidden",!tmpRep);
+  if(tmpRep && !$("repWho").value){ const f=D.g!=="m"; $("repWho").value = D.grades ? (f?"طالبات ":"طلاب ")+D.grades : (f?"الطالبات":"الطلاب"); }
+  if(tmpRep && !$("repGoals").value && !$("repRes").value) $("repMagic").click(); });
+$("evMagic").onclick=()=>{ const e=D.els[curEl], t=$("evT").value.trim(), tp=tmpRep?$("repType").value:repFor(e,t);
+  if(!t){ $("evT").focus(); toast("اكتبي عنوان الشاهد أول، أو اختاري من الأمثلة"); return; }
+  if($("evD").value.trim() && !confirm("أستبدل الوصف الحالي بنص جاهز؟")) return;
+  $("evD").value = fillT(REPORTS[tp].desc, t); toast("✨ عدّلي عليه براحتك"); };
+$("repMagic").onclick=()=>{ const t=$("evT").value.trim(), R=REPORTS[$("repType").value];
+  if(!t){ $("evT").focus(); toast("اكتبي عنوان الشاهد أول، أو اختاري من الأمثلة"); return; }
+  if(($("repGoals").value.trim()||$("repRes").value.trim()) && !confirm("أستبدل نص التقرير الحالي بنص جاهز؟")) return;
+  $("repGoals").value=fillT(R.goals,t); $("repRes").value=fillT(R.res,t); if(!$("repWhere").value&&R.where) $("repWhere").value=R.where;
+  if(!$("evD").value.trim()) $("evD").value=fillT(R.desc,t); toast("✨ تعبّى التقرير، عدّلي عليه براحتك"); };
 $("evSave").onclick=async()=>{
   const t=$("evT").value.trim(); if(!t){ $("evT").focus(); toast("اكتبي عنوان الشاهد"); return; }
-  const e=D.els[curEl], obj={id:curEv>=0?e.items[curEv].id:uid(), t, d:$("evD").value.trim(), dt:$("evDate").value.trim(), imgs:tmpPh.slice()};
+  const rawL=$("evLink").value.trim(), link=normLink(rawL); if(rawL&&!link){ $("evLink").focus(); toast("الرابط غير صحيح، تأكدي منه"); return; }
+  const rep = tmpRep ? {type:$("repType").value, who:$("repWho").value.trim(), where:$("repWhere").value.trim(), goals:$("repGoals").value.trim(), res:$("repRes").value.trim()} : null;
+  const e=D.els[curEl], obj={id:curEv>=0?e.items[curEv].id:uid(), t, d:$("evD").value.trim(), dt:$("evDate").value.trim(), imgs:tmpPh.slice(), link, rep};
   if(curEv>=0){ const old=e.items[curEv].imgs.filter(x=>!obj.imgs.includes(x)); for(const im of old) await dbDel("img",im).catch(()=>{}); e.items[curEv]=obj; } else e.items.push(obj);
   await save(); close("mEv"); await openEl(curEl); render(); toast("✅ انحفظ الشاهد");
 };
@@ -447,7 +760,7 @@ $("evSave").onclick=async()=>{
 function seg(id,v){ document.querySelectorAll("#"+id+" button").forEach(b=>b.classList.toggle("on",b.dataset.v===v)); }
 function openInfo(){
   tmpG=D.g; seg("gSeg",tmpG); tmpLogo=D.logo; tmpMe=D.me;
-  [["Name","name"],["Subj","subj"],["School","school"],["Grades","grades"],["Dept","dept"],["Office","office"],["Prin","prin"],["Year","year"],["About","about"]].forEach(([a,b])=>$("i"+a).value=D[b]||"");
+  [["Name","name"],["Subj","subj"],["School","school"],["Grades","grades"],["Dept","dept"],["Office","office"],["Prin","prin"],["Year","year"]].forEach(([a,b])=>$("i"+a).value=D[b]||"");
   prevImg("logoPrev",tmpLogo); prevImg("meImgPrev",tmpMe);
   const f=tmpG!=="m"; $("lName").textContent=f?"اسم المعلمة":"اسم المعلم"; $("lPrin").textContent=f?"اسم مديرة المدرسة":"اسم مدير المدرسة";
   open("mInfo");
@@ -468,10 +781,22 @@ $("logoDel").onclick=()=>{ tmpLogo=""; prevImg("logoPrev",""); };
 $("meDel").onclick=()=>{ tmpMe=""; prevImg("meImgPrev",""); };
 $("infoSave").onclick=async()=>{
   D.g=tmpG; D.logo=tmpLogo; D.me=tmpMe;
-  [["Name","name"],["Subj","subj"],["School","school"],["Grades","grades"],["Dept","dept"],["Office","office"],["Prin","prin"],["Year","year"],["About","about"]].forEach(([a,b])=>D[b]=$("i"+a).value.trim());
+  [["Name","name"],["Subj","subj"],["School","school"],["Grades","grades"],["Dept","dept"],["Office","office"],["Prin","prin"],["Year","year"]].forEach(([a,b])=>D[b]=$("i"+a).value.trim());
   await save(); close("mInfo"); render(); toast("✅ انحفظت بياناتك");
 };
 $("bInfo").onclick=openInfo; $("infoTipGo").onclick=e=>{ e.preventDefault(); openInfo(); };
+
+/* ===== الصفحات الإضافية ===== */
+function openPages(){ const c=D.cv||{};
+  $("cQual").value=c.qual||""; $("cExp").value=c.exp||""; $("cMail").value=c.mail||""; $("cCourses").value=c.courses||""; $("cAwards").value=c.awards||"";
+  $("vVision").value=D.vision||""; $("vMission").value=D.about||""; $("vValues").value=D.values||""; $("gGoals").value=D.goals||"";
+  $("pCheck").checked=D.pCheck!==false; $("pW").checked=D.pW!==false; open("mPages"); }
+$("pagesCard").onclick=openPages;
+$("vMagic").onclick=()=>{ if(!$("vVision").value.trim()) $("vVision").value=D.g==="m"?VM_DEF.vision_m:VM_DEF.vision_f; if(!$("vMission").value.trim()) $("vMission").value=VM_DEF.mission; if(!$("vValues").value.trim()) $("vValues").value=VM_DEF.values; toast("✨ عدّلي عليها براحتك"); };
+$("gMagic").onclick=()=>{ if($("gGoals").value.trim() && !confirm("أستبدل الأهداف الحالية بأهداف جاهزة؟")) return; $("gGoals").value=fillT(GOALS_DEF,""); if(!D.subj) toast("💡 اكتبي مادتك في 👤 بياناتي عشان تطلع في الأهداف"); else toast("✨ عدّلي عليها براحتك"); };
+$("pagesSave").onclick=async()=>{ D.cv={qual:$("cQual").value.trim(), exp:$("cExp").value.trim(), mail:$("cMail").value.trim(), courses:$("cCourses").value.trim(), awards:$("cAwards").value.trim()};
+  D.vision=$("vVision").value.trim(); D.about=$("vMission").value.trim(); D.values=$("vValues").value.trim(); D.goals=$("gGoals").value.trim(); D.pCheck=$("pCheck").checked; D.pW=$("pW").checked;
+  await save(); close("mPages"); render(); toast("✅ انحفظت الصفحات"); };
 
 /* ===== الشكل ===== */
 function openLook(){
@@ -498,11 +823,14 @@ $("bMore").onclick=()=>open("mMore");
 const PW=794, PH=1123;
 function pagesPlan(){
   const els=D.els.map((e,i)=>({e,i})).filter(x=>D.showEmpty||x.e.items.length);
-  const plan=[{type:"cover"},{type:"info"},{type:"toc"}];
+  const plan=[{type:"cover"},{type:"info"}];
+  if(hasCV()) plan.push({type:"cv"}); if(hasVM()) plan.push({type:"vm"}); if(lines(D.goals).length) plan.push({type:"goals"});
+  plan.push({type:"toc"}); if(D.pCheck!==false) plan.push({type:"check"});
   const toc=[];
-  for(const x of els){ toc.push({n:x.i+1, t:x.e.t, page:plan.length+1, cnt:x.e.items.length}); plan.push({type:"div", el:x}); x.e.items.forEach((it,j)=>plan.push({type:"ev", el:x, it, j})); }
+  const pageOf={};
+  for(const x of els){ pageOf[x.i]=plan.length+1; toc.push({n:x.i+1, t:x.e.t, page:plan.length+1, cnt:x.e.items.length}); plan.push({type:"div", el:x}); x.e.items.forEach((it,j)=>plan.push({type:"ev", el:x, it, j})); }
   if(D.sign!==false) plan.push({type:"sign"});
-  return {plan, toc};
+  return {plan, toc, pageOf};
 }
 function frame(t, inner, n, total){
   return '<div class="pg" style="position:relative;width:'+PW+'px;height:'+PH+'px;background:#fff;overflow:hidden;font-family:Tajawal,sans-serif;direction:rtl;color:#2b2b2b">'+
@@ -515,7 +843,7 @@ function frame(t, inner, n, total){
    '<div style="position:absolute;top:96px;right:56px;left:56px;height:2px;background:'+t.g+'"></div>'+
    '<div style="position:absolute;top:118px;right:56px;left:56px;bottom:100px">'+inner+'</div>'+
    '<div style="position:absolute;bottom:50px;right:56px;left:56px;display:flex;justify-content:space-between;font-size:12.5px;color:#8a7d70;border-top:1px solid #eee;padding-top:10px">'+
-     '<span>'+esc([D.name,D.school].filter(Boolean).join(" • "))+'</span><span>'+AR_DIG(n)+' / '+AR_DIG(total)+'</span></div>'+
+     '<span>'+esc([D.name,D.school].filter(Boolean).join(" • "))+'</span>'+(total>1?'<span>'+AR_DIG(n)+' / '+AR_DIG(total)+'</span>':'<span>'+esc(D.year||"")+'</span>')+'</div>'+
   '</div>';
 }
 function coverHTML(t){
@@ -561,8 +889,38 @@ function infoHTML(t){
   const tbl='<div style="border:1.5px solid '+t.g+';border-radius:14px;overflow:hidden">'+rows.map((r,i)=>'<div style="display:flex;font-size:19px;'+(i?'border-top:1px solid #eee;':'')+'"><div style="width:220px;background:'+t.soft+';padding:16px 22px;font-weight:800;color:'+t.ink+'">'+r[0]+'</div><div style="flex:1;padding:16px 22px">'+esc(r[1])+'</div></div>').join("")+'</div>';
   return '<div style="text-align:center;margin:10px 0 28px">'+(D.me?'<div style="width:150px;height:150px;border-radius:50%;background:url('+D.me+') center/cover;border:5px solid '+t.g+';margin:0 auto 16px"></div>':'')+
     '<div style="font-size:34px;font-weight:800;color:'+t.ink+'">'+(f?"بطاقة المعلمة":"بطاقة المعلم")+'</div><div style="width:80px;height:4px;background:'+t.g+';margin:12px auto 0;border-radius:2px"></div></div>'+tbl+
-    (D.about?'<div style="margin-top:28px;background:'+t.soft+';border-radius:14px;padding:22px 26px;border-right:6px solid '+t.g+'"><div style="font-size:20px;font-weight:800;color:'+t.ink+';margin-bottom:8px">'+(f?"رسالتي في التعليم":"رسالتي في التعليم")+'</div><div style="font-size:18px;line-height:2">'+esc(D.about).replace(/\n/g,"<br>")+'</div></div>':'');
+    (false&&D.about?'<div style="margin-top:28px;background:'+t.soft+';border-radius:14px;padding:22px 26px;border-right:6px solid '+t.g+'"><div style="font-size:20px;font-weight:800;color:'+t.ink+';margin-bottom:8px">'+(f?"رسالتي في التعليم":"رسالتي في التعليم")+'</div><div style="font-size:18px;line-height:2">'+esc(D.about).replace(/\n/g,"<br>")+'</div></div>':'');
 }
+function titleBlk(t, s){ return '<div style="text-align:center;margin:6px 0 26px"><div style="font-size:34px;font-weight:800;color:'+t.ink+'">'+s+'</div><div style="width:80px;height:4px;background:'+t.g+';margin:12px auto 0;border-radius:2px"></div></div>'; }
+function listBlk(t, head, arr, max){ arr=arr.slice(0,max); if(!arr.length) return "";
+  return '<div style="margin-top:22px"><div style="font-size:21px;font-weight:800;color:'+t.ink+';margin-bottom:8px;display:flex;align-items:center;gap:10px"><span style="width:8px;height:24px;background:'+t.g+';border-radius:3px;display:inline-block"></span>'+head+'</div>'+
+   arr.map(x=>'<div style="font-size:17px;line-height:1.7;padding:6px 4px 6px 0;border-bottom:1px dashed #eee;display:flex;gap:10px"><span style="color:'+t.g+'">◆</span><span>'+esc(x)+'</span></div>').join("")+'</div>'; }
+function cvHTML(t){ const f=D.g!=="m", c=D.cv||{};
+  const rows=[[f?"الاسم":"الاسم",D.name],["المؤهل العلمي",c.qual],["التخصص",D.subj],["سنوات الخبرة",c.exp],["المدرسة",D.school],["البريد الإلكتروني",c.mail]].filter(r=>r[1]);
+  const co=lines(c.courses), aw=lines(c.awards), room=Math.max(4, 16-rows.length);
+  return titleBlk(t,"السيرة الذاتية")+
+   '<div style="display:flex;gap:24px;align-items:center">'+(D.me?'<div style="width:130px;height:130px;border-radius:50%;background:url('+D.me+') center/cover;border:5px solid '+t.g+';flex:0 0 130px"></div>':'')+
+   '<div style="flex:1;border:1.5px solid '+t.g+';border-radius:14px;overflow:hidden">'+rows.map((r,i)=>'<div style="display:flex;font-size:17.5px;'+(i?'border-top:1px solid #eee;':'')+'"><div style="width:170px;background:'+t.soft+';padding:11px 18px;font-weight:800;color:'+t.ink+'">'+r[0]+'</div><div style="flex:1;padding:11px 18px;'+(r[0]==="البريد الإلكتروني"?'direction:ltr;text-align:right':'')+'">'+esc(r[1])+'</div></div>').join("")+'</div></div>'+
+   listBlk(t,"الدورات التدريبية",co,Math.ceil(room*(co.length/(co.length+aw.length||1)))+2)+listBlk(t,"الجوائز والإنجازات",aw,Math.max(3,room-Math.min(co.length,room)+2)); }
+function vmHTML(t){ const vals=(D.values||"").split(/[،,]/).map(x=>x.trim()).filter(Boolean);
+  const card=(ic,h,txt)=>'<div style="background:'+t.soft+';border-radius:16px;padding:22px 26px;border-right:6px solid '+t.g+';margin-bottom:22px"><div style="font-size:22px;font-weight:800;color:'+t.ink+';margin-bottom:8px">'+ic+' '+h+'</div><div style="font-size:18.5px;line-height:2">'+esc(txt).replace(/\n/g,"<br>")+'</div></div>';
+  return titleBlk(t,"رؤيتي ورسالتي")+'<div style="margin-top:10px">'+(D.vision?card("🌟","رؤيتي",D.vision):"")+(D.about?card("💌","رسالتي في التعليم",D.about):"")+'</div>'+
+   (vals.length?'<div style="font-size:22px;font-weight:800;color:'+t.ink+';margin:10px 0 14px">💎 قيمي</div><div style="display:flex;flex-wrap:wrap;gap:12px">'+vals.slice(0,10).map(v=>'<div style="background:linear-gradient(160deg,'+t.a+','+t.b+');color:#fff;border-radius:999px;padding:10px 22px;font-size:18px;font-weight:700;border:2px solid '+t.g+'">'+esc(v)+'</div>').join("")+'</div>':''); }
+function goalsHTML(t){ const g=lines(D.goals).slice(0,12);
+  return titleBlk(t,"أهداف المادة")+(D.subj?'<div style="text-align:center;font-size:19px;color:#7a6b5e;margin:-12px 0 22px">'+esc(D.subj)+(D.grades?' — '+esc(D.grades):'')+'</div>':'')+
+   g.map((x,i)=>'<div style="display:flex;gap:16px;align-items:flex-start;padding:12px 4px;border-bottom:1px dashed #e5ddd0"><div style="width:40px;height:40px;border-radius:12px;background:'+t.a+';color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;flex:0 0 40px;font-size:18px">'+AR_DIG(i+1)+'</div><div style="font-size:18.5px;line-height:1.8;padding-top:5px">'+esc(x)+'</div></div>').join(""); }
+function checkHTML(t, pageOf){ const showW=D.pW!==false; let sw=0, cov=0, done=0, tot=0;
+  const rows=D.els.map((e,i)=>{ const w=elW(e), has=e.items.length>0, wn=parseFloat(w)||0; sw+=wn; if(has){ cov+=wn; done++; } tot+=e.items.length;
+    return '<tr style="border-top:1px solid #eee"><td style="padding:10px 8px;text-align:center;font-weight:800;color:'+t.ink+'">'+AR_DIG(i+1)+'</td><td style="padding:10px 8px;font-weight:700;line-height:1.5">'+esc(e.t)+'</td>'+
+     (showW?'<td style="padding:10px 6px;text-align:center">'+(w!==""?AR_DIG(w)+'٪':'—')+'</td>':'')+
+     '<td style="padding:10px 6px;text-align:center">'+AR_DIG(e.items.length)+'</td>'+
+     '<td style="padding:10px 6px;text-align:center"><span style="display:inline-block;border-radius:999px;padding:4px 12px;font-size:14px;font-weight:800;'+(has?'background:#e3f3e8;color:#1f7a4a">✓ متوفر':'background:#fbeaea;color:#a0524a">✗ غير متوفر')+'</span></td>'+
+     '<td style="padding:10px 6px;text-align:center;font-weight:800;color:'+t.g+'">'+(pageOf[i]?AR_DIG(pageOf[i]):'—')+'</td></tr>'; }).join("");
+  const fs=D.els.length>13?14.5:16.5;
+  return titleBlk(t,"قائمة شواهد الأداء الوظيفي")+
+   '<table style="width:100%;border-collapse:collapse;font-size:'+fs+'px;border:1.5px solid '+t.g+';border-radius:12px;overflow:hidden"><tr style="background:'+t.a+';color:#fff;font-weight:800"><td style="padding:12px 8px;text-align:center;width:44px">م</td><td style="padding:12px 8px">العنصر</td>'+(showW?'<td style="padding:12px 6px;text-align:center;width:70px">الوزن</td>':'')+'<td style="padding:12px 6px;text-align:center;width:78px">الشواهد</td><td style="padding:12px 6px;text-align:center;width:120px">الحالة</td><td style="padding:12px 6px;text-align:center;width:62px">الصفحة</td></tr>'+rows+'</table>'+
+   '<div style="display:flex;gap:14px;margin-top:22px">'+
+    [["العناصر المتوفرة",AR_DIG(done)+" من "+AR_DIG(D.els.length)],["مجموع الشواهد",AR_DIG(tot)]].concat(showW&&sw?[["أوزان مغطاة بشواهد",AR_DIG(Math.round(cov))+"٪"]]:[]).map(x=>'<div style="flex:1;background:'+t.soft+';border:1px solid '+t.g2+';border-radius:14px;padding:14px;text-align:center"><div style="font-size:15px;color:#7a6b5e">'+x[0]+'</div><div style="font-size:26px;font-weight:800;color:'+t.ink+';margin-top:4px">'+x[1]+'</div></div>').join("")+'</div>'; }
 function tocHTML(t, toc){
   return '<div style="text-align:center;margin:10px 0 26px"><div style="font-size:34px;font-weight:800;color:'+t.ink+'">فهرس الملف</div><div style="width:80px;height:4px;background:'+t.g+';margin:12px auto 0;border-radius:2px"></div></div>'+
    toc.map(x=>'<div style="display:flex;align-items:center;gap:14px;padding:13px 6px;border-bottom:1px dashed #e5ddd0;font-size:18.5px">'+
@@ -580,10 +938,34 @@ function divHTML(t, x){
    '<div style="width:120px;height:3px;background:'+t.g+';margin:30px auto"></div>'+
    (e.items.length?'<div style="text-align:right;min-width:420px;max-width:560px">'+e.items.map((it,j)=>'<div style="font-size:18px;padding:7px 0;display:flex;gap:10px"><span style="color:'+t.g+';font-weight:800">'+AR_DIG(j+1)+'.</span><span>'+esc(it.t)+'</span></div>').join("")+'</div>'
      :'<div style="font-size:18px;color:#9a8b7c">لا توجد شواهد مضافة لهذا العنصر.</div>')+
+   (e.link?'<div style="display:flex;align-items:center;gap:18px;margin-top:30px;background:'+t.soft+';border:1px solid '+t.g2+';border-radius:16px;padding:14px 18px;text-align:right">'+qrImg(e.link,120,t.b)+'<div><div style="font-size:19px;font-weight:800;color:'+t.ink+'">📲 امسح الباركود</div><div style="font-size:15.5px;color:#7a6b5e;margin-top:4px;line-height:1.7">لمشاهدة شواهد إضافية لهذا العنصر</div><div style="font-size:12px;color:#a99b8c;direction:ltr;text-align:right;margin-top:4px">'+esc(shortUrl(e.link))+'</div></div></div>':'')+
   '</div>';
 }
+function qrStrip(t, url, txt){ return '<div style="display:flex;align-items:center;gap:16px;margin-top:14px;background:'+t.soft+';border:1px solid '+t.g2+';border-radius:14px;padding:10px 16px">'+qrImg(url,96,t.b)+'<div><div style="font-size:17px;font-weight:800;color:'+t.ink+'">📲 '+txt+'</div><div style="font-size:12px;color:#a99b8c;direction:ltr;text-align:right;margin-top:4px">'+esc(shortUrl(url))+'</div></div></div>'; }
+function photoGrid(urls, H){ const n=urls.length; if(!n) return "";
+  const box=(u,h,w)=>'<div style="width:'+w+';height:'+h+'px;background:#f4f1ec url('+u+') center/contain no-repeat;border:1px solid #e8e1d6;border-radius:10px"></div>';
+  if(n===1) return box(urls[0],H,"100%");
+  if(n===2) return '<div style="display:flex;gap:12px">'+box(urls[0],H,"50%")+box(urls[1],H,"50%")+'</div>';
+  if(n===3) return '<div style="display:flex;gap:12px">'+box(urls[0],H,"33.3%")+box(urls[1],H,"33.3%")+box(urls[2],H,"33.3%")+'</div>';
+  return '<div style="display:flex;flex-direction:column;gap:10px"><div style="display:flex;gap:10px">'+box(urls[0],(H-10)/2,"50%")+box(urls[1],(H-10)/2,"50%")+'</div><div style="display:flex;gap:10px">'+box(urls[2],(H-10)/2,"50%")+box(urls[3],(H-10)/2,"50%")+'</div></div>'; }
+function repHTML(t, x, it, j, urls){ const r=it.rep, R=REPORTS[r.type]||REPORTS.general, f=D.g!=="m", RN=fillT(R.n,"");
+  const cells=[[f?"المنفذة":"المنفذ",D.name],["التاريخ",it.dt],["المستفيدون",r.who],["المكان",r.where],["العنصر",x.e.t],["المادة",D.subj]].filter(c=>c[1]).slice(0,6);
+  const G=lines(r.goals), Rs=lines(r.res), dl=it.d?Math.ceil(it.d.length/64):0, tl=G.reduce((a,l)=>a+Math.ceil(l.length/30),0), rl=Rs.reduce((a,l)=>a+Math.ceil(l.length/30),0);
+  const textH = Math.max(tl,rl)*27+60 + (it.d?dl*28+60:0), cellsH=Math.ceil(cells.length/2)*44+10, signH=80, qrH=it.link?124:0;
+  const H = 905-60-cellsH-textH-signH-qrH-40, fs = H<170 ? 14.5 : 16;
+  const sec=(h,arr)=>'<div style="flex:1;background:'+t.soft+';border-radius:12px;padding:10px 14px"><div style="font-weight:800;color:'+t.ink+';font-size:'+(fs+1)+'px;margin-bottom:4px">'+h+'</div>'+arr.map(l=>'<div style="font-size:'+fs+'px;line-height:1.7;display:flex;gap:6px"><span style="color:'+t.g+'">•</span><span>'+esc(l)+'</span></div>').join("")+'</div>';
+  const n=urls.length, cols=n===4?2:Math.max(1,n), rows=n===4?2:1;
+  const flexPh = n ? '<div style="flex:1;min-height:150px;display:grid;gap:10px;grid-template-columns:repeat('+cols+',1fr);grid-template-rows:repeat('+rows+',1fr)">'+urls.slice(0,4).map(u=>'<div style="background:#f4f1ec url('+u+') center/contain no-repeat;border:1px solid #e8e1d6;border-radius:10px"></div>').join("")+'</div>' : '<div style="flex:1"></div>';
+  return '<div style="height:100%;display:flex;flex-direction:column">'+'<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px"><span style="background:'+t.a+';color:#fff;border-radius:999px;padding:6px 16px;font-size:15px;font-weight:800">'+esc(RN)+'</span><span style="font-size:14px;color:#8a7d70">العنصر '+AR_DIG(x.i+1)+' · شاهد '+AR_DIG(j+1)+'</span></div>'+
+   '<div style="font-size:27px;font-weight:800;color:'+t.ink+';line-height:1.4;margin-bottom:12px">'+esc(it.t)+'</div>'+
+   '<div style="display:grid;grid-template-columns:1fr 1fr;border:1.5px solid '+t.g2+';border-radius:12px;overflow:hidden;margin-bottom:12px">'+cells.map((c,i)=>'<div style="display:flex;font-size:'+fs+'px;'+(i>1?'border-top:1px solid #eee;':'')+(i%2?'border-right:1px solid #eee;':'')+'"><div style="background:'+t.soft+';padding:9px 12px;font-weight:800;color:'+t.ink+';min-width:96px">'+c[0]+'</div><div style="padding:9px 12px;flex:1">'+esc(c[1])+'</div></div>').join("")+'</div>'+
+   ((G.length||Rs.length)?'<div style="display:flex;gap:12px;margin-bottom:12px">'+(G.length?sec("🎯 الأهداف",G):"")+(Rs.length?sec("📈 النتائج والأثر",Rs):"")+'</div>':'')+
+   (it.d?'<div style="border:1px solid #eee;border-radius:12px;padding:10px 14px;margin-bottom:12px"><div style="font-weight:800;color:'+t.ink+';font-size:'+(fs+1)+'px;margin-bottom:4px">📝 وصف التنفيذ</div><div style="font-size:'+fs+'px;line-height:1.8">'+esc(it.d).replace(/\n/g,"<br>")+'</div></div>':'')+
+   flexPh+(it.link?qrStrip(t,it.link,"امسح الباركود لمشاهدة الشاهد"):"")+
+   '<div style="display:flex;gap:30px;margin-top:16px">'+[[f?"المعلمة":"المعلم",D.name],[f?"مديرة المدرسة":"مدير المدرسة",D.prin]].map(b=>'<div style="flex:1;text-align:center;font-size:15px"><b style="color:'+t.ink+'">'+b[0]+'</b>: '+esc(b[1]||"")+'<div style="margin:22px 40px 0;border-top:1.5px dashed #b9ad9d;font-size:12px;color:#9a8b7c;padding-top:4px">التوقيع</div></div>').join("")+'</div></div>'; }
 function evHTML(t, x, it, j, urls){
-  const n=urls.length, lines=it.d?it.d.split(/\n/).reduce((a,l)=>a+Math.max(1,Math.ceil(l.length/62)),0):0, H=n?Math.max(300, 905-118-(it.dt?24:0)-(it.d?40+lines*35:18)-24):0;
+  if(it.rep) return repHTML(t, x, it, j, urls);
+  const n=urls.length, lnN=it.d?it.d.split(/\n/).reduce((a,l)=>a+Math.max(1,Math.ceil(l.length/62)),0):0, H=n?Math.max(260, 905-118-(it.dt?24:0)-(it.d?40+lnN*35:18)-24-(it.link?124:0)):0;
   let grid="";
   const box=(u,h,w)=>'<div style="width:'+w+';height:'+h+'px;background:#f4f1ec url('+u+') center/contain no-repeat;border:1px solid #e8e1d6;border-radius:10px"></div>';
   if(n===1) grid=box(urls[0],H,"100%");
@@ -594,7 +976,7 @@ function evHTML(t, x, it, j, urls){
    '<div style="display:flex;align-items:flex-start;gap:14px"><div style="width:46px;height:46px;border-radius:12px;background:'+t.a+';color:#fff;font-weight:800;font-size:20px;display:flex;align-items:center;justify-content:center;flex:0 0 46px">'+AR_DIG(j+1)+'</div>'+
    '<div style="flex:1"><div style="font-size:28px;font-weight:800;color:'+t.ink+';line-height:1.4">'+esc(it.t)+'</div>'+(it.dt?'<div style="font-size:15px;color:#8a7d70;margin-top:4px">📅 '+esc(it.dt)+'</div>':'')+'</div></div>'+
    (it.d?'<div style="font-size:17.5px;line-height:2;margin:16px 0 18px;background:'+t.soft+';border-radius:12px;padding:14px 18px;border-right:5px solid '+t.g+'">'+esc(it.d).replace(/\n/g,"<br>")+'</div>':'<div style="height:18px"></div>')+
-   grid+(n?'':'<div style="text-align:center;color:#a99b8c;font-size:16px;margin-top:40px">شاهد نصي بدون صور</div>');
+   grid+(it.link&&!n?'<div style="display:flex;flex-direction:column;align-items:center;margin-top:40px">'+qrImg(it.link,260,t.b)+'<div style="font-size:21px;font-weight:800;color:'+t.ink+';margin-top:16px">📲 امسح الباركود لمشاهدة الشاهد</div><div style="font-size:13px;color:#a99b8c;direction:ltr;margin-top:6px">'+esc(shortUrl(it.link))+'</div></div>':(it.link?qrStrip(t,it.link,"امسح الباركود لمشاهدة الشاهد"):''))+(n||it.link?'':'<div style="text-align:center;color:#a99b8c;font-size:16px;margin-top:40px">شاهد نصي بدون صور</div>');
 }
 function signHTML(t){
   const f=D.g!=="m";
@@ -605,12 +987,16 @@ function signHTML(t){
    '<div style="margin:80px auto 0;width:150px;height:150px;border:2px dashed '+t.g2+';border-radius:50%;display:flex;align-items:center;justify-content:center;color:#b9ad9d;font-size:15px">ختم المدرسة</div>';
 }
 async function buildPages(){
-  const t=THEMES[D.theme]||THEMES.gold, {plan,toc}=pagesPlan(), total=plan.length, out=[];
+  const t=THEMES[D.theme]||THEMES.gold, {plan,toc,pageOf}=pagesPlan(), total=plan.length, out=[];
   for(let p=0;p<plan.length;p++){
     const pl=plan[p], n=p+1;
     if(pl.type==="cover") out.push(coverHTML(t));
     else if(pl.type==="info") out.push(frame(t, infoHTML(t), n, total));
     else if(pl.type==="toc") out.push(frame(t, tocHTML(t,toc), n, total));
+    else if(pl.type==="cv") out.push(frame(t, cvHTML(t), n, total));
+    else if(pl.type==="vm") out.push(frame(t, vmHTML(t), n, total));
+    else if(pl.type==="goals") out.push(frame(t, goalsHTML(t), n, total));
+    else if(pl.type==="check") out.push(frame(t, checkHTML(t,pageOf), n, total));
     else if(pl.type==="div") out.push(frame(t, divHTML(t,pl.el), n, total));
     else if(pl.type==="ev"){ const urls=await Promise.all(pl.it.imgs.slice(0,4).map(imgURL)); out.push(frame(t, evHTML(t,pl.el,pl.it,pl.j,urls.filter(Boolean)), n, total)); }
     else if(pl.type==="sign") out.push(frame(t, signHTML(t), n, total));
@@ -621,7 +1007,7 @@ async function buildPages(){
 /* ===== المعاينة والتصدير ===== */
 let pdfBlob=null;
 $("fab").onclick=async()=>{
-  pdfBlob=null; $("expMsg").textContent=""; $("expProg").classList.add("hidden");
+  pdfBlob=null; $("mExp").dataset.one=""; $("expMsg").textContent=""; $("expProg").classList.add("hidden");
   const pages=await buildPages(), sc=Math.min(1,($("pv").clientWidth||330)/PW);
   const ev=D.els.reduce((a,e)=>a+e.items.length,0);
   $("expInfo").textContent="الملف فيه "+AR_DIG(pages.length)+" صفحة و"+AR_DIG(ev)+" شاهد. راجعيه، وبعدها حمّليه أو أرسليه.";
@@ -637,10 +1023,10 @@ async function waitImgs(el){
   await Promise.all([...urls].map(u=>new Promise(ok=>{ const i=new Image(); i.onload=ok; i.onerror=ok; i.src=u; })));
   if(document.fonts&&document.fonts.ready) await document.fonts.ready;
 }
-async function makePdf(){
-  if(pdfBlob) return pdfBlob;
+async function makePdf(onePages){
+  if(pdfBlob&&!onePages) return pdfBlob;
   if(!window.html2canvas||!window.jspdf){ toast("تأكدي من الإنترنت وجربي مرة ثانية"); throw new Error("libs"); }
-  const pages=await buildPages(), stage=$("stage"), bar=$("expProg"), fill=bar.querySelector("i");
+  const pages=onePages||await buildPages(), stage=$("stage"), bar=$("expProg"), fill=bar.querySelector("i");
   bar.classList.remove("hidden"); $("bPdf").disabled=$("bShare").disabled=true;
   const pdf=new jspdf.jsPDF({unit:"pt",format:"a4",orientation:"portrait",compress:true});
   const W=pdf.internal.pageSize.getWidth(), H=pdf.internal.pageSize.getHeight();
@@ -654,16 +1040,29 @@ async function makePdf(){
       cv.width=cv.height=0; fill.style.width=((i+1)/pages.length*100)+"%";
     }
   } finally { stage.innerHTML=""; $("bPdf").disabled=$("bShare").disabled=false; }
-  pdfBlob=pdf.output("blob");
+  const out=pdf.output("blob"); if(onePages) return out;
+  pdfBlob=out;
   $("expMsg").textContent="✅ الملف جاهز ("+(pdfBlob.size/1048576).toFixed(1)+" ميقا)";
   return pdfBlob;
 }
+let oneBlob=null, oneName="shahid.pdf";
+async function exportOne(i,j){
+  const t=THEMES[D.theme]||THEMES.gold, e=D.els[i], it=e.items[j];
+  const urls=(await Promise.all(it.imgs.slice(0,4).map(imgURL))).filter(Boolean);
+  const html=frame(t, evHTML(t,{e,i},it,j,urls), 1, 1);
+  oneBlob=null; oneName=(it.rep?"report":"shahid")+".pdf";
+  $("expInfo").textContent="صفحة الشاهد «"+it.t+"» لوحدها. حمّليها أو أرسليها."; $("expMsg").textContent=""; $("expProg").classList.add("hidden");
+  open("mExp"); const w=$("pv").clientWidth-20, s=w/PW;
+  $("pv").innerHTML='<div style="width:'+(PW*s)+'px;height:'+(PH*s)+'px;margin:0 auto;overflow:hidden"><div style="transform:scale('+s+');transform-origin:top right;width:'+PW+'px">'+html+'</div></div>';
+  $("mExp").dataset.one="1"; $("mExp")._one=[html];
+}
 function saveBlob(b,name){ const a=document.createElement("a"); a.href=URL.createObjectURL(b); a.download=name; document.body.appendChild(a); a.click(); setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); },4000); }
-$("bPdf").onclick=async()=>{ try{ const b=await makePdf(); saveBlob(b,"shawahid.pdf"); }catch(e){ if(e.message!=="libs") toast("صار خطأ، جربي مرة ثانية"); } };
+async function curPdf(){ const m=$("mExp"); if(m.dataset.one==="1"){ if(!oneBlob){ oneBlob=await makePdf(m._one); $("expMsg").textContent="✅ الصفحة جاهزة"; } return [oneBlob,oneName]; } return [await makePdf(),"shawahid.pdf"]; }
+$("bPdf").onclick=async()=>{ try{ const [b,nm]=await curPdf(); saveBlob(b,nm); }catch(e){ if(e.message!=="libs") toast("صار خطأ، جربي مرة ثانية"); } };
 $("bShare").onclick=async()=>{
-  try{ const b=await makePdf(); const f=new File([b],"shawahid.pdf",{type:"application/pdf"});
-    if(navigator.canShare&&navigator.canShare({files:[f]})){ try{ await navigator.share({files:[f]}); }catch(e){ if(e.name!=="AbortError") saveBlob(b,"shawahid.pdf"); } }
-    else { saveBlob(b,"shawahid.pdf"); toast("جهازك ما يدعم الإرسال المباشر، نزل الملف وأرسليه"); }
+  try{ const [b,nm]=await curPdf(); const f=new File([b],nm,{type:"application/pdf"});
+    if(navigator.canShare&&navigator.canShare({files:[f]})){ try{ await navigator.share({files:[f]}); }catch(e){ if(e.name!=="AbortError") saveBlob(b,nm); } }
+    else { saveBlob(b,nm); toast("جهازك ما يدعم الإرسال المباشر، نزل الملف وأرسليه"); }
   }catch(e){ if(e.message!=="libs") toast("صار خطأ، جربي مرة ثانية"); }
 };
 
@@ -718,6 +1117,7 @@ async function launch(code){
   try{ if(navigator.storage&&navigator.storage.persist) navigator.storage.persist(); }catch(e){}
   let d=null; try{ d=await dbGet("kv","pf_"+code); }catch(e){}
   D = d ? {...defaults(), ...d} : defaults();
+  D.cv={...defaults().cv, ...(D.cv||{})}; D.els.forEach(e=>{ if(e.w===undefined) e.w=WEIGHTS[e.k]!==undefined?WEIGHTS[e.k]:""; if(e.link===undefined) e.link=""; });
   if(!d) await save();
   if(IS_IOS && !IS_STANDALONE && !store.get("pf_iostip")) $("iosTip").classList.remove("hidden");
   try{ history.replaceState(null,"",location.pathname+"?k="+encodeURIComponent(code)); }catch(e){}
