@@ -186,6 +186,17 @@ h3.sec{font-size:15px;color:var(--brand2);margin:20px 4px 8px;font-weight:800}
 .elPick button.has i{background:#e3f3e8;color:var(--ok)}
 .elPick button.on{border-color:var(--brand);background:#f6ece8}
 .elPick button.on i{background:var(--brand);color:#fff}
+/* بطاقة إرشاد العنصر */
+.guide{background:linear-gradient(160deg,#FBF1EE,#F6E3DD);border:1px solid var(--line);border-radius:16px;padding:12px 13px;margin:8px 0 4px}
+.guide .gh{display:flex;align-items:center;gap:8px;cursor:pointer}
+.guide .gh b{flex:1;font-size:14.5px;color:var(--brand)}
+.guide .gw{background:var(--brand);color:#fff;border-radius:999px;padding:3px 10px;font-size:12px;font-weight:800;white-space:nowrap}
+.guide .gt{border:none;background:rgba(255,255,255,.75);border-radius:8px;padding:4px 9px;font-size:12px;cursor:pointer;color:var(--brand2);font-weight:700}
+.guide .gs{margin-top:11px}
+.guide h6{font-size:13px;color:var(--ink);margin-bottom:3px;font-weight:800}
+.guide p{font-size:13px;line-height:1.9;color:#5e4744}
+.guide .chip{background:#fff}
+.guide .gp{font-size:12px;color:var(--brand2);margin-top:6px}
 .upProg{font-size:12.5px;color:var(--brand2);margin-top:8px;min-height:18px;text-align:center}
 </style>
 </head>
@@ -235,6 +246,14 @@ h3.sec{font-size:15px;color:var(--brand2);margin:20px 4px 8px;font-weight:800}
 <!-- element sheet -->
 <div class="modal" id="mEl"><div class="sheet">
   <div class="sh"><h4 id="elTitle"></h4><button class="x" data-close>✕</button></div>
+  <div class="guide" id="elGuide">
+    <div class="gh" id="gHead"><b>📘 دليل العنصر</b><span class="gw" id="gW"></span><button class="gt" id="gToggle" type="button">إخفاء</button></div>
+    <div id="gBody">
+      <div class="gs"><h6>🎯 المقصود فيه</h6><p id="gMean"></p></div>
+      <div class="gs"><h6>⚖️ وزنه في التقييم</h6><p id="gWeight"></p></div>
+      <div class="gs" id="gSugBox"><h6>📎 الشواهد المقترحة</h6><div class="chips" id="gSug"></div><div class="gp" id="gProg"></div></div>
+    </div>
+  </div>
   <div class="hint" id="elHint"></div>
   <div id="evList"></div>
   <div class="box2">
@@ -479,27 +498,27 @@ async function checkCode(raw){ const c=normCode(raw); if(!c) return null; const 
 
 /* ===== العناصر ===== */
 const ELEMENTS = [
- {k:"duty", pd:"الالتزام بالدوام والمهام والتكليفات وأخلاقيات مهنة التعليم.", t:"أداء الواجبات الوظيفية", h:"التزامك بالدوام والمهام والتكليفات وأخلاقيات المهنة.",
+ {k:"duty", g:"التزامك بالأنظمة والتعليمات: الحضور والانصراف في وقتهم، وأداء الحصص والمناوبة والانتظار، وتنفيذ التكليفات واللجان المدرسية، والالتزام بميثاق أخلاقيات مهنة التعليم.", pd:"الالتزام بالدوام والمهام والتكليفات وأخلاقيات مهنة التعليم.", t:"أداء الواجبات الوظيفية", h:"التزامك بالدوام والمهام والتكليفات وأخلاقيات المهنة.",
   s:["الالتزام بالدوام الرسمي","المناوبة والإشراف اليومي","حصص الانتظار","المشاركة في اللجان المدرسية","تنفيذ التكليفات الإدارية","الالتزام بميثاق أخلاقيات مهنة التعليم","المشاركة في الفعاليات المدرسية","الإذاعة المدرسية","المناسبات الوطنية"]},
- {k:"prof", pd:"النمو المهني والمشاركة الفاعلة في المجتمع التعليمي.", t:"التفاعل مع المجتمع المهني", h:"نموّك المهني ومشاركتك مع زميلاتك والمجتمع التعليمي.",
+ {k:"prof", g:"نموّك المهني ومشاركة خبرتك مع {COL}: الدورات والورش اللي حضرتيها أو قدمتيها، ومجتمعات التعلم المهنية، والزيارات التبادلية والدروس التطبيقية، ونقل أثر التدريب لفصلك.", pd:"النمو المهني والمشاركة الفاعلة في المجتمع التعليمي.", t:"التفاعل مع المجتمع المهني", h:"نموّك المهني ومشاركتك مع زميلاتك والمجتمع التعليمي.",
   s:["حضور دورة تدريبية","تقديم ورشة أو دورة لزميلاتي","مجتمعات التعلم المهنية","تبادل الزيارات الصفية","تنفيذ درس تطبيقي","حضور ملتقى أو مؤتمر تعليمي","ساعات تطوعية"]},
- {k:"parents", pd:"التواصل مع الأسر وإشراكهم في تعلم {S}.", t:"التفاعل مع أولياء الأمور", h:"تواصلك مع الأسر وإشراكهم في تعلم {S}.",
+ {k:"parents", g:"شراكتك مع الأسر في تعلم {S}: التواصل المستمر معهم، وإطلاعهم على مستوى أبنائهم، وإشراكهم في الخطط والأنشطة، والتجاوب مع ملاحظاتهم.", pd:"التواصل مع الأسر وإشراكهم في تعلم {S}.", t:"التفاعل مع أولياء الأمور", h:"تواصلك مع الأسر وإشراكهم في تعلم {S}.",
   s:["اجتماع أولياء الأمور","التواصل عبر منصة مدرستي","إرسال تقارير مستوى {S}","رسائل شكر وتحفيز للأسر","استدعاء ولي أمر للمتابعة","استبانة رضا أولياء الأمور","مشاركة الأسرة في نشاط صفي"]},
- {k:"strat", pd:"تنويع استراتيجيات التدريس لتلبية احتياجات {S}.", t:"التنويع في استراتيجيات التدريس", h:"الاستراتيجيات اللي تستخدمينها لتلبية احتياجات {S}.",
+ {k:"strat", g:"تنويعك في طرق التدريس حسب أهداف الدرس واحتياجات {S}: التعلم النشط والتعاوني، ومهارات التفكير، والتعلم بالمشاريع واللعب، مع مراعاة الفروق الفردية.", pd:"تنويع استراتيجيات التدريس لتلبية احتياجات {S}.", t:"التنويع في استراتيجيات التدريس", h:"الاستراتيجيات اللي تستخدمينها لتلبية احتياجات {S}.",
   s:["التعلم التعاوني","التعلم باللعب","العصف الذهني","الخرائط الذهنية","الصف المقلوب","التعلم بالمشاريع","فكر زاوج شارك","لعب الأدوار"]},
- {k:"results", pd:"الخطط والبرامج الداعمة لرفع مستوى {S}.", t:"تحسين نتائج المتعلمين", h:"خططك وبرامجك اللي رفعت مستوى {S}.",
+ {k:"results", g:"الخطط والبرامج اللي ترفع مستوى {S}: الخطط العلاجية لدعم المتعثرات، والإثرائية لتحدي المتميزات، ورعاية الموهوبات، وقياس التحسن قبل وبعد عشان يبان أثر شغلك على النتائج.", pd:"الخطط والبرامج الداعمة لرفع مستوى {S}.", t:"تحسين نتائج المتعلمين", h:"خططك وبرامجك اللي رفعت مستوى {S}.",
   s:["خطة علاجية للمتعثرات","خطة إثرائية للمتميزات","رعاية الموهوبات","مقارنة النتائج قبل وبعد","تكريم المتفوقات","برنامج دعم القراءة","مسابقة صفية"]},
- {k:"plan", pd:"تخطيط الدروس وتوزيع المنهج وتنفيذه.", t:"إعداد وتنفيذ خطة التعلم", h:"تخطيطك للدروس وتوزيع المنهج وتنفيذه.",
+ {k:"plan", g:"تخطيطك للتعلم وتنفيذه: توزيع المنهج على الأسابيع، وتحضير الدروس وصياغة الأهداف، ومتابعة تنفيذ الخطة وتعديلها حسب مستوى {S}.", pd:"تخطيط الدروس وتوزيع المنهج وتنفيذه.", t:"إعداد وتنفيذ خطة التعلم", h:"تخطيطك للدروس وتوزيع المنهج وتنفيذه.",
   s:["توزيع المنهج","تحضير الدروس","الخطة الفصلية","الأهداف ومؤشرات الأداء","سجل متابعة تنفيذ الخطة","خطة أسبوعية"]},
- {k:"tech", pd:"توظيف التقنيات والوسائل التعليمية المناسبة.", t:"توظيف تقنيات ووسائل التعلم المناسبة", h:"التقنيات والوسائل اللي تخدم الدرس.",
+ {k:"tech", g:"توظيفك للتقنية والوسائل اللي تخدم أهداف الدرس: منصة مدرستي، والسبورة الذكية، والعروض والتطبيقات التفاعلية، والوسائل اللي تصممينها بنفسك.", pd:"توظيف التقنيات والوسائل التعليمية المناسبة.", t:"توظيف تقنيات ووسائل التعلم المناسبة", h:"التقنيات والوسائل اللي تخدم الدرس.",
   s:["منصة مدرستي","السبورة الذكية","وسيلة تعليمية من إعدادي","عرض تقديمي تفاعلي","تطبيق تعليمي","اختبار إلكتروني","كتاب أو درس تفاعلي"]},
- {k:"env", pd:"تهيئة بيئة صفية آمنة وجاذبة للتعلم.", t:"تهيئة البيئة التعليمية", h:"فصلك وبيئته الآمنة والجاذبة للتعلم.",
+ {k:"env", g:"تهيئة فصل آمن ومحفّز للتعلم: تنظيمه، والأركان التعليمية، واللوحات التحفيزية، وقوانين الصف، وجو الاحترام اللي يشجع {S} على المشاركة.", pd:"تهيئة بيئة صفية آمنة وجاذبة للتعلم.", t:"تهيئة البيئة التعليمية", h:"فصلك وبيئته الآمنة والجاذبة للتعلم.",
   s:["تنظيم الفصل","ركن تعليمي","لوحات تحفيزية","قوانين الصف","مراعاة الفروق الفردية","بيئة صفية آمنة وجاذبة"]},
- {k:"class", pd:"ضبط الصف وتحفيز {S} وتوزيع الأدوار.", t:"الإدارة الصفية", h:"ضبط الصف وتحفيز {S} وتوزيع الأدوار.",
+ {k:"class", g:"إدارتك للصف أثناء الحصة: ضبط السلوك بأسلوب إيجابي، والتعزيز والتحفيز، وتوزيع الأدوار، واستثمار وقت الحصة في التعلم.", pd:"ضبط الصف وتحفيز {S} وتوزيع الأدوار.", t:"الإدارة الصفية", h:"ضبط الصف وتحفيز {S} وتوزيع الأدوار.",
   s:["لوحة التعزيز والتحفيز","قواعد السلوك الصفي","توزيع الأدوار والمهام","إدارة الوقت في الحصة","سجل متابعة السلوك","نظام النجوم والنقاط"]},
- {k:"analysis", pd:"تحليل النتائج وتشخيص المستويات وبناء القرارات عليها.", t:"تحليل نتائج المتعلمين وتشخيص مستوياتهم", h:"تحليل النتائج وتصنيف المستويات وبناء القرارات عليها.",
+ {k:"analysis", g:"تحليلك لنتائج {S} وتشخيص مستوياتهم: الاختبار التشخيصي، وتحليل نتائج الاختبارات حسب المهارات، وتصنيف المستويات، وبناء قراراتك وخططك على هالنتائج.", pd:"تحليل النتائج وتشخيص المستويات وبناء القرارات عليها.", t:"تحليل نتائج المتعلمين وتشخيص مستوياتهم", h:"تحليل النتائج وتصنيف المستويات وبناء القرارات عليها.",
   s:["الاختبار التشخيصي","تحليل نتائج الاختبارات","تصنيف مستويات {S}","رسم بياني للنتائج","تحليل نتائج نافس","تقرير مستوى الفصل"]},
- {k:"assess", pd:"تنويع أدوات وأساليب التقويم.", t:"تنوع أساليب التقويم", h:"أدوات التقويم المتنوعة اللي تستخدمينها.",
+ {k:"assess", g:"تنويعك لأدوات التقويم: القبلي والتكويني والختامي، والاختبارات القصيرة، وسلالم التقدير، وملفات الإنجاز، والمهام الأدائية، والتقويم الذاتي والأقراني.", pd:"تنويع أدوات وأساليب التقويم.", t:"تنوع أساليب التقويم", h:"أدوات التقويم المتنوعة اللي تستخدمينها.",
   s:["التقويم القبلي","التقويم التكويني","الاختبارات القصيرة","ملف الإنجاز","سلالم التقدير","التقويم الذاتي والأقراني","المهام الأدائية والمشاريع","أوراق العمل"]}
 ];
 const WEIGHTS={duty:10,prof:10,parents:10,strat:10,results:10,plan:10,tech:10,env:5,class:5,analysis:10,assess:10};
@@ -838,7 +857,8 @@ document.querySelectorAll(".modal").forEach(m=>{ m.addEventListener("click",ev=>
 async function openEl(i){
   curEl=i; const e=D.els[i], def=elDef(e.k);
   $("elTitle").textContent = AR_DIG(i+1)+". "+e.t;
-  $("elHint").textContent = def ? gS(def.h, D.g)+" أضيفي شاهد أو أكثر، ولكل شاهد صوره أو ملف PDF ووصفه." : "عنصر خاص أضفتيه. أضيفي شواهده بنفس الطريقة.";
+  $("elHint").textContent = def ? "أضيفي شاهد أو أكثر، ولكل شاهد صوره أو ملف PDF ووصفه." : "عنصر خاص أضفتيه. أضيفي شواهده بنفس الطريقة.";
+  drawGuide(e, def);
   $("delEl").classList.toggle("hidden", !!def);
   $("elLink").value=e.link||""; const w=elW(e); $("elW").value = w===""?"":w;
   drawRate(e); if(typeof drvElUI==="function") drvElUI(e);
@@ -856,6 +876,23 @@ async function openEl(i){
   }
   openM("mEl");
 }
+/* بطاقة الإرشاد: المقصود، والوزن، والشواهد المقترحة */
+function drawGuide(e, def){
+  const w=parseFloat(elW(e))||0, closed=!!store.get("pf_gclosed");
+  $("gW").textContent = w ? "الوزن "+AR_DIG(w)+"٪" : "بدون وزن";
+  $("gMean").textContent = def ? fillT(def.g||def.h,"") : "عنصر خاص أضفتيه بنفسك. أضيفي فيه الشواهد اللي ما تدخل تحت العناصر الرسمية.";
+  const part=5*w/100, partT={0.25:"ربع درجة",0.5:"نص درجة",0.75:"ثلاث أرباع درجة",1:"درجة كاملة"}[Math.round(part*100)/100] || (NUM(part,2)+" درجة");
+  $("gWeight").textContent = w ? "يمثل "+AR_DIG(w)+"٪ من درجة تقييمك الكلية"+(w<10?"، ووزنه أقل من غيره بس لازم يكون فيه شاهد.":"، وهو من العناصر الأعلى وزن.")+" ولو أخذتي فيه ٥ من ٥ يضيف لدرجتك "+partT+" من ٥."
+    : "ما له وزن محدد. تقدرين تحطين وزنه من «وزن العنصر» تحت.";
+  const sug=def ? def.s.map(x=>gS(x,D.g)) : [], used=new Set(e.items.map(x=>x.t));
+  $("gSugBox").classList.toggle("hidden", !sug.length);
+  $("gSug").innerHTML = sug.map(x=>'<button type="button" class="chip'+(used.has(x)?' used':'')+'">'+(used.has(x)?'✓ ':'＋ ')+esc(x)+'</button>').join("");
+  $("gSug").querySelectorAll(".chip").forEach((c,k)=>c.onclick=()=>{ const t=sug[k]; openEv(-1); $("evT").value=t; $("repType").value=repFor(D.els[curEl], t); });
+  const nU=sug.filter(x=>used.has(x)).length;
+  $("gProg").textContent = sug.length ? (nU ? "✓ أضفتي "+AR_DIG(nU)+" من "+AR_DIG(sug.length)+" شواهد مقترحة. " : "")+"اضغطي أي شاهد عشان تضيفينه." : "";
+  $("gBody").classList.toggle("hidden", closed); $("gToggle").textContent = closed ? "عرض" : "إخفاء";
+}
+$("gHead").onclick=()=>{ store.set("pf_gclosed", !store.get("pf_gclosed")); const e=D.els[curEl]; drawGuide(e, elDef(e.k)); };
 $("addEv").onclick=()=>openEv(-1);
 $("upHere").onclick=()=>{ closeM("mEl"); openUp(curEl); };
 function drawRate(e){ const r=+e.r||0; $("elRate").querySelectorAll("button").forEach(b=>b.classList.toggle("on", +b.dataset.v===r));
@@ -864,7 +901,7 @@ function drawRate(e){ const r=+e.r||0; $("elRate").querySelectorAll("button").fo
 $("elRate").querySelectorAll("button").forEach(b=>b.onclick=async()=>{ const e=D.els[curEl], v=+b.dataset.v; e.r = (+e.r===v) ? 0 : v; await save(); drawRate(e); render(); });
 $("scoreCard").onclick=()=>{ const S=selfScore(); if(!S.n){ const i=D.els.findIndex(e=>e.items.length && !+e.r); openEl(i>=0?i:0); return; } const i=D.els.findIndex(e=>!+e.r); if(i>=0) openEl(i); else openPages(); };
 $("elLink").onchange=async()=>{ const e=D.els[curEl], raw=$("elLink").value.trim(), u=normLink(raw); if(raw&&!u){ toast("الرابط غير صحيح"); return; } e.link=u; if(!u){ e.fid=null; } $("elLink").value=u; await save(); render(); if(typeof drvElUI==="function") drvElUI(e); if(u) toast("✅ انحفظ الرابط، ويطلع باركود في صفحة العنصر"); };
-$("elW").onchange=async()=>{ const e=D.els[curEl], v=$("elW").value.replace(/[٠-٩]/g,d=>"٠١٢٣٤٥٦٧٨٩".indexOf(d)).replace(/[^0-9.]/g,""); e.w = v===""?"":Math.min(100,parseFloat(v)); await save(); render(); };
+$("elW").onchange=async()=>{ const e=D.els[curEl], v=$("elW").value.replace(/[٠-٩]/g,d=>"٠١٢٣٤٥٦٧٨٩".indexOf(d)).replace(/[^0-9.]/g,""); e.w = v===""?"":Math.min(100,parseFloat(v)); await save(); render(); drawGuide(e, elDef(e.k)); };
 $("renEl").onclick=async()=>{ const e=D.els[curEl]; const t=prompt("اسم العنصر:", e.t); if(t&&t.trim()){ e.t=t.trim(); await save(); openEl(curEl); render(); } };
 $("delEl").onclick=async()=>{ const e=D.els[curEl]; if(!confirm("حذف العنصر «"+e.t+"» وكل شواهده؟")) return; for(const it of e.items) for(const im of allImgIds(it)) await dbDel("img",im).catch(()=>{}); D.els.splice(curEl,1); await save(); closeM("mEl"); render(); };
 $("addEl").onclick=async()=>{ const t=prompt("اسم العنصر الخاص (مثال: النشاط الطلابي):"); if(t&&t.trim()){ D.els.push({k:"c_"+uid(), t:t.trim(), items:[]}); await save(); render(); openEl(D.els.length-1); } };
