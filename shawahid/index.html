@@ -945,7 +945,7 @@ function drawGuide(e, def){
   $("gSug").querySelectorAll(".chip").forEach((c,k)=>c.onclick=()=>{ const t=sug[k]; openEv(-1); $("evT").value=t; $("repType").value=repFor(D.els[curEl], t); });
   const nU=sug.filter(x=>used.has(x)).length;
   $("gProg").textContent = sug.length ? (nU ? "✓ أضفتي "+AR_DIG(nU)+" من "+AR_DIG(sug.length)+" شواهد مقترحة. " : "")+"اضغطي أي شاهد عشان تضيفينه." : "";
-  const FL=def ? FORMS.filter(F=>F.el===e.k) : []; $("gFormBox").classList.toggle("hidden", !FL.length);
+  const FL=def ? FORMS.filter(F=>F.el===e.k || (F.alt||[]).includes(e.k)) : []; $("gFormBox").classList.toggle("hidden", !FL.length);
   $("gForms").innerHTML = FL.map(F=>'<button type="button" class="chip" data-k="'+F.k+'">'+F.ic+' '+esc(fl(F.n))+'</button>').join("");
   $("gForms").querySelectorAll(".chip").forEach(c=>c.onclick=()=>openForm(c.dataset.k,{el:curEl}));
   $("gBody").classList.toggle("hidden", closed); $("gToggle").textContent = closed ? "عرض" : "إخفاء";
@@ -1093,7 +1093,7 @@ const FORMS = [
  {k:"idp", el:"prof", ic:"🧭", n:"خطة التطوير المهني الفردية", tk:"year", d:"احتياجاتك وأهدافك وإجراءات تطويرك خلال العام، ومؤشر لكل هدف. تتعبّى من تقييمك الذاتي.",
   f:[["year","t","العام الدراسي"],["strengths","a","نقاط القوة",null,{half:1}],["needs","a","فرص التحسين والاحتياجات",null,{half:1}]],
   tb:{label:"خطة التطوير", min:3, max:8, cols:[["area","t","مجال التطوير"],["goal","t","الهدف"],["act","t","الإجراءات والأنشطة"],["when","t","الموعد"],["ind","t","مؤشر التحقق"],["st","s","الحالة",{o:["لم يبدأ","جارٍ","منجز"]}]]}},
- {k:"action", el:"results", ic:"🔬", n:"البحث الإجرائي", tk:"title", d:"مشكلة صفية، والإجراءات اللي طبقتيها لحلها، والنتائج والتوصيات.",
+ {k:"action", el:"results", alt:["prof"], ic:"🔬", n:"البحث الإجرائي", tk:"title", d:"مشكلة صفية، والإجراءات اللي طبقتيها لحلها، والنتائج والتوصيات.",
   f:[["title","t","عنوان البحث","مثال: أثر التعلم باللعب في تحسين مهارة القراءة"],["sample","t","العينة","مثال: ٢٥ من {S} الصف ٢/أ"],["dur","t","مدة التطبيق","مثال: ٤ أسابيع"],["tools","t","أدوات القياس","مثال: اختبار قبلي وبعدي، بطاقة ملاحظة"],
      ["problem","p","مشكلة البحث"],["q","a","أسئلة البحث"],["sol","a","الإجراءات (الحل المقترح)",null,{half:1}],["results","a","النتائج",null,{half:1}],["rec","a","التوصيات"]],
   ex:{problem:"لاحظت ضعف عدد من {S} في مهارة مهمة في مادة {SUBJ}، وأثّر هذا على التحصيل والمشاركة في الحصة، فطبقت إجراءات منظمة لعلاجها وقست أثرها.",
@@ -1252,9 +1252,9 @@ function formCalc(F, v, rows){
 /* ===== قائمة النماذج ===== */
 function openForms(){
   const used={}; D.els.forEach(e=>e.items.forEach(it=>{ if(it.form) used[it.form.k]=(used[it.form.k]||0)+1; }));
-  let h=""; ELEMENTS.forEach((E,idx)=>{ const L=FORMS.filter(F=>F.el===E.k); if(!L.length) return; const ei=D.els.findIndex(e=>e.k===E.k);
-    h+='<div class="fgh">'+AR_DIG((ei>=0?ei:idx)+1)+'. '+esc(ei>=0?D.els[ei].t:E.t)+'</div><div class="fgrid">'+L.map(F=>'<button type="button" class="ftile" data-k="'+F.k+'"><i>'+F.ic+'</i><b>'+esc(fl(F.n))+'</b><small>'+esc(fl(F.d))+'</small>'+(used[F.k]?'<em>✓ عبّيتيه '+AR_DIG(used[F.k])+' مرة</em>':'')+'</button>').join("")+'</div>'; });
-  $("formsList").innerHTML=h; $("formsList").querySelectorAll(".ftile").forEach(b=>b.onclick=()=>{ closeM("mForms"); openForm(b.dataset.k); });
+  let h=""; ELEMENTS.forEach((E,idx)=>{ const L=FORMS.filter(F=>F.el===E.k || (F.alt||[]).includes(E.k)); if(!L.length) return; const ei=D.els.findIndex(e=>e.k===E.k);
+    h+='<div class="fgh">'+AR_DIG((ei>=0?ei:idx)+1)+'. '+esc(ei>=0?D.els[ei].t:E.t)+'</div><div class="fgrid">'+L.map(F=>'<button type="button" class="ftile" data-k="'+F.k+'" data-ei="'+ei+'"><i>'+F.ic+'</i><b>'+esc(fl(F.n))+'</b><small>'+esc(fl(F.d))+'</small>'+(used[F.k]?'<em>✓ عبّيتيه '+AR_DIG(used[F.k])+' مرة</em>':'')+'</button>').join("")+'</div>'; });
+  $("formsList").innerHTML=h; $("formsList").querySelectorAll(".ftile").forEach(b=>b.onclick=()=>{ closeM("mForms"); openForm(b.dataset.k, {el:+b.dataset.ei}); });
   openM("mForms");
 }
 
