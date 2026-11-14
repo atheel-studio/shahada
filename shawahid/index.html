@@ -1519,15 +1519,52 @@ function pagesPlan(){
   const els=D.els.map((e,i)=>({e,i})).filter(x=>D.showEmpty||x.e.items.length);
   const plan=[{type:"cover"},{type:"info"}];
   if(hasCV()) plan.push({type:"cv"}); if(hasVM()) plan.push({type:"vm"}); if(lines(D.goals).length) plan.push({type:"goals"});
-  plan.push({type:"toc"}); if(D.pCheck!==false) plan.push({type:"check"});
+  const tocAt=plan.length; if(D.pCheck!==false) plan.push({type:"check"});
   if(D.pSelf!==false && selfScore().n) plan.push({type:"self"}); if(hasMid()) plan.push({type:"mid"}); if(hasFin()) plan.push({type:"fin"});
-  const toc=[];
-  const pageOf={};
-  for(const x of els){ pageOf[x.i]=plan.length+1; toc.push({n:x.i+1, t:x.e.t, page:plan.length+1, cnt:x.e.items.length}); plan.push({type:"div", el:x}); x.e.items.forEach((it,j)=>{
+  for(const x of els){ plan.push({type:"div", el:x}); x.e.items.forEach((it,j)=>{
       if(it.form && FORM[it.form.k]){ fitForm(t,x,it,j).forEach(h=>plan.push({type:"html", el:x, it, j, html:h})); if(it.imgs.length) plan.push({type:"fimg", el:x, it, j}); return; }
       plan.push({type:"ev", el:x, it, j}); pdfRest(it).forEach(p=>plan.push({type:"pdfpg", el:x, it, j, id:p.id, k:p.k})); }); }
   if(D.sign!==false) plan.push({type:"sign"});
-  return {plan, toc, pageOf};
+  if(evCount()>0){ const groups=tocPack(t, tocRows(plan)); plan.splice(tocAt, 0, ...groups.map((rows,i)=>({type:"toc", rows, i, n:groups.length}))); }
+  const pg=new Map(), pageOf={};
+  plan.forEach((p,i)=>{ pg.set(p,i+1); if(p.type==="div") pageOf[p.el.i]=i+1; });
+  return {plan, pg, pageOf};
+}
+/* ===== الفهرس التلقائي ===== */
+const TOC_SEC={info:()=>D.g!=="m"?"بطاقة المعلمة":"بطاقة المعلم", cv:()=>"السيرة الذاتية", vm:()=>"رؤيتي ورسالتي", goals:()=>"أهداف المادة", check:()=>"قائمة شواهد الأداء الوظيفي", self:()=>"التقييم الذاتي", mid:()=>"المراجعة النصفية", fin:()=>"التقييم النهائي", sign:()=>"الاعتماد"};
+function tocRows(plan){ const rows=[], seen=new Set();
+  for(const p of plan){
+    if(TOC_SEC[p.type]) rows.push({k:"sec", t:TOC_SEC[p.type](), ref:p});
+    else if(p.type==="div") rows.push({k:"el", n:p.el.i+1, t:p.el.e.t, cnt:p.el.e.items.length, ref:p});
+    else if((p.type==="ev"||p.type==="html") && !seen.has(p.it)){ seen.add(p.it); const F=p.it.form&&FORM[p.it.form.k];
+      rows.push({k:"ev", n:p.j+1, t:p.it.t||(F?fl(F.n):"شاهد"), tag:F?"نموذج":(p.it.pdf?"PDF":""), ref:p}); }
+  }
+  return rows; }
+function tocCut(s, n){ s=(s||"").replace(/\s+/g," ").trim(); return s.length>n ? s.slice(0,n-1).trim()+"…" : s; }
+function tocHead(t, cont){ return '<div style="text-align:center;margin:'+(cont?'0 0 16px':'4px 0 20px')+'"><div style="font-size:'+(cont?26:34)+'px;font-weight:800;color:'+t.ink+'">فهرس الملف'+(cont?' <span style="font-size:17px;color:#9a8b7c;font-weight:600">(تابع)</span>':'')+'</div><div style="width:80px;height:4px;background:'+t.g+';margin:'+(cont?8:12)+'px auto 0;border-radius:2px"></div></div>'; }
+function tocRowHTML(t, r, page){
+  const lead='<div style="flex:1 1 24px;min-width:24px;border-bottom:2px dotted '+t.g2+';margin:0 8px 6px"></div>';
+  const pg='<div style="flex:0 0 auto;min-width:30px;text-align:left;font-weight:800;color:'+t.g+';font-size:'+(r.k==="ev"?15.5:18)+'px">'+AR_DIG(page)+'</div>';
+  if(r.k==="sec") return '<div style="display:flex;align-items:flex-end;padding:9px 6px 8px"><div style="flex:0 1 auto;white-space:nowrap;overflow:hidden;font-size:17.5px;font-weight:700;color:'+t.ink+'">'+esc(r.t)+'</div>'+lead+pg+'</div>';
+  if(r.k==="el") return '<div style="display:flex;align-items:center;gap:12px;padding:14px 6px 7px;border-top:1px solid #eee5d8"><div style="width:34px;height:34px;border-radius:10px;background:'+t.a+';color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex:0 0 34px">'+AR_DIG(r.n)+'</div><div style="flex:1;display:flex;align-items:flex-end;min-width:0"><div style="flex:0 1 auto;white-space:nowrap;overflow:hidden;font-size:18px;font-weight:800;color:'+t.ink+'">'+esc(tocCut(r.t,44))+' <span style="font-size:13.5px;color:#9a8b7c;font-weight:500">('+(r.cnt?AR_DIG(r.cnt)+" شاهد":"لا توجد شواهد")+')</span></div>'+lead+pg+'</div></div>';
+  return '<div style="display:flex;align-items:flex-end;padding:5px 6px 5px 6px;padding-right:52px;font-size:15.5px"><div style="flex:0 0 auto;color:'+t.g+';font-weight:800;margin-left:8px">'+AR_DIG(r.n)+'.</div><div style="flex:0 1 auto;white-space:nowrap;overflow:hidden;color:#3a332c">'+esc(tocCut(r.t,58))+(r.tag?' <span style="font-size:12px;color:'+t.ink+';background:'+t.soft+';border:1px solid '+t.g2+';border-radius:999px;padding:1px 8px;margin-right:4px">'+r.tag+'</span>':'')+'</div>'+lead+pg+'</div>';
+}
+function tocPack(t, rows){
+  if(!rows.length) return [[]];
+  if(!FMEAS){ FMEAS=document.createElement("div"); FMEAS.style.cssText="position:fixed;left:-30000px;top:0;width:"+(PW-112)+"px;direction:rtl;font-family:Tajawal,sans-serif;color:#2b2b2b;visibility:hidden;pointer-events:none"; document.body.appendChild(FMEAS); }
+  const H=PH-218-8;
+  try{
+    FMEAS.innerHTML='<div>'+tocHead(t,0)+'</div><div>'+tocHead(t,1)+'</div><div>'+rows.map(r=>tocRowHTML(t,r,888)).join("")+'</div>';
+    const ch=FMEAS.children, h0=ch[0].offsetHeight, h1=ch[1].offsetHeight, hs=[...ch[2].children].map(e=>e.offsetHeight||30);
+    if(!h0 || !hs.some(Boolean)) throw 0;
+    const pages=[]; let cur=[], used=h0;
+    for(let i=0;i<rows.length;i++){ const need=hs[i]+(rows[i].k==="el" && i+1<rows.length && rows[i+1].k==="ev" ? hs[i+1] : 0);
+      if(cur.length && used+need>H){ pages.push(cur); cur=[]; used=h1; }
+      cur.push(rows[i]); used+=hs[i]; }
+    if(cur.length) pages.push(cur);
+    return pages;
+  } catch(e){ const pages=[]; for(let i=0;i<rows.length;i+=24) pages.push(rows.slice(i,i+24)); return pages; }
+  finally { FMEAS.innerHTML=""; }
 }
 function frame(t, inner, n, total){
   return '<div class="pg" style="position:relative;width:'+PW+'px;height:'+PH+'px;background:#fff;overflow:hidden;font-family:Tajawal,sans-serif;direction:rtl;color:#2b2b2b">'+
@@ -1739,12 +1776,8 @@ function finHTML(t){ const fi=D.fin||{}, sn=(D.mid||{}).snap, S=selfScore(), ev=
   const cards=[["إجمالي الشواهد",AR_DIG(ev)],["العناصر المغطاة",AR_DIG(countDone())+" / "+AR_DIG(D.els.length)]].concat(S.n?[["التقييم الذاتي",NUM(S.avg,1)+" من ٥",21]]:[]).concat(sn?[["منذ المراجعة النصفية",(ev-sn.ev>=0?"+":"")+AR_DIG(ev-sn.ev)+" شاهد",20]]:[]);
   return titleBlk(t,"التقييم النهائي")+'<div style="text-align:center;font-size:16px;color:#7a6b5e;margin:-14px 0 18px">نهاية العام الدراسي '+esc(D.year||"")+'</div>'+statCards(t,cards)+
    bullets(t,"🏆 حصاد العام وأبرز الإنجازات",lines(fi.ach),7,0,15)+bullets(t,"📚 خطة النمو المهني للعام القادم",lines(fi.pd),6,true,15)+prinBox(t,3); }
-function tocHTML(t, toc){
-  return '<div style="text-align:center;margin:10px 0 26px"><div style="font-size:34px;font-weight:800;color:'+t.ink+'">فهرس الملف</div><div style="width:80px;height:4px;background:'+t.g+';margin:12px auto 0;border-radius:2px"></div></div>'+
-   toc.map(x=>'<div style="display:flex;align-items:center;gap:14px;padding:13px 6px;border-bottom:1px dashed #e5ddd0;font-size:18.5px">'+
-     '<div style="width:40px;height:40px;border-radius:12px;background:'+t.a+';color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;flex:0 0 40px">'+AR_DIG(x.n)+'</div>'+
-     '<div style="flex:1;font-weight:700">'+esc(x.t)+'<span style="font-size:14px;color:#9a8b7c;font-weight:500;margin-right:8px">('+(x.cnt?AR_DIG(x.cnt)+" شاهد":"لا توجد شواهد")+')</span></div>'+
-     '<div style="font-weight:800;color:'+t.g+'">'+AR_DIG(x.page)+'</div></div>').join("");
+function tocHTML(t, pl, pg){
+  return tocHead(t, pl.i>0)+'<div>'+pl.rows.map(r=>tocRowHTML(t, r, pg.get(r.ref)||"")).join("")+'</div>';
 }
 function divHTML(t, x){
   const e=x.e, def=elDef(e.k);
@@ -1810,12 +1843,12 @@ function signHTML(t){
    '<div style="margin:80px auto 0;width:150px;height:150px;border:2px dashed '+t.g2+';border-radius:50%;display:flex;align-items:center;justify-content:center;color:#b9ad9d;font-size:15px">ختم المدرسة</div>';
 }
 async function buildPages(){
-  const t=THEMES[D.theme]||THEMES.gold, {plan,toc,pageOf}=pagesPlan(), total=plan.length, out=[];
+  const t=THEMES[D.theme]||THEMES.gold, {plan,pg,pageOf}=pagesPlan(), total=plan.length, out=[];
   for(let p=0;p<plan.length;p++){
     const pl=plan[p], n=p+1;
     if(pl.type==="cover") out.push(coverHTML(t));
     else if(pl.type==="info") out.push(frame(t, infoHTML(t), n, total));
-    else if(pl.type==="toc") out.push(frame(t, tocHTML(t,toc), n, total));
+    else if(pl.type==="toc") out.push(frame(t, tocHTML(t,pl,pg), n, total));
     else if(pl.type==="cv") out.push(frame(t, cvHTML(t), n, total));
     else if(pl.type==="vm") out.push(frame(t, vmHTML(t), n, total));
     else if(pl.type==="goals") out.push(frame(t, goalsHTML(t), n, total));
