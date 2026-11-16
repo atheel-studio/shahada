@@ -1297,7 +1297,24 @@ $("save").onclick=()=>{
 };
 
 /* ================= التصدير ================= */
-function cloneFix(doc){
+/* html2canvas يكسر تشكيل الحروف العربية لما تلتصق بالأرقام أو بالحروف اللاتينية (مثل ١٤٤٨هـ) فتطلع «١٤٤٨ه.».
+   الحل: نحط الجزء العربي الملتصق في span لحاله قبل التصوير. */
+function fixShaping(root){
+  const NUM=/[0-9٠-٩۰-۹]/, AR=/[ء-غف-يـٱ-ۓ]/, LAT=/[A-Za-z]/;
+  const doc=root.ownerDocument||document, w=doc.createTreeWalker(root, 4), list=[];
+  while(w.nextNode()){ const t=w.currentNode.nodeValue; if(AR.test(t) && (NUM.test(t)||LAT.test(t))) list.push(w.currentNode); }
+  for(const node of list){
+    const toks=node.nodeValue.match(/[0-9٠-٩۰-۹]+|[A-Za-z]+|\s+|[^\sA-Za-z0-9٠-٩۰-۹]+/g); if(!toks) continue;
+    const kind=s=>/^\s+$/.test(s)?"s":(NUM.test(s[0])||LAT.test(s[0]))?"n":"a";
+    let changed=false; const frag=doc.createDocumentFragment();
+    toks.forEach((s,i)=>{ const k=kind(s), pk=i?kind(toks[i-1]):"", nk=i<toks.length-1?kind(toks[i+1]):"";
+      if(k==="a" && AR.test(s) && (pk==="n"||nk==="n")){ const sp=doc.createElement("span"); sp.style.whiteSpace="nowrap"; sp.textContent=s; frag.appendChild(sp); changed=true; }
+      else frag.appendChild(doc.createTextNode(s)); });
+    if(changed) node.parentNode.replaceChild(frag, node);
+  }
+}
+function cloneFix(doc, el){
+  if(el) fixShaping(el);
   const t=TH(D.theme);
   doc.querySelectorAll("#renderBox .title").forEach(el=>{ el.style.background="none"; const col=getComputedStyle(el).webkitTextFillColor;
     const c=(D.layout==="kids"?t.t1:t.t2); el.style.webkitTextFillColor=c; el.style.color=c; });
