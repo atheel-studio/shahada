@@ -228,6 +228,55 @@ h3.sec{font-size:15px;color:var(--brand2);margin:20px 4px 8px;font-weight:800}
 .fsum b{display:block;font-size:15px;color:var(--ink);margin-top:2px;line-height:1.4}
 .ev .im.fm{font-size:26px;background:#f6ece8}
 .upProg{font-size:12.5px;color:var(--brand2);margin-top:8px;min-height:18px;text-align:center}
+/* ===== ✨ الملف الجاهز بضغطة ===== */
+.smart{position:relative;overflow:hidden;margin-top:12px;border-radius:18px;padding:14px 14px;display:flex;align-items:center;gap:12px;cursor:pointer;color:#3a2a10;background:linear-gradient(120deg,#fff4dc,#f7e0b0 55%,#f3d39a);border:1px solid #ecd09a;box-shadow:0 8px 22px rgba(160,110,30,.18)}
+.smart:after{content:"";position:absolute;top:0;bottom:0;width:60px;left:-80px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.65),transparent);transform:skewX(-20deg);animation:shine 3.6s ease-in-out infinite}
+@keyframes shine{0%,60%{left:-80px}100%{left:110%}}
+.smart .sIc{width:46px;height:46px;flex:0 0 46px;border-radius:14px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:0 3px 10px rgba(160,110,30,.2)}
+.smart .sTx{flex:1;min-width:0}.smart b{display:block;font-size:15.5px;line-height:1.5}.smart span{display:block;font-size:12.5px;line-height:1.7;color:#6d5320}
+.smart .sGo{font-size:20px;color:#a07a2c}
+.smart.has{background:linear-gradient(120deg,#f4fbf6,#e2f2e7);border-color:#bfe0c9;box-shadow:0 8px 22px rgba(31,122,74,.12);color:#173d29}.smart.has span{color:#3f6b52}.smart.has .sGo{color:#2f7a52}
+#mAuto{z-index:45}
+#mAuto .sheet{padding-bottom:0}
+.awDots{display:flex;gap:5px;margin-left:6px}.awDots i{width:22px;height:5px;border-radius:5px;background:#eadfdc}.awDots i.on{background:var(--brand)}.awDots i.ok{background:#c9a79e}
+#awBody{padding-bottom:calc(16px + env(safe-area-inset-bottom))}
+.awEl,.awGrp{border:1px solid var(--line);border-radius:14px;padding:10px 11px;margin-top:9px;background:#fff}
+.awH{display:flex;align-items:center;gap:8px}.awH i{font-style:normal;flex:0 0 26px;height:26px;border-radius:8px;background:#F3E8E3;color:var(--brand);font-size:12.5px;font-weight:800;display:flex;align-items:center;justify-content:center}
+.awH b{flex:1;font-size:14px;line-height:1.5}.awH em{font-style:normal;font-size:11.5px;color:var(--ok);font-weight:700}
+.chip.on{background:var(--brand);border-color:var(--brand);color:#fff}
+.chip[disabled]{opacity:.75;cursor:default}
+.awFoot{position:sticky;bottom:0;display:flex;gap:8px;background:linear-gradient(transparent,#fff 28%);padding:18px 0 4px;margin-top:6px}
+.awFoot .btn{flex:1}.awFoot .b-go{flex:2}
+.b-go{background:linear-gradient(135deg,#6d5552,#3f2d2b);color:#fff;box-shadow:0 8px 18px rgba(94,71,68,.3)}
+.awCv{margin-top:6px;min-height:200px}
+.awTh{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}
+.awTh button{border:2px solid transparent;background:#faf7f6;border-radius:12px;padding:5px 3px;cursor:pointer;font-size:10.5px;font-weight:700;color:#6d5552}
+.awTh button.on{border-color:var(--brand)}.awTh i{display:block;height:28px;border-radius:8px;margin-bottom:3px}
+.awGen{text-align:center;padding:10px 0 20px}
+.awRing{position:relative;width:96px;height:96px;margin:6px auto 8px}.awRing svg{transform:rotate(-90deg)}.awRing circle{transition:stroke-dashoffset .15s}
+.awRing b{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;color:var(--brand)}
+.awNow{font-size:14px;font-weight:700;color:var(--brand);min-height:22px}
+.awList{max-height:46vh;overflow:auto;margin-top:12px;text-align:right;border:1px solid var(--line);border-radius:14px;padding:6px 10px}
+.awList div{display:flex;align-items:center;gap:8px;font-size:13px;padding:6px 0;color:#b3a29d;border-bottom:1px dashed #f0e6e2;transition:color .2s}
+.awList div:last-child{border:none}.awList div i{font-style:normal;width:20px;text-align:center}
+.awList div small{margin-right:auto;font-size:11px;color:#c9b6b0}
+.awList div.ok{color:var(--ink)}.awList div.ok i{color:var(--ok);font-weight:800}
+.awSum{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:4px}
+.awSum div{background:#f6fbf7;border:1px solid #cfe8d6;border-radius:14px;padding:10px 4px;text-align:center}
+.awSum div.w{background:#fff7e6;border-color:#f0d8a4}
+.awSum b{display:block;font-size:22px;font-weight:800;color:var(--brand)}.awSum span{font-size:11.5px;color:#8a7570}
+.tip.ok{background:#f2faf4;border-color:#bfe0c9;color:#1f5a3a}
+.awIt{display:flex;gap:10px;align-items:flex-start;padding:10px 0 2px;border-top:1px dashed #f0e6e2;margin-top:8px}
+.awIt .im{width:54px;height:54px;flex:0 0 54px;border-radius:11px;background:#f6efe9 center/cover;display:flex;align-items:center;justify-content:center;font-size:20px;color:#c9b6b0}
+.awIt .tx{flex:1;min-width:0}.awIt .tx b{display:block;font-size:14px;line-height:1.5}.awIt .tx p{font-size:12px;color:#9a8580}
+.awIt .st{display:inline-block;margin:4px 0 0 4px;font-size:11px;font-weight:700;border-radius:999px;padding:2px 8px;background:#f3eeec;color:#7b6763}
+.awIt .st.w{background:#fff3dc;color:#8a5a12}.awIt .st.ok{background:#e9f5ed;color:#1f6a40}
+.awIt .bt{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+.awIt .b{border:none;background:#f3eeec;border-radius:9px;width:34px;height:30px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;margin:0}
+.awIt label.b{background:#fff3dc}
+.awUndo{display:block;width:100%;border:none;background:none;color:#a08a84;font-size:12.5px;margin-top:10px;cursor:pointer;text-decoration:underline}
+.qrBox{display:flex;gap:12px;align-items:center;margin-top:10px;background:#fff;border:1px solid #e5efe8;border-radius:12px;padding:10px}
+.qrBox img{border-radius:6px}.qrBox b{display:block;font-size:14px}.qrBox span{display:block;font-size:12px;color:#6b7d72;line-height:1.7;margin:2px 0 6px}.qrBox .btn{padding:7px 10px;font-size:12.5px}
 </style>
 </head>
 <body>
@@ -255,6 +304,7 @@ h3.sec{font-size:15px;color:var(--brand2);margin:20px 4px 8px;font-weight:800}
     <div class="ring"><svg width="74" height="74"><circle cx="37" cy="37" r="31" stroke="rgba(255,255,255,.2)" stroke-width="8" fill="none"/><circle id="ringC" cx="37" cy="37" r="31" stroke="#f0cf6a" stroke-width="8" fill="none" stroke-linecap="round" stroke-dasharray="194.8" stroke-dashoffset="194.8" style="transition:stroke-dashoffset .5s"/></svg><b id="ringT">0/11</b></div>
     <div><h2 id="heroT">ابدئي بجمع شواهدك ✨</h2><p id="heroP">اختاري أي عنصر، وأضيفي صور الشواهد ووصف بسيط. وفي النهاية يطلع لك ملف PDF مرتب وجاهز.</p><span class="hstat hidden" id="heroStat"></span> <span class="streak hidden" id="streak"></span></div>
   </div>
+  <div class="smart" id="smartCard"><div class="sIc">✨</div><div class="sTx"><b id="smartT">✨ جهّزي ملفك كامل بضغطة</b><span id="smartP"></span></div><div class="sGo">‹</div></div>
   <button class="btn b-main upbtn" id="bUp">⬆️ رفع شاهد<small>صورة، أو ملف PDF، أو لقطة شاشة، وتختارين عنصره</small></button>
   <div class="lic" id="lic"></div>
   <div class="score hidden" id="scoreCard"><div class="sc" id="scoreN">—</div><div><b id="scoreT"></b><span id="scoreP"></span></div></div>
@@ -336,7 +386,9 @@ h3.sec{font-size:15px;color:var(--brand2);margin:20px 4px 8px;font-weight:800}
     <div class="two"><div><label>المستفيدون</label><input id="repWho" placeholder="مثال: طالبات ٤/أ"></div><div><label>المكان</label><input id="repWhere" placeholder="مثال: الفصل"></div></div>
     <label>الأهداف</label><textarea id="repGoals" placeholder="هدف في كل سطر"></textarea>
     <label>النتائج والأثر</label><textarea id="repRes" placeholder="نتيجة في كل سطر"></textarea>
-    <button type="button" class="magic" id="repMagic">✨ عبّي التقرير بنص جاهز</button>
+    <label>خطوات التنفيذ (اختياري)</label><textarea id="repSteps" placeholder="خطوة في كل سطر"></textarea>
+    <label>التوصيات (اختياري)</label><textarea id="repRec" placeholder="توصية في كل سطر" style="min-height:70px"></textarea>
+    <button type="button" class="magic" id="repMagic">✨ اكتبي لي التقرير كامل</button>
     <div class="hint">أكثر من ٤٠ نوع تقرير، والنوع يتغير تلقائي حسب المثال اللي تختارينه. الوصف اللي فوق يطلع في التقرير كـ«وصف التنفيذ»، والنص الجاهز تقدرين تعدلينه براحتك.</div>
   </div>
   <div class="row"><button class="btn b-main" id="evSave">✅ حفظ الشاهد</button></div>
@@ -508,6 +560,11 @@ h3.sec{font-size:15px;color:var(--brand2);margin:20px 4px 8px;font-weight:800}
   </ol>
   <div class="tip">⚠️ الآيفون يحفظ بيانات التطبيق المثبت لحالها. لو عندك شواهد هنا، احفظي <b>نسخة احتياطية</b> من «⋯ المزيد» قبل، واسترجعيها داخل التطبيق بعد التثبيت.</div>
   <div class="row"><button class="btn b-main" data-close>تمام 👍</button></div>
+</div></div>
+
+<div class="modal" id="mAuto"><div class="sheet">
+  <div class="sh"><h4 id="awTitle">✨ ملفك بضغطة</h4><div class="awDots" id="awDots"></div><button class="x" data-close>✕</button></div>
+  <div id="awBody"></div>
 </div></div>
 
 <div id="stage"></div>
@@ -797,7 +854,7 @@ function qrImg(url, size, col){ try{ const q=qrcode(0,"M"); q.addData(url); q.ma
   return '<img src="'+c.toDataURL("image/png")+'" style="width:'+size+'px;height:'+size+'px;display:block">'; }catch(e){ return ""; } }
 const shortUrl=u=>{ try{ const x=new URL(u); return (x.hostname.replace(/^www\./,"")+x.pathname).slice(0,46)+((x.hostname+x.pathname).length>46?"…":""); }catch(e){ return u.slice(0,46); } };
 const lines=t=>String(t||"").split(/\n/).map(x=>x.trim().replace(/^[•\-–\*]\s*/,"")).filter(Boolean);
-function gS(t, g){ return t.replace(/\{S\}/g, g==="m"?"الطلاب":"الطالبات").replace(/المتعثرات/g,g==="m"?"المتعثرين":"المتعثرات").replace(/المتميزات/g,g==="m"?"المتميزين":"المتميزات").replace(/الموهوبات/g,g==="m"?"الموهوبين":"الموهوبات").replace(/المتفوقات/g,g==="m"?"المتفوقين":"المتفوقات").replace(/زميلاتي/g,g==="m"?"زملائي":"زميلاتي").replace(/تستخدمينها/g,g==="m"?"تستخدمها":"تستخدمينها").replace(/فصلك/g,"فصلك").replace(/تخطيطك/g,"تخطيطك").replace(/التزامك/g,"التزامك").replace(/خططك/g,"خططك").replace(/تواصلك/g,"تواصلك").replace(/نموّك/g,"نموّك"); }
+function gS(t, g){ return t.replace(/\{S\}/g, g==="m"?"الطلاب":"الطالبات").replace(/لل(متعثر|متميز|موهوب|متفوق)ات/g, g==="m"?"لل$1ين":"لل$1ات").replace(/المتعثرات/g,g==="m"?"المتعثرين":"المتعثرات").replace(/المتميزات/g,g==="m"?"المتميزين":"المتميزات").replace(/الموهوبات/g,g==="m"?"الموهوبين":"الموهوبات").replace(/المتفوقات/g,g==="m"?"المتفوقين":"المتفوقات").replace(/زميلاتي/g,g==="m"?"زملائي":"زميلاتي").replace(/تستخدمينها/g,g==="m"?"تستخدمها":"تستخدمينها").replace(/فصلك/g,"فصلك").replace(/تخطيطك/g,"تخطيطك").replace(/التزامك/g,"التزامك").replace(/خططك/g,"خططك").replace(/تواصلك/g,"تواصلك").replace(/نموّك/g,"نموّك"); }
 
 /* ===== الألوان ===== */
 const THEMES = {
@@ -899,6 +956,7 @@ async function render(){
     $("scoreP").textContent="افتحي أي عنصر وقيّمي نفسك من ١ إلى ٥، ويحسب لك الملف تقديرك حسب أوزان العناصر."; }
   else sc.classList.add("hidden");
   const pg=[]; if(hasCV()) pg.push("السيرة الذاتية"); if(hasVM()) pg.push("الرؤية والرسالة"); if(lines(D.goals).length) pg.push("أهداف المادة"); if(D.pCheck) pg.push("قائمة الشواهد"); if(D.pSelf!==false&&S.n) pg.push("التقييم الذاتي"); if(hasMid()) pg.push("المراجعة النصفية"); if(hasFin()) pg.push("التقييم النهائي");
+  smartCard();
   $("pagesSub").textContent = pg.length ? "✓ في ملفك: "+pg.join("، ") : "وقائمة الشواهد والأوزان";
 }
 const hasCV=()=>{ const c=D.cv||{}; return !!(c.qual||c.exp||c.mail||lines(c.courses).length||lines(c.awards).length); };
@@ -909,7 +967,7 @@ document.querySelectorAll(".modal").forEach(m=>{ m.addEventListener("click",ev=>
 
 /* ===== العنصر ===== */
 async function openEl(i){
-  curEl=i; const e=D.els[i], def=elDef(e.k);
+  curEl=i; autoRet=0; const e=D.els[i], def=elDef(e.k);
   $("elTitle").textContent = AR_DIG(i+1)+". "+e.t;
   $("elHint").textContent = def ? "أضيفي شاهد أو أكثر، ولكل شاهد صوره أو ملف PDF ووصفه." : "عنصر خاص أضفتيه. أضيفي شواهده بنفس الطريقة.";
   drawGuide(e, def);
@@ -974,7 +1032,7 @@ function openEv(j){
   $("repType").innerHTML = Object.entries(REPORTS).map(([k,r])=>'<option value="'+k+'">'+esc(fillT(r.n,""))+'</option>').join("");
   const r = it&&it.rep ? it.rep : null; tmpRep = r?1:0; seg("repSeg", String(tmpRep));
   $("repType").value = r ? r.type : repFor(e, it?it.t:"");
-  $("repWho").value = r?(r.who||""):""; $("repWhere").value = r?(r.where||""):""; $("repGoals").value = r?(r.goals||""):""; $("repRes").value = r?(r.res||""):"";
+  $("repWho").value = r?(r.who||""):""; $("repWhere").value = r?(r.where||""):""; $("repGoals").value = r?(r.goals||""):""; $("repRes").value = r?(r.res||""):""; $("repSteps").value = r?(r.steps||""):""; $("repRec").value = r?(r.rec||""):""; tmpAV=0;
   $("repBox").classList.toggle("hidden", !tmpRep);
   const used=new Set(e.items.map(x=>x.t));
   $("evSug").innerHTML = def ? def.s.map(s=>gS(s,D.g)).map(s=>'<button type="button" class="chip'+(used.has(s)?' used':'')+'">'+esc(s)+'</button>').join("") : "";
@@ -1037,28 +1095,33 @@ async function pdfToImgs(file, onMsg){
   return {name:(file.name||"ملف.pdf"), pages, n};
 }
 $("evToday").onclick=()=>{ $("evDate").value=todayHijri(); };
-let tmpRep=0;
+let tmpRep=0, tmpAV=0;
 document.querySelectorAll("#repSeg button").forEach(b=>b.onclick=()=>{ tmpRep=+b.dataset.v; seg("repSeg",String(tmpRep)); $("repBox").classList.toggle("hidden",!tmpRep);
   if(tmpRep && !$("repWho").value){ const f=D.g!=="m"; $("repWho").value = D.grades ? (f?"طالبات ":"طلاب ")+D.grades : (f?"الطالبات":"الطلاب"); }
   if(tmpRep && !$("repGoals").value && !$("repRes").value) $("repMagic").click(); });
-$("evMagic").onclick=()=>{ const e=D.els[curEl], t=$("evT").value.trim(), tp=tmpRep?$("repType").value:repFor(e,t);
+function magicRep(){ const e=D.els[curEl], t=$("evT").value.trim(), def=elDef(e.k), raw=(def&&def.s.find(x=>gS(x,D.g)===t))||t;
+  if(tmpRep && SUG_REP[raw] && $("repType").value===(EL_REP[e.k]||"general")) $("repType").value=SUG_REP[raw];
+  const N=autoReport(e.k, raw, seedInt((CODE||"")+raw,7)+tmpAV, tmpRep?$("repType").value:null); tmpAV++; return N; }
+$("evMagic").onclick=()=>{ const t=$("evT").value.trim();
   if(!t){ $("evT").focus(); toast("اكتبي عنوان الشاهد أول، أو اختاري من الأمثلة"); return; }
-  if($("evD").value.trim() && !confirm("أستبدل الوصف الحالي بنص جاهز؟")) return;
-  $("evD").value = fillT(REPORTS[tp].desc, t); toast("✨ عدّلي عليه براحتك"); };
-$("repMagic").onclick=()=>{ const t=$("evT").value.trim(), R=REPORTS[$("repType").value];
+  if(!tmpAV && $("evD").value.trim() && !confirm("أستبدل الوصف الحالي بنص جاهز؟")) return;
+  $("evD").value = magicRep().d; toast("✨ عدّلي عليه براحتك، واضغطي مرة ثانية لصياغة غيرها"); };
+$("repMagic").onclick=()=>{ const t=$("evT").value.trim();
   if(!t){ $("evT").focus(); toast("اكتبي عنوان الشاهد أول، أو اختاري من الأمثلة"); return; }
-  if(($("repGoals").value.trim()||$("repRes").value.trim()) && !confirm("أستبدل نص التقرير الحالي بنص جاهز؟")) return;
-  $("repGoals").value=fillT(R.goals,t); $("repRes").value=fillT(R.res,t); if(!$("repWhere").value&&R.where) $("repWhere").value=R.where;
-  if(!$("evD").value.trim()) $("evD").value=fillT(R.desc,t); toast("✨ تعبّى التقرير، عدّلي عليه براحتك"); };
+  if(!tmpAV && ($("repGoals").value.trim()||$("repRes").value.trim()) && !confirm("أستبدل نص التقرير الحالي بنص جاهز؟")) return;
+  const N=magicRep(), r=N.rep; $("repGoals").value=r.goals; $("repRes").value=r.res; $("repSteps").value=r.steps; $("repRec").value=r.rec;
+  if(!$("repWhere").value&&r.where) $("repWhere").value=r.where; if(!$("repWho").value&&r.who) $("repWho").value=r.who;
+  if(!$("evD").value.trim() || tmpAV>1) $("evD").value=N.d; toast(tmpAV>1?"🔄 صياغة ثانية":"✨ تعبّى التقرير، واضغطي مرة ثانية لصياغة غيرها"); };
 $("evSave").onclick=async()=>{
   const t=$("evT").value.trim(); if(!t){ $("evT").focus(); toast("اكتبي عنوان الشاهد"); return; }
   const rawL=$("evLink").value.trim(), link=normLink(rawL); if(rawL&&!link){ $("evLink").focus(); toast("الرابط غير صحيح، تأكدي منه"); return; }
-  const rep = tmpRep ? {type:$("repType").value, who:$("repWho").value.trim(), where:$("repWhere").value.trim(), goals:$("repGoals").value.trim(), res:$("repRes").value.trim()} : null;
+  const rep = tmpRep ? {type:$("repType").value, who:$("repWho").value.trim(), where:$("repWhere").value.trim(), goals:$("repGoals").value.trim(), res:$("repRes").value.trim(), steps:$("repSteps").value.trim(), rec:$("repRec").value.trim()} : null;
   const e=D.els[curEl], obj={id:curEv>=0?e.items[curEv].id:uid(), t, d:$("evD").value.trim(), dt:$("evDate").value.trim(), imgs:tmpPh.slice(), link, rep, pdf:tmpPdf?{...tmpPdf, pages:tmpPdf.pages.slice()}:null};
   if(curEv>=0 && e.items[curEv].form) obj.form=e.items[curEv].form;
+  if(curEv>=0 && e.items[curEv].auto) obj.auto={...e.items[curEv].auto, ed:1};
   const before=stats(), isNew=curEv<0;
   if(curEv>=0){ const keep=new Set(allImgIds(obj)), old=allImgIds(e.items[curEv]).filter(x=>!keep.has(x)); for(const im of old) await dbDel("img",im).catch(()=>{}); e.items[curEv]=obj; } else e.items.push(obj);
-  await save(); closeM("mEv"); await openEl(curEl); render();
+  await save(); closeM("mEv"); if(autoRet && $("mAuto").classList.contains("open")){ autoRet=0; drawBoard(); } else { autoRet=0; await openEl(curEl); } render();
   if(isNew){ markActivity(); clearNudge(); if(!milestone(before, stats())) toast("✅ انحفظ الشاهد"); } else toast("✅ انحفظ الشاهد");
 };
 
@@ -1799,7 +1862,8 @@ function photoGrid(urls, H){ const n=urls.length; if(!n) return "";
   if(n===2) return '<div style="display:flex;gap:12px">'+box(urls[0],H,"50%")+box(urls[1],H,"50%")+'</div>';
   if(n===3) return '<div style="display:flex;gap:12px">'+box(urls[0],H,"33.3%")+box(urls[1],H,"33.3%")+box(urls[2],H,"33.3%")+'</div>';
   return '<div style="display:flex;flex-direction:column;gap:10px"><div style="display:flex;gap:10px">'+box(urls[0],(H-10)/2,"50%")+box(urls[1],(H-10)/2,"50%")+'</div><div style="display:flex;gap:10px">'+box(urls[2],(H-10)/2,"50%")+box(urls[3],(H-10)/2,"50%")+'</div></div>'; }
-function repHTML(t, x, it, j, urls){ const r=it.rep, R=REPORTS[r.type]||REPORTS.general, f=D.g!=="m", RN=fillT(R.n,"");
+function repHTML(t, x, it, j, urls){ return repHTML2(t, x, it, j, urls); }
+function repHTML0(t, x, it, j, urls){ const r=it.rep, R=REPORTS[r.type]||REPORTS.general, f=D.g!=="m", RN=fillT(R.n,"");
   const cells=[[f?"المنفذة":"المنفذ",D.name],["التاريخ",it.dt],["المستفيدون",r.who],["المكان",r.where],["العنصر",x.e.t],["المادة",D.subj]].filter(c=>c[1]).slice(0,6);
   const G=lines(r.goals), Rs=lines(r.res), dl=it.d?Math.ceil(it.d.length/64):0, tl=G.reduce((a,l)=>a+Math.ceil(l.length/30),0), rl=Rs.reduce((a,l)=>a+Math.ceil(l.length/30),0);
   const textH = Math.max(tl,rl)*27+60 + (it.d?dl*28+60:0), cellsH=Math.ceil(cells.length/2)*44+10, signH=80, qrH=it.link?124:0;
@@ -2155,6 +2219,7 @@ $("bDrvShare").onclick=async()=>{ const tok=needTok(); if(!tok) return; const bo
     box.innerHTML=(pub?"✅ هذا رابط ملفك، أي أحد معه الرابط يقدر يفتحه:":"✅ انرفع الملف. ⚠️ حسابك ما سمح بالمشاركة بالرابط، فاللي يفتحه بيطلب صلاحية منك.")+
       '<input id="shareUrl" readonly value="'+esc(link)+'"><div class="row" style="margin-top:6px"><button class="btn b-light" id="shCopy" type="button">📋 نسخ الرابط</button><a class="btn b-wa" id="shWa" target="_blank" rel="noopener">واتساب</a></div>';
     box.classList.remove("hidden");
+    box.insertAdjacentHTML("beforeend",'<div class="qrBox">'+qrImg(link,120,"#2b201e")+'<div><b>📲 باركود ملفك</b><span>اطبعيه على غلاف ملفك الورقي أو أرسليه للمديرة، ويفتح الملف من الجوال.</span><a class="btn b-light" id="qrDl" download="باركود-ملف-الشواهد.png">⬇️ حفظ الباركود</a></div></div>'); $("qrDl").href=box.querySelector(".qrBox img").src;
     $("shWa").href="https://wa.me/?text="+encodeURIComponent((D.g!=="m"?"ملف شواهد الأداء الوظيفي للمعلمة ":"ملف شواهد الأداء الوظيفي للمعلم ")+(D.name||"")+"\n"+link);
     $("shCopy").onclick=async()=>{ try{ await navigator.clipboard.writeText(link); }catch(x){ $("shareUrl").select(); try{ document.execCommand("copy"); }catch(y){} } toast("✅ انتسخ الرابط"); };
   }catch(x){ $("expProg").classList.add("hidden"); if(x.message!=="libs") $("expMsg").textContent="⚠️ "+drvErr(x); } };
@@ -2217,6 +2282,420 @@ async function boot(){
 }
 $("codeGo").onclick=async()=>{ const c=await checkCode($("codeIn").value); if(c) launch(c); else $("codeErr").textContent="الكود غير صحيح، تأكدي منه وجربي مرة ثانية."; };
 $("codeIn").onkeydown=e=>{ if(e.key==="Enter") $("codeGo").click(); };
+
+/* ===== ✨ الملف الجاهز بضغطة: محرك صياغة التقارير =====
+   كل تقرير ينبني من: وصف التنفيذ + خطوات التنفيذ + الأهداف + النتائج + التوصيات.
+   الصياغة تتغير حسب: المادة، والمرحلة، وجنس المعلم، ورقم الصياغة (زر «صياغة ثانية»)، والكود (عشان ما تتشابه ملفات المعلمات).
+   الرموز: {S} الطالبات/الطلاب · {H} ـهن/ـهم · {COL} الزميلات/الزملاء · {TCH} المعلمة/المعلم · {SUBJ} المادة · {SK} مهارة من المادة · {T} عنوان الشاهد */
+const AX={
+ duty_att:{d:["حرصتُ على الحضور قبل بداية اليوم الدراسي والانصراف في الموعد الرسمي، مع أداء الحصص كاملة في أوقاتها والالتزام بالجدول المدرسي، وتوثيق الحضور في السجل المعتمد.","تم الالتزام بالدوام الرسمي حضوراً وانصرافاً، والبدء في الحصص فور دخول الفصل واستثمار زمنها كاملاً، مع الالتزام بالأنظمة والتعليمات المنظمة للعمل."],
+  st:["الحضور قبل بداية الطابور الصباحي.","التوقيع في سجل الحضور والانصراف في الوقت المحدد.","الدخول إلى الحصص في مواعيدها دون تأخير.","استثمار زمن الحصة كاملاً في التعلم.","الالتزام بالتعاميم والتعليمات المنظمة للدوام."],
+  g:["احترام وقت {S} وحق{H} في التعلم.","تحقيق الانتظام في تنفيذ الخطة الدراسية."], r:["عدم تسجيل تأخر أو غياب بغير عذر.","تنفيذ الخطة الدراسية في وقتها دون فاقد تعليمي."],
+  rc:["الاستمرار في الانضباط وتوثيقه في سجل الحضور.","تعزيز ثقافة الالتزام بالوقت لدى {S} بالقدوة."]},
+ duty_watch:{d:["نُفّذت المناوبة اليومية والإشراف وفق الجدول المعتمد من إدارة المدرسة، بمتابعة {S} في الساحات والممرات ووقت الفسحة والانصراف، والتعامل مع المواقف الطارئة بحكمة وإبلاغ الإدارة بما يلزم."],
+  st:["الاطلاع على جدول المناوبة والمواقع المحددة.","الحضور إلى موقع الإشراف في الوقت المحدد.","متابعة سلوك {S} وسلامت{H} في الساحات والممرات.","التأكد من انصراف {S} بأمان مع أولياء الأمور.","رصد الملاحظات وإبلاغ الإدارة بها."],
+  g:["الإسهام في انضباط اليوم الدراسي.","حماية {S} من السلوكيات الخطرة."], r:["انتظام الدخول والانصراف دون ازدحام.","الحد من السلوكيات السلبية في أوقات الفسحة."],
+  rc:["تفعيل لوحة إرشادية لسلوكيات الفسحة الآمنة.","تبادل ملاحظات المناوبة مع {COL} أسبوعياً."]},
+ duty_wait:{d:["تم تنفيذ حصص الانتظار المسندة واستثمارها في أنشطة تعليمية قصيرة، مثل مسابقات المعلومات وتنمية مهارات القراءة والتفكير، بما يحافظ على انضباط الفصل ويحقق الفائدة لـ{S}."],
+  st:["استلام جدول حصص الانتظار من الوكالة.","التوجه للفصل في بداية الحصة مباشرة.","تنفيذ نشاط قصير هادف (مسابقة، قراءة، لغز تفكير).","المحافظة على الهدوء والانضباط حتى نهاية الحصة.","تسجيل الحصة في سجل حصص الانتظار."],
+  g:["تقليل الهدر في الوقت المدرسي."], r:["حصص انتظار هادفة بدلاً من الفراغ.","تفاعل إيجابي من {S} مع الأنشطة القصيرة."],
+  rc:["إعداد حقيبة أنشطة جاهزة لحصص الانتظار.","ربط أنشطة الانتظار بالمواد الأساسية عند الإمكان."]},
+ duty_comm:{d:["تمت المشاركة الفاعلة في «{T}»، بحضور الاجتماعات الدورية، والإسهام في إعداد الخطة وتوزيع المهام، وتنفيذ ما أُسند من أعمال في وقتها، ورفع ما يلزم من محاضر وتقارير."],
+  st:["حضور الاجتماع الأول واستلام المهام.","الإسهام في إعداد خطة اللجنة وجدولها الزمني.","تنفيذ المهام المسندة ومتابعتها.","توثيق الأعمال في محاضر الاجتماعات.","تقديم المقترحات لتطوير عمل اللجنة."],
+  g:["تفعيل العمل التشاركي في المدرسة."], r:["إنجاز أعمال اللجنة وفق الخطة.","توثيق منظم لأعمال اللجنة."],
+  rc:["تقييم أعمال اللجنة في نهاية الفصل.","تبادل الأدوار بين الأعضاء لتنمية الخبرات."]},
+ duty_task:{d:["تم تكليفي بـ«{T}» من إدارة المدرسة، وجرى تنفيذه بدقة وفق التوجيهات والمدة المحددة، مع التنسيق مع الجهات ذات العلاقة ورفع ما يثبت الإنجاز."],
+  st:["استلام التكليف وفهم المطلوب ومدته.","وضع خطة مختصرة للتنفيذ.","التنسيق مع ذوي العلاقة.","التنفيذ والمتابعة حتى الإنجاز.","رفع ما يثبت الإنجاز للإدارة."],
+  g:["الإسهام في تحقيق أهداف المدرسة."], r:["إنجاز التكليف في وقته وبالجودة المطلوبة."],
+  rc:["توثيق التكليفات في ملف خاص أولاً بأول."]},
+ duty_ethic:{d:["تم الالتزام بميثاق أخلاقيات مهنة التعليم قولاً وعملاً، من خلال العدل بين {S}، واحترام {COL} وأولياء الأمور، والمحافظة على أسرار العمل، والحرص على أن تكون الممارسات اليومية قدوة حسنة."],
+  st:["الاطلاع على ميثاق أخلاقيات مهنة التعليم.","العدل والمساواة في التعامل مع {S}.","الاحترام المتبادل مع {COL} والإدارة.","المحافظة على خصوصية بيانات {S} وأسرار العمل.","التواصل المهذب والمهني مع أولياء الأمور."],
+  g:["تعزيز الثقة بين المدرسة والأسرة."], r:["علاقات مهنية إيجابية داخل المدرسة.","رضا أولياء الأمور عن التعامل."],
+  rc:["مناقشة بنود الميثاق في أحد لقاءات المجتمع المهني."]},
+ activity:{d:["تمت المشاركة في «{T}» بالإعداد والتنظيم والإشراف على مشاركة {S}، وتنوعت الفقرات بين المسابقات والعروض والأنشطة الهادفة، مع توثيق الفعالية بالصور."],
+  st:["التنسيق مع رائدة النشاط وتحديد الفقرات.","اختيار {S} المشاركين وتوزيع الأدوار.","تجهيز المكان والأدوات اللازمة.","تنفيذ الفعالية والإشراف عليها.","توثيق الفعالية وتكريم المشاركين."],
+  g:["اكتشاف مواهب {S} وتنميتها.","تعزيز العمل الجماعي وروح الفريق."], r:["مشاركة واسعة من {S}.","ظهور مواهب جديدة لدى عدد من {S}."],
+  rc:["إشراك عدد أكبر من {S} في الفعاليات القادمة.","ربط الفعاليات بأهداف المادة كلما أمكن."]},
+ radio:{d:["تم الإشراف على «{T}» بإعداد فقراتها وتدريب {S} على الإلقاء، وشملت القرآن الكريم والحديث الشريف وكلمة الصباح وفقرات المعلومات، وقُدّمت في الطابور الصباحي بثقة وتميز."],
+  st:["اختيار موضوع الإذاعة وإعداد فقراتها.","اختيار {S} المشاركين وتوزيع الفقرات.","تدريب {S} على الإلقاء ومخارج الحروف.","تقديم الإذاعة في الطابور الصباحي.","تكريم المشاركين وتوثيق الإذاعة."],
+  g:["ربط {S} بالمناسبات والقيم الإيجابية."], r:["ثقة أكبر لدى {S} في التحدث أمام الجمهور.","إذاعة منظمة نالت استحسان الإدارة."],
+  rc:["تدوير الأدوار ليشارك أكبر عدد من {S}.","ربط موضوع الإذاعة بمحتوى مادة {SUBJ}."]},
+ national:{d:["تم تنفيذ فعاليات «{T}» بمشاركة {S}، وتضمنت أنشطة وطنية متنوعة كالأناشيد والمسابقات والأركان التعريفية بمنجزات الوطن، بما يعزز قيم الانتماء والمواطنة."],
+  st:["إعداد خطة الفعالية وتحديد الفقرات.","تجهيز الأركان والوسائل بالمشاركة مع {S}.","تنفيذ الفقرات والأنشطة الوطنية.","توثيق الفعالية بالصور.","تكريم المشاركين."],
+  g:["تنمية الاعتزاز بالهوية الوطنية."], r:["حماس كبير ومشاركة فاعلة من {S}.","ترسيخ قيم الولاء والانتماء."],
+  rc:["ربط المناسبات الوطنية بمستهدفات رؤية المملكة ٢٠٣٠."]},
+ course:{d:["تم حضور «{T}»، وتناولت محاور تطبيقية في الممارسات التدريسية الحديثة، وشاركتُ في أنشطتها ونقاشاتها، ثم جرى نقل أثرها إلى الفصل بتطبيق ما تم تعلمه في حصص مادة {SUBJ}.","شاركتُ في «{T}» بهدف تطوير أدائي المهني، واستفدتُ من محاورها في تنويع أساليب التدريس، وطبقتُ ما تعلمته مع {S}، وشاركته مع {COL} في المدرسة."],
+  st:["التسجيل في البرنامج التدريبي.","حضور الجلسات والمشاركة في الأنشطة.","تدوين الأفكار القابلة للتطبيق.","تطبيق ما تم تعلمه داخل الفصل.","نقل أثر التدريب إلى {COL}."],
+  g:["مواكبة المستجدات التربوية.","تحسين نواتج تعلم {S}."], r:["تحسن ملحوظ في الممارسات التدريسية.","توظيف استراتيجيات جديدة في الحصص."],
+  rc:["إعداد بطاقة نقل أثر التدريب لكل برنامج.","حضور برنامج تدريبي واحد على الأقل كل فصل."]},
+ workshop:{d:["تم تقديم «{T}» لـ{COL} في المدرسة، وتناولت الإطار النظري والتطبيق العملي، مع أنشطة تفاعلية ونماذج من الميدان، واختُتمت بنقاش مفتوح وتوزيع حقيبة مختصرة."],
+  st:["تحديد احتياج {COL} التدريبي.","إعداد محتوى الورشة وأنشطتها.","التنسيق مع الإدارة لموعد الورشة ومكانها.","تقديم الورشة وإدارة النقاش.","قياس رضا الحضور ومتابعة التطبيق."],
+  g:["بناء ثقافة التعلم من الأقران."], r:["تفاعل إيجابي من {COL}.","تطبيق عدد من {COL} لما تم عرضه."],
+  rc:["متابعة أثر الورشة بزيارات صفية لاحقة.","مشاركة مادة الورشة إلكترونياً."]},
+ plc:{d:["تمت المشاركة في لقاء «{T}» مع {COL}، ونوقش فيه أحد التحديات التعليمية، وتبادلنا الممارسات الناجحة، وخرج اللقاء بتوصيات عملية طُبقت في الفصل."],
+  st:["تحديد موضوع اللقاء والمشكلة المستهدفة.","عرض التجارب والممارسات الناجحة.","النقاش وتبادل الآراء والحلول.","صياغة التوصيات وتوزيع المهام.","تطبيق التوصيات ومتابعة أثرها."],
+  g:["بناء المعرفة المهنية بشكل جماعي."], r:["حلول عملية لتحديات مشتركة.","تحسن الممارسات التدريسية داخل الفصول."],
+  rc:["توثيق مخرجات كل لقاء في محضر.","قياس أثر التوصيات في اللقاء التالي."]},
+ visit:{d:["تم تنفيذ «{T}» بحضور حصة إحدى {COL}، ورصد الممارسات المتميزة في إدارة الصف وتوظيف الاستراتيجيات، ثم مناقشة الملاحظات بروح مهنية والاستفادة منها في تطوير الأداء."],
+  st:["الاتفاق المسبق على موعد الزيارة وهدفها.","حضور الحصة ورصد الملاحظات في بطاقة الزيارة.","التركيز على الممارسات المتميزة القابلة للنقل.","مناقشة الملاحظات بعد الحصة.","تطبيق ما تمت الاستفادة منه في الفصل."],
+  g:["تعزيز ثقافة الملاحظة البنّاءة."], r:["نقل ممارسات متميزة إلى الفصل.","علاقة مهنية تعاونية مع {COL}."],
+  rc:["تنفيذ زيارتين تبادليتين على الأقل كل فصل.","تحديد هدف واضح لكل زيارة."]},
+ lesson:{d:["تم تنفيذ «{T}» في مادة {SUBJ} بحضور عدد من {COL}، وعُرض فيه توظيف استراتيجيات التعلم النشط وإدارة الصف والتقويم البنائي، ثم نوقشت ملاحظات الحضور ومقترحاتهم."],
+  st:["اختيار الدرس والاستراتيجيات المناسبة.","إعداد خطة الدرس وأدواته.","دعوة {COL} والإدارة للحضور.","تنفيذ الدرس وفق الخطة.","مناقشة الملاحظات وتوثيقها."],
+  g:["عرض ممارسة تدريسية قابلة للتطبيق."], r:["إشادة الحضور بالممارسات المطبقة.","تطبيق {COL} لبعض الاستراتيجيات المعروضة."],
+  rc:["تصوير مقتطفات من الدرس لمجتمع التعلم.","تبادل الدروس التطبيقية بين التخصصات."]},
+ conf:{d:["تم حضور «{T}»، والاستماع إلى أوراق العمل والتجارب المقدمة، والمشاركة في الحوارات، واستُثمرت مخرجاته في تطوير الممارسات داخل الفصل ونقلها لـ{COL}."],
+  st:["التسجيل وحضور الجلسات.","تدوين الأفكار والتجارب المميزة.","المشاركة في النقاشات.","تلخيص المخرجات.","مشاركتها مع {COL}."],
+  g:["الاطلاع على التجارب التعليمية المتميزة."], r:["أفكار جديدة طُبقت في الفصل."], rc:["إعداد ملخص مكتوب لمخرجات الملتقى."]},
+ volunteer:{d:["تمت المشاركة في «{T}» وتنفيذ المهام التطوعية المطلوبة بروح المسؤولية، وتوثيق الساعات في المنصة الوطنية للعمل التطوعي."],
+  st:["التسجيل في الفرصة التطوعية.","تنفيذ المهام المطلوبة.","توثيق الساعات في المنصة الوطنية.","إشراك {S} في العمل التطوعي عند الإمكان."],
+  g:["الإسهام في مستهدفات رؤية ٢٠٣٠ للعمل التطوعي."], r:["ساعات تطوعية موثقة.","تعزيز قيمة العطاء لدى {S}."], rc:["تنظيم فرصة تطوعية مدرسية يشارك فيها {S}."]},
+ par_meet:{d:["تم عقد «{T}»، وعُرض فيه مستوى {S} الدراسي والسلوكي، والخطط العلاجية والإثرائية المنفذة، وجرى الاستماع لملاحظات أولياء الأمور والاتفاق على آليات متابعة مشتركة."],
+  st:["إرسال الدعوات لأولياء الأمور بوقت كافٍ.","إعداد تقرير مختصر بمستوى {S}.","عرض المستويات والخطط الداعمة.","الاستماع للملاحظات والمقترحات.","الاتفاق على خطة متابعة مشتركة."],
+  g:["توحيد الجهود بين المدرسة والمنزل."], r:["حضور جيد وتفاعل من أولياء الأمور.","اتفاق على متابعة مشتركة لمستوى {S}."],
+  rc:["متابعة ما تم الاتفاق عليه بعد شهر.","توفير قناة تواصل مستمرة مع الأسر."]},
+ parents:{d:["تم «{T}» عبر القنوات الرسمية المعتمدة، وجرى إطلاع أولياء الأمور على مستوى {S} وتقدّم{H}، ومشاركتهم في دعم التعلم بالمنزل، مع الرد على استفساراتهم أولاً بأول."],
+  st:["تحديد قناة التواصل الرسمية المناسبة.","إعداد محتوى الرسائل والتقارير.","التواصل مع أولياء الأمور بشكل دوري.","الرد على الاستفسارات والملاحظات.","توثيق التواصل في سجل خاص."],
+  g:["تعزيز ثقة الأسرة بالمدرسة."], r:["تجاوب إيجابي من أولياء الأمور.","تحسن متابعة الواجبات في المنزل."],
+  rc:["إرسال رسائل تحفيزية دورية للأسر.","إشراك الأسرة في نشاط صفي كل فصل."]},
+ par_report:{d:["تم «{T}» لأولياء الأمور عبر القنوات الرسمية، وتضمن مستوى كل {ST} في المهارات الأساسية لمادة {SUBJ}، ونقاط القوة والاحتياج، وتوصيات عملية للمتابعة المنزلية."],
+  st:["رصد مستوى {S} في المهارات.","إعداد تقرير مختصر لكل {ST}.","إرسال التقارير عبر القناة الرسمية.","متابعة الردود والاستفسارات."],
+  g:["تمكين الأسرة من دعم أبنائها."], r:["وعي أكبر لدى الأسر بمستوى أبنائها."], rc:["إرسال التقرير مرة كل شهر على الأقل."]},
+ par_call:{d:["تم التواصل مع ولي الأمر لمناقشة ملاحظات دراسية وسلوكية، والاتفاق على خطة متابعة مشتركة بين المدرسة والمنزل، ثم متابعة التحسن ومشاركته مع الأسرة."],
+  st:["رصد الملاحظة وتوثيقها.","التواصل مع ولي الأمر وتحديد موعد.","مناقشة الملاحظة وأسبابها.","الاتفاق على إجراءات المتابعة.","متابعة التحسن وإبلاغ الأسرة."],
+  g:["معالجة الملاحظات مبكراً."], r:["تحسن في مستوى الحالة بعد المتابعة."], rc:["توثيق كل تواصل في سجل متابعة {S}."]},
+ par_survey:{d:["تم تطبيق «{T}» إلكترونياً على أولياء الأمور، وتحليل استجاباتهم وملاحظاتهم، والاستفادة منها في تحسين التواصل وأساليب التدريس."],
+  st:["إعداد بنود الاستبانة.","نشر الرابط لأولياء الأمور.","جمع الاستجابات وتحليلها.","استخلاص فرص التحسين وتطبيقها."],
+  g:["إشراك الأسر في التطوير."], r:["بيانات واضحة عن رضا الأسر.","قرارات تحسين مبنية على آراء الأسر."], rc:["تكرار الاستبانة نهاية العام لقياس التحسن."]},
+ remedial:{d:["تم تنفيذ «{T}» بعد تشخيص مستويات {S} وتحديد المهارات غير المتقنة في مادة {SUBJ}، وتضمنت تدريبات فردية وجماعية متدرجة، وتعليم الأقران، ومتابعة دورية حتى الإتقان.","بناءً على نتائج التشخيص، أُعدّت «{T}» تستهدف المتعثرات في مهارات {SK}، ونُفذت عبر بطاقات علاجية متدرجة ومجموعات صغيرة، مع قياس التقدم بعد كل مرحلة."],
+  st:["تشخيص المستويات وتحديد المتعثرات.","تحديد المهارات غير المتقنة لكل حالة.","إعداد أنشطة وتدريبات علاجية متدرجة.","التنفيذ في مجموعات صغيرة وتعليم الأقران.","إعادة القياس ومتابعة التحسن."],
+  g:["إتقان المهارات الأساسية في مادة {SUBJ}."], r:["إتقان عدد من المتعثرات للمهارات المستهدفة.","ارتفاع الثقة بالنفس لدى المتعثرات."],
+  rc:["إشراك الأسرة في دعم الخطة بالمنزل.","الاستمرار في المتابعة حتى ثبات الإتقان."]},
+ enrich:{d:["تم تنفيذ «{T}» في مادة {SUBJ}، وتضمنت مهام وأنشطة إثرائية تتجاوز المقرر، وتحديات تفكير عليا، ومشاريع مصغرة عُرضت أمام الزميلات."],
+  st:["تحديد المتميزات بناءً على النتائج.","إعداد أنشطة إثرائية وتحديات تفكير.","تنفيذ الأنشطة في أوقات مناسبة.","عرض المنتجات وتكريم المبدعات."],
+  g:["توظيف قدرات المتميزات في دعم الزميلات."], r:["منتجات إبداعية متميزة عُرضت في الفصل.","مشاركة المتميزات في تحديات تفكير أعلى."], rc:["مشاركة المتميزات في المسابقات الخارجية."]},
+ gifted:{d:["تم تنفيذ برنامج «{T}» باكتشاف الموهوبات وترشيحهن، وتقديم أنشطة نوعية تنمي مواهبهن، ومتابعة مشاركتهن في البرامج والمسابقات."],
+  st:["ملاحظة السمات والقدرات المميزة.","ترشيح الموهوبات للبرامج المناسبة.","تقديم أنشطة نوعية داعمة.","متابعة المشاركات والإنجازات."],
+  g:["توفير بيئة داعمة للإبداع."], r:["ترشيح موهوبات لبرامج نوعية."], rc:["التنسيق مع رائدة الموهوبات لاستمرار الرعاية."]},
+ compare:{d:["تمت مقارنة نتائج {S} في القياس القبلي والبعدي بعد تنفيذ الخطط الداعمة، وتمثيلها بيانياً، وتبيّن تحسن واضح في عدد من المهارات المستهدفة."],
+  st:["تطبيق قياس قبلي للمهارات.","تنفيذ الخطط العلاجية والإثرائية.","تطبيق قياس بعدي بنفس المعايير.","حساب نسب التحسن وتمثيلها بيانياً.","بناء قرارات المرحلة التالية."],
+  g:["بناء القرارات على بيانات واضحة."], r:["إثبات أثر الخطط بأرقام موثقة."], rc:["تكرار المقارنة في كل فترة تقويم."]},
+ honor:{d:["تم «{T}» تقديراً لتميز{H}، بتوزيع شهادات الشكر والهدايا الرمزية والإشادة بهن أمام الزميلات، مع إشراك الأسر في الاحتفاء."],
+  st:["تحديد معايير التكريم بوضوح.","اختيار المتفوقات وفق المعايير.","إعداد الشهادات والهدايا.","تنفيذ التكريم وتوثيقه."],
+  g:["نشر ثقافة التميز في الفصل."], r:["دافعية أعلى لدى {S} للتفوق."], rc:["تنويع مجالات التكريم (التحسن، السلوك، المبادرة)."]},
+ reading:{d:["تم تنفيذ «{T}»، وتضمن قراءة يومية موجهة لمدة قصيرة، وأنشطة فهم قرائي متدرجة، ومتابعة فردية للمحتاجين، وتحفيز {S} بجدول إنجاز قرائي."],
+  st:["قياس مستوى القراءة الحالي.","تحديد نصوص قرائية مناسبة للمستويات.","تنفيذ القراءة الموجهة يومياً.","أنشطة فهم قرائي ومتابعة فردية.","قياس التقدم وتحفيز المتقدمين."],
+  g:["رفع الطلاقة والدقة القرائية."], r:["تحسن ملحوظ في الطلاقة القرائية.","إقبال أكبر على القراءة الحرة."], rc:["ركن قراءة صفي بكتب متنوعة المستويات."]},
+ contest:{d:["تم تنفيذ «{T}» بين مجموعات {S} في محتوى دروس مادة {SUBJ}، بأسئلة متدرجة وتحديات سريعة، وانتهت بتكريم المجموعة الفائزة."],
+  st:["إعداد أسئلة متدرجة من محتوى الدروس.","تقسيم {S} إلى مجموعات متوازنة.","تنفيذ المسابقة بقوانين واضحة.","تكريم الفائزين ومناقشة الأخطاء الشائعة."],
+  g:["مراجعة المحتوى بأسلوب ممتع."], r:["تثبيت المفاهيم بطريقة ممتعة.","مشاركة {S} الأقل تفاعلاً."], rc:["توظيف منصات المسابقات الإلكترونية."]},
+ curriculum:{d:["تم إعداد «{T}» لمادة {SUBJ} وفق التقويم الدراسي المعتمد، وتوزيع الوحدات والدروس على الأسابيع، مع مراعاة الإجازات وأيام التقويم، ومتابعة التنفيذ دورياً."],
+  st:["الاطلاع على التقويم الدراسي وعدد الأسابيع.","تحليل محتوى المقرر ووحداته.","توزيع الدروس على الأسابيع.","اعتماد التوزيع من الإدارة.","متابعة التنفيذ ومعالجة أي تأخر."],
+  g:["تحقيق التوازن بين الدروس والزمن."], r:["تغطية المقرر في الوقت المحدد."], rc:["مراجعة التوزيع منتصف الفصل وتعديله عند الحاجة."]},
+ prep:{d:["تم إعداد «{T}» لمادة {SUBJ}، متضمناً الأهداف السلوكية القابلة للقياس، والاستراتيجيات والوسائل المناسبة، وأنشطة التقويم البنائي والختامي لكل درس."],
+  st:["تحليل محتوى الدرس.","صياغة الأهداف القابلة للقياس.","اختيار الاستراتيجيات والوسائل المناسبة.","إعداد أنشطة التقويم.","مراجعة التحضير وتطويره بعد التنفيذ."],
+  g:["ربط الأهداف بالأنشطة والتقويم."], r:["حصص منظمة وواضحة الأهداف."], rc:["تبادل نماذج التحضير المتميزة مع {COL}."]},
+ madrasati:{d:["تم توظيف منصة مدرستي في نشر الدروس والواجبات والاختبارات القصيرة، ومتابعة إنجاز {S} وتقديم التغذية الراجعة، والتواصل مع أولياء الأمور عبر المنصة."],
+  st:["تجهيز الدروس والمصادر على المنصة.","نشر الواجبات والاختبارات القصيرة.","متابعة إنجاز {S} أولاً بأول.","تقديم التغذية الراجعة عبر المنصة.","استخراج تقارير الإنجاز ومتابعتها."],
+  g:["تعزيز التعلم الذاتي."], r:["ارتفاع نسبة إنجاز الواجبات.","متابعة أدق لمستوى {S}."], rc:["تفعيل الفصول الافتراضية في المراجعات."]},
+ tech:{d:["تم توظيف «{T}» في تدريس مادة {SUBJ}، لعرض المحتوى بصورة تفاعلية وتنفيذ أنشطة شارك فيها {S}، مما أسهم في تقريب المفاهيم وزيادة التفاعل."],
+  st:["اختيار التقنية المناسبة لهدف الدرس.","تجهيز المحتوى والأنشطة التفاعلية.","توظيفها أثناء الحصة بمشاركة {S}.","تقويم أثرها على الفهم والتفاعل."],
+  g:["تنمية المهارات الرقمية لدى {S}."], r:["زيادة التفاعل والانتباه.","فهم أعمق للمفاهيم المجردة."], rc:["تنويع الأدوات التقنية بين الدروس."]},
+ teachaid:{d:["تم إعداد «{T}» بنفسي لدرس من دروس مادة {SUBJ}، باستخدام خامات بسيطة وألوان جاذبة، ووُظفت في شرح المفهوم وتطبيقه بمشاركة {S}."],
+  st:["تحديد المفهوم الذي يحتاج وسيلة.","تصميم الوسيلة وتنفيذها.","توظيفها في الدرس بمشاركة {S}.","حفظها في ركن الوسائل لاستخدامها لاحقاً."],
+  g:["تحويل المجرد إلى محسوس."], r:["تذكّر أطول للمفهوم بعد ربطه بالوسيلة."], rc:["مشاركة الوسيلة مع {COL} في نفس المادة."]},
+ etest:{d:["تم إعداد «{T}» على منصة إلكترونية وتطبيقه على {S}، وتحليل النتائج آلياً لتحديد مستوى الإتقان لكل مهارة، وبناء خطة المعالجة عليها."],
+  st:["تحديد المهارات المستهدفة.","بناء الأسئلة إلكترونياً.","تطبيق الاختبار على {S}.","تحليل النتائج وتحديد مستوى الإتقان.","بناء خطة المعالجة."],
+  g:["توفير الوقت في التصحيح."], r:["نتائج فورية ودقيقة."], rc:["استخدام بنك أسئلة مشترك مع {COL}."]},
+ classroom:{d:["تمت تهيئة البيئة الصفية من خلال «{T}» بما يخدم التعلم، من حيث ترتيب المقاعد للعمل التعاوني، وتجهيز الأركان التعليمية، وتعليق اللوحات التحفيزية وقوانين الصف، مع مراعاة الأمن والسلامة."],
+  st:["تحديد احتياجات البيئة الصفية.","ترتيب المقاعد بما يناسب الأنشطة.","تجهيز الأركان واللوحات.","إشراك {S} في التنظيم والعناية بالفصل.","مراجعة البيئة وتحديثها دورياً."],
+  g:["إشعار {S} بالانتماء للفصل."], r:["فصل منظم وجاذب.","زيادة دافعية {S}."], rc:["تحديث اللوحات بأعمال {S} شهرياً."]},
+ rules:{d:["تم وضع «{T}» بالمشاركة مع {S} في بداية العام، وصياغتها بعبارات إيجابية واضحة، وتعليقها في الفصل، ومتابعة الالتزام بها بالتعزيز الإيجابي."],
+  st:["مناقشة أهمية القواعد مع {S}.","صياغة القواعد بالمشاركة وبعبارات إيجابية.","تعليقها في مكان بارز.","متابعة الالتزام وتعزيزه.","مراجعة القواعد عند الحاجة."],
+  g:["تنمية الانضباط الذاتي."], r:["انخفاض المشكلات السلوكية.","التزام {S} بالقواعد المتفق عليها مع{H}."], rc:["تذكير {S} بالقواعد بطرق إبداعية."]},
+ plan:{d:["تم تنفيذ «{T}» بعد تشخيص مستويات {S}، وتقديم أنشطة متدرجة تناسب كل مستوى، ومتابعة التقدم بشكل دوري."],
+  st:["تشخيص المستويات.","تصنيف {S} حسب الاحتياج.","إعداد أنشطة متدرجة لكل مستوى.","التنفيذ والمتابعة.","قياس التقدم."],
+  g:["مراعاة الفروق الفردية."], r:["تقدم {S} حسب مستوياتهم."], rc:["تحديث التصنيف بعد كل تقويم."]},
+ reward:{d:["تم تطبيق «{T}» لتعزيز السلوكيات الإيجابية والمشاركة، برصد النقاط والنجوم بشكل مستمر وعادل، وتكريم المتميزين أسبوعياً."],
+  st:["تحديد السلوكيات المستهدفة بالتعزيز.","تصميم اللوحة أو السجل.","رصد النقاط بشكل يومي وعادل.","تكريم المتميزين أسبوعياً.","مراجعة النظام وتطويره."],
+  g:["بناء بيئة صفية إيجابية."], r:["زيادة السلوكيات الإيجابية.","مشاركة أوسع في الحصة."], rc:["التنويع في المعززات المعنوية."]},
+ general:{d:["تم تنفيذ «{T}» وفق الخطة المعدة، بمشاركة {S}، مع المتابعة والتوثيق."],
+  st:["التخطيط وتحديد الهدف.","التنفيذ مع {S}.","المتابعة والتقويم.","التوثيق."],
+  g:["تحسين نواتج التعلم."], r:["تحقق الأهداف المرجوة."], rc:["الاستمرار وتطوير التجربة."]},
+ diag:{d:["تم تطبيق «{T}» في بداية الفصل لقياس المهارات الأساسية في مادة {SUBJ}، وتصحيحه وتحليل نتائجه، وتصنيف {S} إلى مستويات لبناء الخطط العلاجية والإثرائية."],
+  st:["تحديد المهارات الأساسية المستهدفة.","إعداد الاختبار التشخيصي.","تطبيقه على {S} وتصحيحه.","تحليل النتائج حسب المهارة.","تصنيف المستويات وبناء الخطط."],
+  g:["معرفة نقطة البداية لكل {ST}."], r:["خريطة واضحة لمستويات {S}.","خطط علاجية وإثرائية مبنية على بيانات."], rc:["إعادة القياس بعد تنفيذ الخطط."]},
+ analysis:{d:["تم «{T}» لمادة {SUBJ}، بحساب المتوسط ونسبة الإتقان لكل مهارة، وتصنيف {S} إلى مستويات، وتحديد المهارات المتقنة وغير المتقنة، وبناء القرارات والخطط عليها."],
+  st:["رصد الدرجات حسب المهارات.","حساب المتوسط ونسب الإتقان.","تصنيف {S} إلى مستويات.","تحديد المهارات الأضعف.","بناء خطة المعالجة والإثراء."],
+  g:["توجيه التدريس نحو الاحتياج الفعلي."], r:["قرارات تدريسية مبنية على البيانات.","تحديد دقيق لاحتياجات {S}."], rc:["مشاركة التحليل مع الإدارة والأسر."]},
+ nafes:{d:["تم «{T}»، وتحليل نتائج {S} في كل مجال ومهارة، ومقارنتها بمتوسط المدرسة والإدارة، وإعداد خطة تدريب مركزة على المهارات الأقل أداءً."],
+  st:["استخراج النتائج من المنصة.","تحليلها حسب المجالات والمهارات.","مقارنتها بالمتوسطات.","تحديد المهارات المستهدفة.","تنفيذ خطة تدريب على نماذج نافس."],
+  g:["رفع الأداء في الاختبارات الوطنية."], r:["خطة تدريب واضحة الأولويات."], rc:["تدريب {S} على نماذج مشابهة طوال العام."]},
+ formative:{d:["تم توظيف أساليب «{T}» خلال الحصص، كالأسئلة الشفهية الموجهة، وبطاقات الخروج، والسبورات الصغيرة، والمهام القصيرة، مع تقديم تغذية راجعة فورية."],
+  st:["تحديد مؤشرات النجاح للدرس.","طرح أسئلة تقويمية أثناء الشرح.","تطبيق بطاقات الخروج نهاية الحصة.","تحليل الاستجابات سريعاً.","تعديل التدريس بناءً على النتائج."],
+  g:["كشف صعوبات التعلم مبكراً."], r:["تصحيح الأخطاء الشائعة في وقتها.","فهم أعمق لدى {S}."], rc:["تنويع أدوات التقويم التكويني بين الدروس."]},
+ rubric:{d:["تم إعداد «{T}» بمعايير واضحة ومستويات أداء متدرجة، واطلاع {S} عليها مسبقاً، وتطبيقها في تقويم المهام والمشاريع بعدالة وشفافية."],
+  st:["تحديد معايير الأداء.","وصف مستويات الأداء لكل معيار.","مشاركة السلم مع {S} قبل التنفيذ.","التقويم وفق السلم.","تقديم التغذية الراجعة."],
+  g:["وضوح توقعات الأداء."], r:["تقويم عادل ودقيق.","تحسن جودة أعمال {S}."], rc:["إشراك {S} في بناء بعض المعايير."]},
+ selfeval:{d:["تم تطبيق «{T}»، وتضمن تقويم {S} لأعمال{H} ولأعمال الأقران وفق معايير محددة، مع تدريب{H} على تقديم الملاحظات البنّاءة."],
+  st:["تحديد المعايير بلغة مبسطة.","تدريب {S} على التقويم.","تنفيذ التقويم الذاتي والأقراني.","مناقشة النتائج وتحسين الأعمال."],
+  g:["تنمية مهارات التفكير التأملي."], r:["وعي أكبر بنقاط القوة والتحسين."], rc:["استخدام بطاقات تقويم ذاتي بعد كل وحدة."]},
+ perf:{d:["تم تكليف {S} بـ«{T}» ترتبط بمحتوى مادة {SUBJ} وواقع الحياة، ومتابعة التنفيذ على مراحل، وتقويم المنتجات النهائية بسلم تقدير، وعرض الأعمال المتميزة."],
+  st:["تحديد المهمة الأدائية وأهدافها.","توضيح المطلوب ومعايير التقويم.","متابعة التنفيذ على مراحل.","عرض المنتجات وتقويمها.","تكريم الأعمال المتميزة."],
+  g:["ربط التعلم بالحياة."], r:["منتجات تعكس فهماً عميقاً.","تنمية مهارات البحث والعرض."], rc:["عرض المنتجات في معرض مدرسي."]},
+ worksheet:{d:["تم إعداد «{T}» متدرجة المستوى في مادة {SUBJ}، تراعي الفروق الفردية، وطُبقت على {S} مع التصحيح وتقديم التغذية الراجعة."],
+  st:["تحديد المهارات المستهدفة.","إعداد أوراق عمل بمستويات متدرجة.","التطبيق داخل الحصة أو واجباً.","التصحيح والتغذية الراجعة."],
+  g:["تدريب {S} على المهارات."], r:["تثبيت المهارات المستهدفة."], rc:["أرشفة أوراق العمل في ملف لكل {ST}."]},
+ strat:{d:["طُبقت استراتيجية «{T}» في حصة {SUBJ}، مع توضيح المهمة وخطوات العمل لـ{S}، ثم تنفيذ النشاط، وعرض النتائج وتقديم التغذية الراجعة."],
+  st:["تحديد هدف الدرس المناسب للاستراتيجية.","توضيح خطوات العمل لـ{S}.","تنفيذ النشاط ومتابعة المجموعات.","عرض النتائج ومناقشتها.","تقويم تحقق الهدف."],
+  g:["تنمية مهارات التفكير والتواصل."], r:["ارتفاع التفاعل والمشاركة."], rc:["تنويع الاستراتيجيات حسب طبيعة الدرس."]}
+};
+/* نصوص خاصة بالشاهد نفسه (لما يشترك أكثر من شاهد في نفس نوع التقرير) */
+const TX={
+ "التعلم التعاوني":{d:"طُبقت استراتيجية التعلم التعاوني في حصة {SUBJ}، بتقسيم {S} إلى مجموعات غير متجانسة من ٤ إلى ٥، ولكل عضو دور محدد (قائد، مقرر، مسؤول وقت، متحدث)، ونفذت المجموعات مهمة مرتبطة بهدف الدرس ثم عرضت إنجازها.",st:["تقسيم {S} إلى مجموعات غير متجانسة.","توزيع الأدوار داخل كل مجموعة.","تقديم المهمة ووقتها ومعايير النجاح.","المرور على المجموعات والتوجيه.","عرض الإنجاز وتقويم عمل المجموعات."],g:"تنمية مهارات العمل الجماعي وتحمل المسؤولية.",r:"تعاون واضح بين أعضاء المجموعات."},
+ "التعلم باللعب":{d:"وُظفت استراتيجية التعلم باللعب في حصة {SUBJ} من خلال لعبة تعليمية هادفة مرتبطة بمهارات {SK}، بقوانين واضحة ومنافسة إيجابية، وانتهت بربط اللعبة بهدف الدرس.",st:["اختيار لعبة مرتبطة بهدف الدرس.","شرح قوانين اللعبة.","تنفيذ اللعبة في مجموعات.","ربط اللعبة بالمفهوم المستهدف.","تقويم ختامي قصير."],g:"تحويل التعلم إلى تجربة ممتعة.",r:"حماس ومشاركة من جميع {S}."},
+ "العصف الذهني":{d:"طُبقت استراتيجية العصف الذهني في حصة {SUBJ}، بطرح سؤال مفتوح مرتبط بالدرس، وتدوين جميع أفكار {S} دون نقد، ثم تصنيفها ومناقشتها واختيار أفضلها.",st:["طرح سؤال أو مشكلة مفتوحة.","توضيح قواعد العصف الذهني.","تدوين جميع الأفكار دون نقد.","تصنيف الأفكار ومناقشتها.","الخروج بأفضل الحلول."],g:"تنمية الطلاقة الفكرية والتفكير الإبداعي.",r:"أفكار متنوعة ومبتكرة من {S}."},
+ "الخرائط الذهنية":{d:"وُظفت الخرائط الذهنية في تلخيص درس من دروس مادة {SUBJ}، وتضمن النشاط رسم الفكرة الرئيسة في المركز وتفريع الأفكار الفرعية منها بالألوان والرموز من قِبل {S}، ثم عرض أفضل الخرائط ومناقشتها.",st:["عرض نموذج لخريطة ذهنية.","تحديد الفكرة الرئيسة للدرس.","رسم الفروع والأفكار الفرعية.","عرض الخرائط ومناقشتها."],g:"تنظيم المعلومات وربطها بصرياً.",r:"تلخيص منظم يسهل المراجعة."},
+ "الصف المقلوب":{d:"طُبقت استراتيجية الصف المقلوب بإرسال مقطع شرح قصير لـ{S} قبل الحصة عبر منصة مدرستي، واستُثمر وقت الحصة في الأنشطة والتطبيق وحل المشكلات بمتابعة مباشرة.",st:["إعداد مقطع شرح قصير أو مادة قرائية.","مشاركتها مع {S} قبل الحصة.","التحقق من المشاهدة بسؤال سريع.","تخصيص الحصة للتطبيق والأنشطة.","تقويم الفهم في نهاية الحصة."],g:"استثمار وقت الحصة في التطبيق.",r:"وقت أكبر للتطبيق والتفاعل داخل الحصة."},
+ "التعلم بالمشاريع":{d:"نُفذ مشروع تعليمي في مادة {SUBJ} عملت فيه مجموعات {S} على مشكلة واقعية، بالتخطيط والبحث والتنفيذ، ثم عرضت المجموعات منتجاتها وقُوّمت بسلم تقدير.",st:["تحديد المشكلة أو فكرة المشروع.","تقسيم المجموعات وتحديد المهام.","البحث والتخطيط والتنفيذ.","عرض المنتجات.","التقويم بسلم تقدير."],g:"ربط التعلم بمشكلات واقعية.",r:"منتجات إبداعية تعكس الفهم العميق."},
+ "فكر زاوج شارك":{d:"طُبقت استراتيجية فكّر زاوج شارك في حصة {SUBJ}، بطرح سؤال للتفكير الفردي لمدة محددة، ثم النقاش في أزواج، ثم مشاركة الإجابات مع الفصل كاملاً.",st:["طرح سؤال مفتوح مرتبط بالدرس.","التفكير الفردي لمدة محددة.","النقاش في أزواج.","مشاركة الإجابات مع الفصل.","التغذية الراجعة والتلخيص."],g:"إتاحة الفرصة للجميع للتفكير والمشاركة.",r:"مشاركة {S} الأقل تفاعلاً."},
+ "لعب الأدوار":{d:"وُظفت استراتيجية لعب الأدوار في حصة {SUBJ} بتمثيل موقف مرتبط بالدرس، وتوزيع الأدوار على {S}، ثم مناقشة الموقف واستخلاص المفاهيم والقيم منه.",st:["إعداد الموقف والأدوار.","توزيع الأدوار وتهيئة {S}.","تمثيل الموقف.","مناقشة الموقف واستخلاص الدروس."],g:"تنمية مهارات التواصل والتعبير.",r:"فهم أعمق للمفهوم من خلال المعايشة."},
+ "السبورة الذكية":{d:"وُظفت السبورة الذكية في تدريس مادة {SUBJ} بعرض المحتوى تفاعلياً، وتنفيذ أنشطة السحب والإفلات والتلوين، ومشاركة {S} في الحل على السبورة.",st:["تجهيز ملف العرض التفاعلي.","عرض المحتوى بالصور والوسائط.","إشراك {S} في الأنشطة على السبورة.","التقويم التفاعلي في نهاية الحصة."]},
+ "عرض تقديمي تفاعلي":{d:"تم إعداد عرض تقديمي تفاعلي لدرس من دروس مادة {SUBJ}، يتضمن صوراً ومقاطع قصيرة وأسئلة تفاعلية، ووُظف في الشرح والتقويم أثناء الحصة."},
+ "تطبيق تعليمي":{d:"وُظف تطبيق تعليمي إلكتروني في حصة {SUBJ} لتنفيذ أنشطة تفاعلية وتحديات قصيرة، مع عرض النتائج فورياً ومناقشتها مع {S}."},
+ "كتاب أو درس تفاعلي":{d:"تم إعداد درس تفاعلي إلكتروني لمادة {SUBJ} يجمع الشرح والأنشطة والتقويم، وأُتيح لـ{S} داخل الحصة وخارجها للمراجعة."},
+ "تنظيم الفصل":{d:"تم تنظيم الفصل بترتيب المقاعد على هيئة مجموعات تخدم التعلم التعاوني، وتخصيص أماكن للأدوات والوسائل، وتحقيق ممرات آمنة للحركة، مع تحديد مسؤوليات {S} في المحافظة على النظام."},
+ "ركن تعليمي":{d:"تم تجهيز ركن تعليمي في الفصل خاص بمادة {SUBJ}، يضم وسائل وبطاقات وأنشطة ذاتية مرتبطة بمهارات {SK}، يُتاح لـ{S} في أوقات محددة للتعلم الذاتي والإثراء.",st:["تحديد هدف الركن ومحتواه.","تجهيز الأدوات والبطاقات والأنشطة.","تعريف {S} بطريقة استخدامه.","تحديث محتوى الركن دورياً."]},
+ "لوحات تحفيزية":{d:"تم تصميم لوحات تحفيزية وتعليقها في الفصل، تتضمن عبارات إيجابية ولوحة شرف وأعمال {S} المتميزة، بما يعزز ثقت{H} بأنفس{H} ويحفز{H} على الإنجاز."},
+ "بيئة صفية آمنة وجاذبة":{d:"تمت تهيئة بيئة صفية آمنة نفسياً ومادياً، يسودها الاحترام وتقبّل الخطأ، مع مراعاة التهوية والإضاءة وترتيب المكان، بما يشجع {S} على المشاركة دون خوف."},
+ "مراعاة الفروق الفردية":{d:"تمت مراعاة الفروق الفردية بين {S} في مادة {SUBJ}، بتنويع الأنشطة والمهام حسب المستويات (أساسي، متوسط، متقدم)، وتقديم الدعم الفردي للمحتاجين وتحديات إضافية للمتميزين."},
+ "توزيع الأدوار والمهام":{d:"تم توزيع الأدوار والمهام الصفية على {S} بشكل دوري (قائد المجموعة، مسؤول النظام، مسؤول الوسائل، المقرر)، بما يعزز تحمل المسؤولية والانضباط داخل الفصل.",st:["تحديد المهام الصفية.","توزيعها على {S} بالتناوب.","تعليق جدول المهام في الفصل.","متابعة الأداء وتعزيز الملتزمين."],g:"تنمية تحمل المسؤولية لدى {S}.",r:"فصل منظم يشارك {S} في إدارته."},
+ "إدارة الوقت في الحصة":{d:"تم توزيع زمن الحصة على مراحلها (تهيئة، عرض، نشاط، تقويم) باستخدام مؤقت مرئي، والانتقال بين الأنشطة بسلاسة، بما يضمن استثمار الوقت كاملاً في التعلم.",st:["تقسيم زمن الحصة على مراحلها.","استخدام مؤقت مرئي للأنشطة.","الانتقال السلس بين الأنشطة.","تخصيص وقت للتقويم الختامي."],g:"استثمار كل دقيقة في التعلم.",r:"إنهاء أهداف الحصة في وقتها."},
+ "سجل متابعة السلوك":{d:"تم إعداد سجل لمتابعة السلوك الصفي يُرصد فيه السلوك الإيجابي والملاحظات بشكل يومي، مع التعامل التربوي مع الملاحظات والتواصل مع الأسرة عند الحاجة."},
+ "نظام النجوم والنقاط":{d:"تم تطبيق نظام النجوم والنقاط لتحفيز {S}، حيث تُمنح النقاط على المشاركة والتعاون والإنجاز، وتُستبدل بمكافآت معنوية في نهاية كل أسبوع."},
+ "التواصل عبر منصة مدرستي":{d:"تم التواصل مع أولياء الأمور عبر منصة مدرستي بإرسال الإشعارات والتنبيهات حول الواجبات والاختبارات ومستوى {S}، والرد على استفساراتهم أولاً بأول."},
+ "رسائل شكر وتحفيز للأسر":{d:"تم إرسال رسائل شكر وتحفيز لأولياء الأمور تقديراً لمتابعتهم وتعاونهم، والإشادة بتحسن أبنائهم وتميزهم، بما يعزز الشراكة الإيجابية بين المدرسة والمنزل."},
+ "مشاركة الأسرة في نشاط صفي":{d:"تمت دعوة عدد من أولياء الأمور للمشاركة في نشاط صفي مرتبط بمادة {SUBJ}، وشاركوا {S} في تنفيذه، مما عزز الشراكة بين المدرسة والأسرة."},
+ "الخطة الفصلية":{d:"تم إعداد الخطة الفصلية لمادة {SUBJ}، متضمنة الأهداف العامة، وتوزيع الوحدات على الأسابيع، والاستراتيجيات والوسائل، وأساليب التقويم ومواعيده."},
+ "الأهداف ومؤشرات الأداء":{d:"تمت صياغة أهداف دروس مادة {SUBJ} صياغة سلوكية قابلة للقياس، وتحديد مؤشرات أداء واضحة لكل هدف، وربطها بأنشطة التعلم وأدوات التقويم."},
+ "سجل متابعة تنفيذ الخطة":{d:"تم إعداد سجل لمتابعة تنفيذ الخطة الدراسية لمادة {SUBJ}، يُرصد فيه ما تم تدريسه أسبوعياً مقارنة بالتوزيع، ومعالجة أي تأخر مباشرة."},
+ "خطة أسبوعية":{d:"تم إعداد خطة أسبوعية لمادة {SUBJ} توضح الدروس والأهداف والواجبات والتقويم لكل يوم، ومشاركتها مع {S} وأولياء الأمور."},
+ "تصنيف مستويات {S}":{d:"تم تصنيف {S} في مادة {SUBJ} إلى مستويات (متقدم، متمكن، يحتاج دعم) بناءً على نتائج التقويم، ووضع خطة مناسبة لكل مستوى."},
+ "رسم بياني للنتائج":{d:"تم تمثيل نتائج {S} في مادة {SUBJ} برسوم بيانية توضح توزيع الدرجات ونسب الإتقان لكل مهارة، والمقارنة بين الفترات، لتسهيل قراءة النتائج وبناء القرارات."},
+ "تقرير مستوى الفصل":{d:"تم إعداد تقرير شامل بمستوى الفصل في مادة {SUBJ}، يتضمن المتوسط ونسب الإتقان وتوزيع المستويات، والمهارات الأقوى والأضعف، والتوصيات."},
+ "الاختبارات القصيرة":{d:"تم تطبيق اختبارات قصيرة دورية في مادة {SUBJ} بعد كل درس أو مهارة، وتصحيحها فوراً، وتقديم التغذية الراجعة ومعالجة الأخطاء الشائعة."},
+ "ملف الإنجاز":{d:"تم توظيف ملف الإنجاز أداةً للتقويم المستمر، تُجمع فيه أعمال {S} المتميزة وأوراق العمل والمشاريع، ويُراجع دورياً لمتابعة نمو{H}.",st:["تعريف {S} بمكونات ملف الإنجاز.","جمع الأعمال والمنتجات دورياً.","مراجعة الملفات وتقديم التغذية الراجعة.","عرض الملفات المتميزة."],g:"توثيق نمو {S} عبر الزمن.",r:"صورة شاملة لتقدم كل {ST}."},
+ "التقويم القبلي":{d:"تم تطبيق تقويم قبلي قبل بدء الوحدة في مادة {SUBJ} لقياس المعارف السابقة لدى {S}، وبناء التدريس على نتائجه."},
+ "المشاركة في الفعاليات المدرسية":{d:"تمت المشاركة في الفعاليات والأنشطة المدرسية المتنوعة خلال الفصل، بالإعداد والتنظيم والإشراف على مشاركة {S}."}
+};
+ Object.assign(TX,{
+ "حضور دورة تدريبية":{ask:"اسم الدورة والجهة", d:"تم حضور دورة تدريبية في تطوير الممارسات التدريسية، تناولت محاور تطبيقية في الاستراتيجيات الحديثة وإدارة الصف والتقويم، وشاركتُ في أنشطتها ونقاشاتها، ثم نقلتُ أثرها إلى حصص مادة {SUBJ} بتطبيق ما تعلمته مع {S}."},
+ "تقديم ورشة أو دورة لزميلاتي":{ask:"عنوان الورشة", d:"تم تقديم ورشة تدريبية لـ{COL} في المدرسة، تناولت الإطار النظري والتطبيق العملي لإحدى الممارسات التدريسية الفاعلة، مع أنشطة تفاعلية ونماذج من الميدان، واختُتمت بنقاش مفتوح وتوزيع حقيبة مختصرة."},
+ "تنفيذ درس تطبيقي":{ask:"عنوان الدرس والصف", d:"تم تنفيذ درس تطبيقي في مادة {SUBJ} بحضور عدد من {COL}، عُرض فيه توظيف استراتيجيات التعلم النشط وإدارة الصف والتقويم البنائي، ثم نوقشت ملاحظات الحضور ومقترحاتهم."},
+ "حضور ملتقى أو مؤتمر تعليمي":{ask:"اسم الملتقى", d:"تم حضور ملتقى تعليمي، والاستماع إلى أوراق العمل والتجارب المقدمة، والمشاركة في الحوارات، واستُثمرت مخرجاته في تطوير الممارسات داخل الفصل ونقلها لـ{COL}."},
+ "ساعات تطوعية":{d:"تمت المشاركة في فرص تطوعية داخل المدرسة وخارجها، وتنفيذ المهام المطلوبة بروح المسؤولية، وتوثيق الساعات في المنصة الوطنية للعمل التطوعي."},
+ "المشاركة في اللجان المدرسية":{ask:"اسم اللجنة", d:"تمت المشاركة الفاعلة في اللجان المدرسية، بحضور الاجتماعات الدورية، والإسهام في إعداد الخطط وتوزيع المهام، وتنفيذ ما أُسند من أعمال في وقتها، ورفع المحاضر والتقارير اللازمة."},
+ "تنفيذ التكليفات الإدارية":{ask:"نوع التكليف", d:"تم تنفيذ التكليفات الإدارية المسندة من إدارة المدرسة بدقة وفق التوجيهات والمدة المحددة، مع التنسيق مع الجهات ذات العلاقة ورفع ما يثبت الإنجاز."},
+ "تحضير الدروس":{d:"تم تحضير دروس مادة {SUBJ} متضمنة الأهداف السلوكية القابلة للقياس، والاستراتيجيات والوسائل المناسبة، وأنشطة التقويم البنائي والختامي لكل درس."},
+ "وسيلة تعليمية من إعدادي":{d:"تم إعداد وسيلة تعليمية بنفسي لدرس من دروس مادة {SUBJ}، باستخدام خامات بسيطة وألوان جاذبة، ووُظفت في شرح المفهوم وتطبيقه بمشاركة {S}."},
+ "خطة إثرائية للمتميزات":{d:"تم تنفيذ خطة إثرائية للمتميزات في مادة {SUBJ}، تضمنت مهام وأنشطة تتجاوز المقرر، وتحديات تفكير عليا، ومشاريع مصغرة عُرضت أمام الزميلات."},
+ "قواعد السلوك الصفي":{d:"تم وضع قواعد السلوك الصفي بالمشاركة مع {S} في بداية العام، وصياغتها بعبارات إيجابية واضحة، وتعليقها في الفصل، ومتابعة الالتزام بها بالتعزيز الإيجابي."}
+});
+/* توصيات عامة لكل عنصر */
+const ER={duty:["الاستمرار في الانضباط والالتزام بالتعليمات."],prof:["إعداد خطة نمو مهني فردية ومتابعة تنفيذها."],parents:["الاستمرار في التواصل الدوري مع الأسر."],strat:["إعداد بنك أنشطة لكل استراتيجية ومشاركته مع {COL}."],
+ results:["متابعة أثر الخطط بقياس قبلي وبعدي."],plan:["مراجعة الخطة دورياً وتعديلها حسب مستوى {S}."],tech:["تنويع الأدوات التقنية بما يخدم الأهداف."],env:["تحديث البيئة الصفية دورياً."],class:["الاستمرار في التعزيز الإيجابي."],analysis:["بناء القرارات التدريسية على نتائج التحليل."],assess:["ربط نتائج التقويم بخطط المعالجة والإثراء."]};
+/* مهارات كل مادة (تدخل في بعض النصوص عشان يصير التقرير خاص بمادتها) */
+const SUBJ_FAM=[[/رياض/,"math"],[/علوم|فيزياء|كيمياء|أحياء/,"sci"],[/لغتي|عربي|لغة عربية|نحو|أدب|بلاغ|كفايات لغوية/,"ar"],[/انجليز|إنجليز|english/i,"en"],[/قرآن|تجويد|إسلامي|توحيد|فقه|حديث|تفسير|دين/,"isl"],
+ [/اجتماع|تاريخ|جغرافيا|وطني|مواطنة/,"soc"],[/حاسب|رقمي|تقني|برمجة/,"cs"],[/فني|فنون/,"art"],[/بدني|صحية/,"pe"],[/طفولة|روضة|رياض الأطفال|تمهيدي/,"kg"],[/أسرية|حياتية/,"life"]];
+const SKILLS={math:["العمليات الحسابية","حل المسائل اللفظية","الكسور والأعداد العشرية","القياس والهندسة"],sci:["الملاحظة والاستنتاج","التجريب العلمي","تفسير الظواهر","قراءة الرسوم البيانية"],
+ ar:["القراءة والفهم القرائي","الكتابة والإملاء","القواعد النحوية","التعبير الكتابي"],en:["القراءة والمفردات","الاستماع والمحادثة","القواعد","الكتابة"],isl:["التلاوة والتجويد","الحفظ والتسميع","فهم المعاني","تطبيق الأحكام"],
+ soc:["قراءة الخرائط","فهم الأحداث التاريخية","قيم المواطنة","التحليل والاستنتاج"],cs:["البرمجة","المهارات الرقمية","حل المشكلات","الأمن الرقمي"],art:["الرسم والتلوين","التصميم","التذوق الفني","الأشغال اليدوية"],
+ pe:["المهارات الحركية","اللياقة البدنية","العادات الصحية","العمل الجماعي"],kg:["المهارات اللغوية المبكرة","المفاهيم الرياضية المبكرة","المهارات الحركية الدقيقة","المهارات الاجتماعية"],life:["المهارات الحياتية","إدارة الموارد","التغذية والصحة","التدبير المنزلي"]};
+const SKILL_DEF=["المهارات الأساسية في المادة","الفهم والتطبيق","التفكير والتحليل"];
+/* الاستراتيجية الأنسب لكل مادة (أول اختيار في المعالج) */
+const STRAT_BY={math:["التعلم التعاوني","التعلم باللعب"],sci:["التعلم بالمشاريع","التعلم التعاوني"],ar:["التعلم التعاوني","الخرائط الذهنية"],en:["لعب الأدوار","التعلم باللعب"],isl:["التعلم التعاوني","العصف الذهني"],
+ soc:["الخرائط الذهنية","لعب الأدوار"],cs:["التعلم بالمشاريع","الصف المقلوب"],art:["التعلم بالمشاريع","العصف الذهني"],pe:["التعلم باللعب","التعلم التعاوني"],kg:["التعلم باللعب","لعب الأدوار"],life:["التعلم بالمشاريع","التعلم التعاوني"]};
+/* الشواهد المختارة تلقائي لكل عنصر (الأول للباقة الأساسية، والثاني للشاملة) */
+const AUTO_PICK={duty:["الالتزام بالدوام الرسمي","المناوبة والإشراف اليومي"],prof:["حضور دورة تدريبية","مجتمعات التعلم المهنية"],parents:["اجتماع أولياء الأمور","التواصل عبر منصة مدرستي"],
+ results:["خطة علاجية للمتعثرات","خطة إثرائية للمتميزات"],plan:["توزيع المنهج","تحضير الدروس"],tech:["منصة مدرستي","وسيلة تعليمية من إعدادي"],env:["تنظيم الفصل","لوحات تحفيزية"],
+ class:["لوحة التعزيز والتحفيز","قواعد السلوك الصفي"],analysis:["الاختبار التشخيصي","تحليل نتائج الاختبارات"],assess:["التقويم التكويني","الاختبارات القصيرة"]};
+
+function subjFam(){ const s=D.subj||""; for(const [re,k] of SUBJ_FAM) if(re.test(s)) return k; return ""; }
+function autoPick(k){ if(k==="strat") return STRAT_BY[subjFam()]||["التعلم التعاوني","العصف الذهني"]; return AUTO_PICK[k]||[]; }
+function seedRng(str){ let h=1779033703^str.length; for(let i=0;i<str.length;i++){ h=Math.imul(h^str.charCodeAt(i),3432918353); h=h<<13|h>>>19; }
+  return ()=>{ h=Math.imul(h^h>>>16,2246822507); h=Math.imul(h^h>>>13,3266489909); h^=h>>>16; return (h>>>0)/4294967296; }; }
+function pickN(arr, n, rnd){ const a=arr.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(rnd()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a.slice(0,n); }
+const uniq = a => a.filter((x,i)=>x && a.indexOf(x)===i);
+/* يشيل الجمل المتشابهة (مثل «معالجة فورية للأخطاء» و«معالجة الأخطاء فوراً») */
+const tok = t => new Set(String(t).replace(/[.،,:]/g,"").split(/\s+/).map(w=>w.replace(/^(وال|بال|لل|ال|و)/,"").replace(/(ية|ة|ات|ين|ون|اً|ا)$/,"")).filter(w=>w.length>1));
+function distinct(arr){ const out=[], ts=[]; for(const x of arr){ if(!x) continue; const a=tok(x); if(ts.some(b=>{ let n=0; a.forEach(w=>{ if(b.has(w)) n++; }); return n/Math.min(a.size,b.size)>=.6; })) continue; out.push(x); ts.push(a); } return out; }
+/* تعبئة الرموز الخاصة بالمحرك، وبعدها fillT للجنس والمادة */
+function autoFill(txt, title, sk){ const m=D.g==="m";
+  return fillT(String(txt).replace(/\{H\}/g, m?"هم":"هن").replace(/\{ST\}/g, m?"طالب":"طالبة").replace(/\{TCH\}/g, m?"المعلم":"المعلمة").replace(/\{SK\}/g, sk||SKILL_DEF[0])
+    .replace(/المتميزات/g, m?"المتميزين":"المتميزات").replace(/المبدعات/g, m?"المبدعين":"المبدعات").replace(/الزميلات/g, m?"الزملاء":"الزميلات").replace(/مواهبهن/g, m?"مواهبهم":"مواهبهن")
+    .replace(/دافعيتهن/g, m?"دافعيتهم":"دافعيتهن").replace(/ترشيحهن/g, m?"ترشيحهم":"ترشيحهن").replace(/مشاركتهن/g, m?"مشاركتهم":"مشاركتهن").replace(/بهن/g, m?"بهم":"بهن").replace(/الملتزمين/g, m?"الملتزمين":"الملتزمات")
+    .replace(/المتقدمين/g, m?"المتقدمين":"المتقدمات").replace(/للمتميزين/g, m?"للمتميزين":"للمتميزات").replace(/للمحتاجين/g, m?"للمحتاجين":"للمحتاجات").replace(/المشاركين/g, m?"المشاركين":"المشاركات")
+    .replace(/الفائزين/g, m?"الفائزين":"الفائزات").replace(/المتميزين/g, m?"المتميزين":"المتميزات").replace(/مستوياتهم/g, m?"مستوياتهم":"مستوياتهن").replace(/رائدة/g, m?"رائد":"رائدة").replace(/الموهوبات/g, m?"الموهوبين":"الموهوبات").replace(/المتفوقات/g, m?"المتفوقين":"المتفوقات")
+    .replace(/(دافعيت|قدرات|انضباط)هم/g, m?"$1هم":"$1هن").replace(/(تشجيع|رعايت|قدرات)هن/g, m?"$1هم":"$1هن").replace(/المعلم الأساسي/g, m?"المعلم الأساسي":"المعلمة الأساسية")
+    .replace(/المشاركات/g, m?"المشاركين":"المشاركات").replace(/للمتعثرات/g, m?"للمتعثرين":"للمتعثرات").replace(/للمتميزات/g, m?"للمتميزين":"للمتميزات").replace(/موهوبات/g, m?"موهوبين":"موهوبات")
+    .replace(/الزملاء/g, m?"الزملاء":"الزميلات"), title); }
+/* يكتب التقرير كامل لشاهد: v رقم الصياغة */
+function autoReport(elK, raw, v, forceType){
+  const title=gS(raw, D.g), type=forceType || SUG_REP[raw] || EL_REP[elK] || "general", R=REPORTS[type]||REPORTS.general, X=AX[type]||AX.general, T=TX[raw]||{};
+  const fam=subjFam(), rnd=seedRng((CODE||"")+"|"+elK+"|"+raw+"|"+(v||0)+"|"+(D.subj||"")), sk=pickN(SKILLS[fam]||SKILL_DEF,1,rnd)[0];
+  const F=t=>autoFill(t, title, sk);
+  const dPool=T.d ? [T.d] : uniq((X.d&&X.d.length)?X.d:[R.desc]);
+  const desc=dPool[(v||0)%dPool.length];
+  const steps=(T.st||X.st||[]).slice(0,5);
+  const goals=distinct([T.g].concat(pickN(uniq(lines(R.goals).concat(X.g||[])), 6, rnd))).slice(0,3);
+  const res=distinct([T.r].concat(pickN(uniq(lines(R.res).concat(X.r||[])), 6, rnd))).slice(0,3);
+  const rec=distinct(pickN(uniq((X.rc||[]).concat(ER[elK]||[])), 4, rnd)).slice(0,2);
+  const f=D.g!=="m", who=D.grades ? (f?"طالبات ":"طلاب ")+D.grades : "";
+  const noKids=/^(course|workshop|plc|visit|conf|volunteer|curriculum|prep|duty_comm|duty_task|duty_ethic|duty_att)$/.test(type);
+  return {t:title, d:F(desc), rep:{type, who: noKids?(/workshop|plc|visit/.test(type)?(f?"زميلات المدرسة":"زملاء المدرسة"):""):who, where:R.where||"", goals:goals.map(F).join("\n"), res:res.map(F).join("\n"), steps:steps.map(F).join("\n"), rec:rec.map(F).join("\n")}};
+}
+
+/* ===== صفحة التقرير الرسمي (نسخة فيها خطوات التنفيذ والتوصيات، وتتقاس عشان ما تطلع برا الصفحة) ===== */
+let RMEAS=null;
+function repBody(t, x, it, j, urls, o){ const r=it.rep, R=REPORTS[r.type]||REPORTS.general, f=D.g!=="m", RN=fillT(R.n,""), fs=o.fs;
+  const cells=[[f?"المنفذة":"المنفذ",D.name],["التاريخ",it.dt],["المستفيدون",r.who],["المكان",r.where],["العنصر",x.e.t],["المادة",D.subj]].filter(c=>c[1]).slice(0,6);
+  const G=lines(r.goals), Rs=lines(r.res), St=o.steps?lines(r.steps):[], Rc=o.rec?lines(r.rec):[];
+  const sec=(h,arr)=>'<div style="flex:1;background:'+t.soft+';border-radius:12px;padding:9px 14px"><div style="font-weight:800;color:'+t.ink+';font-size:'+(fs+1)+'px;margin-bottom:3px">'+h+'</div>'+arr.map(l=>'<div style="font-size:'+fs+'px;line-height:1.65;display:flex;gap:6px"><span style="color:'+t.g+'">•</span><span>'+esc(l)+'</span></div>').join("")+'</div>';
+  const n=urls.length, cols=n===4?2:Math.max(1,n), rows=n===4?2:1, gap=o.fs<15?9:11;
+  const ph = n ? (o.measure ? '<div style="height:'+o.phMin+'px"></div>' : '<div style="flex:1;min-height:'+o.phMin+'px;display:grid;gap:10px;grid-template-columns:repeat('+cols+',1fr);grid-template-rows:repeat('+rows+',1fr)">'+urls.slice(0,4).map(u=>'<div style="background:#f4f1ec url('+u+') center/contain no-repeat;border:1px solid #e8e1d6;border-radius:10px"></div>').join("")+'</div>') : (o.measure?'':'<div style="flex:1"></div>');
+  return '<div style="'+(o.measure?'':'height:100%;')+'display:flex;flex-direction:column">'+
+   '<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:9px"><span style="background:'+t.a+';color:#fff;border-radius:999px;padding:6px 16px;font-size:15px;font-weight:800">'+esc(RN)+'</span><span style="font-size:14px;color:#8a7d70">العنصر '+AR_DIG(x.i+1)+' — شاهد '+AR_DIG(j+1)+'</span></div>'+
+   '<div style="font-size:'+(fs>=18?30:fs>=15?27:24)+'px;font-weight:800;color:'+t.ink+';line-height:1.4;margin-bottom:10px">'+esc(it.t)+'</div>'+
+   (cells.length?'<div style="display:grid;grid-template-columns:1fr 1fr;border:1.5px solid '+t.g2+';border-radius:12px;overflow:hidden;margin-bottom:'+gap+'px">'+cells.map((c,i)=>'<div style="display:flex;font-size:'+fs+'px;'+(i>1?'border-top:1px solid #eee;':'')+(i%2?'border-right:1px solid #eee;':'')+'"><div style="background:'+t.soft+';padding:8px 12px;font-weight:800;color:'+t.ink+';min-width:96px">'+c[0]+'</div><div style="padding:8px 12px;flex:1">'+esc(c[1])+'</div></div>').join("")+'</div>':'')+
+   (it.d?'<div style="border:1px solid #eee;border-right:4px solid '+t.g+';border-radius:12px;padding:9px 14px;margin-bottom:'+gap+'px"><div style="font-weight:800;color:'+t.ink+';font-size:'+(fs+1)+'px;margin-bottom:3px">📝 وصف التنفيذ</div><div style="font-size:'+fs+'px;line-height:1.8">'+esc(it.d).replace(/\n/g,"<br>")+'</div></div>':'')+
+   ((G.length||Rs.length)?'<div style="display:flex;gap:12px;margin-bottom:'+gap+'px">'+(G.length?sec("🎯 الأهداف",G):"")+(Rs.length?sec("📈 النتائج والأثر",Rs):"")+'</div>':'')+
+   (St.length?'<div style="border:1.5px solid '+t.g2+';border-radius:12px;padding:9px 14px;margin-bottom:'+gap+'px"><div style="font-weight:800;color:'+t.ink+';font-size:'+(fs+1)+'px;margin-bottom:5px">🧭 خطوات التنفيذ</div><div style="display:grid;grid-template-columns:'+(o.col1?'1fr':'1fr 1fr')+';gap:5px 16px">'+
+     St.map((l,k)=>'<div style="display:flex;gap:8px;align-items:flex-start;font-size:'+fs+'px;line-height:1.6"><span style="flex:0 0 22px;height:22px;border-radius:50%;background:'+t.a+';color:#fff;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;margin-top:2px">'+AR_DIG(k+1)+'</span><span>'+esc(l)+'</span></div>').join("")+'</div></div>':'')+
+   (Rc.length?'<div style="background:'+t.soft+';border-radius:12px;padding:8px 14px;margin-bottom:'+gap+'px;font-size:'+fs+'px;line-height:1.7"><b style="color:'+t.ink+'">💡 التوصيات: </b>'+Rc.map(esc).join('<span style="color:'+t.g+'"> ◆ </span>')+'</div>':'')+
+   ph+(it.link?qrStrip(t,it.link,"امسح الباركود لمشاهدة الشاهد"):"")+
+   '<div style="display:flex;gap:30px;margin-top:14px">'+[[f?"المعلمة":"المعلم",D.name],[f?"مديرة المدرسة":"مدير المدرسة",D.prin]].map(b=>'<div style="flex:1;text-align:center;font-size:15px"><b style="color:'+t.ink+'">'+b[0]+'</b>: '+esc(b[1]||"")+'<div style="margin:20px 40px 0;border-top:1.5px dashed #b9ad9d;font-size:12px;color:#9a8b7c;padding-top:4px">التوقيع</div></div>').join("")+'</div></div>'; }
+function repHTML2(t, x, it, j, urls){ const r=it.rep, hasX=lines(r.steps).length||lines(r.rec).length;
+  if(!hasX) return repHTML0(t, x, it, j, urls);
+  if(!RMEAS){ RMEAS=document.createElement("div"); RMEAS.style.cssText="position:fixed;left:-30000px;top:0;width:"+(PW-112)+"px;direction:rtl;font-family:Tajawal,sans-serif;color:#2b2b2b;visibility:hidden;pointer-events:none"; document.body.appendChild(RMEAS); }
+  const H=PH-218, phMin=urls.length?(urls.length>2?230:200):0;
+  const opts=[]; if(!urls.length) for(const fs of [19,18,17]) opts.push({fs,steps:1,rec:1,phMin,col1:1}); for(const fs of (urls.length?[16,15,14.5,14]:[17,16,15,14.5,14])) opts.push({fs,steps:1,rec:1,phMin}); opts.push({fs:14,steps:1,rec:0,phMin}); opts.push({fs:14,steps:1,rec:0,phMin:150}); opts.push({fs:13.5,steps:0,rec:0,phMin:150});
+  try{ for(const o of opts){ RMEAS.innerHTML=repBody(t,x,it,j,urls,{...o,measure:1}); if(RMEAS.scrollHeight<=H) return repBody(t,x,it,j,urls,o); } }
+  finally{ RMEAS.innerHTML=""; }
+  return repBody(t,x,it,j,urls,opts[opts.length-1]); }
+
+/* ===== ✨ الملف الجاهز بضغطة: الواجهة ===== */
+const SUBJ_CHIPS=["لغتي","اللغة العربية","الرياضيات","العلوم","اللغة الإنجليزية","الدراسات الإسلامية","القرآن الكريم","الدراسات الاجتماعية","المهارات الرقمية","التربية الفنية","التربية البدنية","الطفولة المبكرة"];
+const SH=()=>$("mAuto").querySelector(".sheet");
+let AW={step:1, mode:"one", picks:{}, theme:"gold", cover:"classic"}, autoRet=0;
+const autoItems = () => { const out=[]; D.els.forEach((e,i)=>e.items.forEach((it,j)=>{ if(it.auto) out.push({e,i,it,j}); })); return out; };
+const needPh = it => !it.imgs.length && !(it.pdf&&it.pdf.pages&&it.pdf.pages.length) && !it.link;
+function seedInt(s, n){ const r=seedRng(s); return Math.floor(r()*n); }
+function smartCard(){ const c=$("smartCard"); if(!c) return; const A=autoItems(), np=A.filter(x=>needPh(x.it)).length;
+  if(A.length){ $("smartT").textContent="✨ ملفك الذكي: "+AR_DIG(A.length)+" تقرير جاهز"; $("smartP").textContent = np ? "📸 باقي "+AR_DIG(np)+" تقرير ما فيه صورة. افتحيه وأضيفي صورك، أو حمّلي الملف على طول." : "✓ كل التقارير فيها صور. افتحي الملف وراجعيه، أو حمّليه PDF."; c.classList.add("has"); }
+  else { $("smartT").textContent="✨ جهّزي ملفك كامل بضغطة"; $("smartP").textContent="تقرير رسمي لكل عنصر، ينكتب حسب مادتك وصفوفك في ثواني. وتضيفين صورك الحقيقية بعدها."; c.classList.remove("has"); } }
+function stepDots(){ $("awDots").innerHTML=[1,2,3].map(n=>'<i class="'+(AW.step>n?"ok":AW.step===n?"on":"")+'"></i>').join(""); $("awDots").classList.toggle("hidden", AW.step>3); }
+function openAuto(step){ AW.step=step||(autoItems().length?5:1); AW.theme=D.theme; AW.cover=D.cover; if(AW.step===2) initPicks(); drawAuto(); openM("mAuto"); }
+function initPicks(){ AW.picks={}; D.els.forEach(e=>{ const def=elDef(e.k); if(!def) return; const n=AW.mode==="two"?2:1, used=new Set(e.items.map(x=>x.t));
+  const base=e.items.length ? [] : autoPick(e.k).slice(0,n); AW.picks[e.k]=new Set(base.filter(r=>!used.has(gS(r,D.g)))); }); }
+function pickCount(){ let n=0; for(const k in AW.picks) n+=AW.picks[k].size; return n; }
+function drawAuto(){ stepDots(); const B=$("awBody"), f=D.g!=="m";
+  if(AW.step===1){ $("awTitle").textContent="١. بياناتك";
+    B.innerHTML='<div class="hint">تطلع في الغلاف وفي كل تقرير، والمادة والصفوف تخلي التقارير مكتوبة عن شغلك أنتِ.</div>'+
+      '<label>الملف لـ</label><div class="seg" id="awG"><button data-v="f">معلمة</button><button data-v="m">معلم</button></div>'+
+      '<label>'+(f?"اسم المعلمة":"اسم المعلم")+'</label><input id="awName" value="'+esc(D.name)+'" placeholder="مثال: نورة بنت محمد الشهري">'+
+      '<label>المادة</label><input id="awSubj" value="'+esc(D.subj)+'" placeholder="مثال: الرياضيات"><div class="chips" id="awSubjC">'+SUBJ_CHIPS.map(s=>'<button type="button" class="chip'+(D.subj===s?' used':'')+'">'+s+'</button>').join("")+'</div>'+
+      '<label>الصفوف</label><input id="awGr" value="'+esc(D.grades)+'" placeholder="مثال: الرابع والخامس الابتدائي">'+
+      '<div class="two"><div><label>المدرسة</label><input id="awSch" value="'+esc(D.school)+'" placeholder="مثال: الابتدائية العاشرة"></div><div><label>'+(f?"مديرة المدرسة":"مدير المدرسة")+'</label><input id="awPrin" value="'+esc(D.prin)+'"></div></div>'+
+      '<div class="row"><button class="btn b-main" id="awNext">التالي ←</button></div>';
+    seg("awG",D.g); document.querySelectorAll("#awG button").forEach(b=>b.onclick=()=>{ keep1(); D.g=b.dataset.v; drawAuto(); });
+    $("awSubjC").querySelectorAll(".chip").forEach(c=>c.onclick=()=>{ $("awSubj").value=c.textContent; $("awSubjC").querySelectorAll(".chip").forEach(x=>x.classList.toggle("used",x===c)); });
+    $("awNext").onclick=async()=>{ keep1(); if(!D.name){ $("awName").focus(); toast(f?"اكتبي اسمك عشان يطلع في الغلاف":"اكتب اسمك عشان يطلع في الغلاف"); return; } if(!D.subj){ $("awSubj").focus(); toast("اختاري المادة، عشان التقارير تنكتب عنها"); return; }
+      await save(); render(); AW.step=2; initPicks(); drawAuto(); SH().scrollTop=0; };
+    return; }
+  if(AW.step===2){ $("awTitle").textContent="٢. وش سويتي هالفصل؟";
+    let h='<div class="hint">اخترت لك الأنسب لكل عنصر. شيلي أو زيدي حسب اللي سويتيه <b>فعلاً</b>، عشان يطابق ملفك شغلك ولا ينحرجك قدام المشرفة.</div>'+
+      '<div class="seg" id="awMode" style="margin-top:10px"><button data-v="one">تقرير لكل عنصر</button><button data-v="two">تقريرين لكل عنصر</button></div>';
+    D.els.forEach((e,i)=>{ const def=elDef(e.k); if(!def) return; const P=AW.picks[e.k]||new Set(), used=new Set(e.items.map(x=>x.t));
+      h+='<div class="awEl"><div class="awH"><i>'+AR_DIG(i+1)+'</i><b>'+esc(e.t)+'</b>'+(e.items.length?'<em>✓ فيه '+AR_DIG(e.items.length)+' شاهد</em>':'')+'</div><div class="chips">'+
+        def.s.map(r=>{ const t=gS(r,D.g), u=used.has(t); return '<button type="button" class="chip'+(P.has(r)?' on':'')+(u?' used':'')+'" data-k="'+e.k+'" data-r="'+esc(r)+'"'+(u?' disabled':'')+'>'+(u?'✓ ':P.has(r)?'✔︎ ':'＋ ')+esc(t)+'</button>'; }).join("")+'</div></div>'; });
+    h+='<div class="awFoot"><button class="btn b-light" id="awBack">→ رجوع</button><button class="btn b-main" id="awNext"></button></div>';
+    B.innerHTML=h; seg("awMode",AW.mode);
+    const upd=()=>{ const n=pickCount(); $("awNext").textContent = n ? "التالي ← ("+AR_DIG(n)+" تقرير)" : "اختاري شاهد واحد على الأقل"; $("awNext").disabled=!n; }; upd();
+    document.querySelectorAll("#awMode button").forEach(b=>b.onclick=()=>{ AW.mode=b.dataset.v; initPicks(); const st=SH().scrollTop; drawAuto(); SH().scrollTop=st; });
+    B.querySelectorAll(".awEl .chip:not([disabled])").forEach(c=>c.onclick=()=>{ const S=AW.picks[c.dataset.k]||(AW.picks[c.dataset.k]=new Set()), r=c.dataset.r;
+      if(S.has(r)) S.delete(r); else S.add(r); const on=S.has(r); c.classList.toggle("on",on); c.textContent=(on?"✔︎ ":"＋ ")+gS(r,D.g); upd(); });
+    $("awBack").onclick=()=>{ AW.step=1; drawAuto(); }; $("awNext").onclick=()=>{ AW.step=3; drawAuto(); SH().scrollTop=0; };
+    return; }
+  if(AW.step===3){ $("awTitle").textContent="٣. شكل ملفك";
+    B.innerHTML='<div class="awCv" id="awCv"></div><label>تصميم الغلاف</label><div class="chips" id="awCovers">'+Object.entries(COVERS).map(([k,n])=>'<button type="button" class="chip" data-v="'+k+'">'+n+'</button>').join("")+'</div>'+
+      '<label>اللون</label><div class="awTh" id="awThemes">'+Object.entries(THEMES).map(([k,t])=>'<button type="button" data-v="'+k+'" title="'+t.n+'"><i style="background:linear-gradient(135deg,'+t.a+','+t.b+');box-shadow:inset 0 -7px 0 '+t.g+'"></i><span>'+t.n+'</span></button>').join("")+'</div>'+
+      '<div class="awFoot"><button class="btn b-light" id="awBack">→ رجوع</button><button class="btn b-main b-go" id="awGo">✨ جهّزي ملفي ('+AR_DIG(pickCount())+' تقرير)</button></div>';
+    const prev=()=>{ const t=THEMES[AW.theme]||THEMES.gold, oc=D.cover, ot=D.theme; D.cover=AW.cover; D.theme=AW.theme; const w=$("awCv").clientWidth||300, s=Math.min(.42,(w-2)/PW);
+      $("awCv").innerHTML='<div style="width:'+(PW*s)+'px;height:'+(PH*s)+'px;overflow:hidden;margin:0 auto;border-radius:8px;box-shadow:0 10px 26px rgba(0,0,0,.18)"><div style="transform:scale('+s+');transform-origin:top right;width:'+PW+'px">'+coverHTML(t)+'</div></div>'; D.cover=oc; D.theme=ot;
+      $("awCovers").querySelectorAll(".chip").forEach(b=>b.classList.toggle("on",b.dataset.v===AW.cover)); $("awThemes").querySelectorAll("button").forEach(b=>b.classList.toggle("on",b.dataset.v===AW.theme)); };
+    $("awCovers").querySelectorAll(".chip").forEach(b=>b.onclick=()=>{ AW.cover=b.dataset.v; prev(); });
+    $("awThemes").querySelectorAll("button").forEach(b=>b.onclick=()=>{ AW.theme=b.dataset.v; prev(); });
+    requestAnimationFrame(prev);
+    $("awBack").onclick=()=>{ AW.step=2; drawAuto(); }; $("awGo").onclick=runAuto;
+    return; }
+  if(AW.step===4){ $("awTitle").textContent="✨ أجهّز ملفك…"; return; }
+  drawBoard(); }
+function keep1(){ const v=id=>($(id)?$(id).value.trim():""); D.name=v("awName"); D.subj=v("awSubj"); D.grades=v("awGr"); D.school=v("awSch"); D.prin=v("awPrin"); }
+/* التجهيز: يكتب التقارير ويوزعها على العناصر */
+async function runAuto(){
+  D.theme=AW.theme; D.cover=AW.cover; AW.step=4; drawAuto();
+  const jobs=[]; D.els.forEach((e,i)=>{ const S=AW.picks[e.k]; if(S) elDef(e.k).s.forEach(r=>{ if(S.has(r)) jobs.push({e,i,r}); }); });
+  const B=$("awBody");
+  B.innerHTML='<div class="awGen"><div class="awRing"><svg width="96" height="96"><circle cx="48" cy="48" r="40" stroke="#f0e6e2" stroke-width="9" fill="none"/><circle id="awRingC" cx="48" cy="48" r="40" stroke="url(#awGrad)" stroke-width="9" fill="none" stroke-linecap="round" stroke-dasharray="251.3" stroke-dashoffset="251.3"/><defs><linearGradient id="awGrad"><stop offset="0" stop-color="#e0b36a"/><stop offset="1" stop-color="#5e4744"/></linearGradient></defs></svg><b id="awPct">٠٪</b></div>'+
+    '<div class="awNow" id="awNow">أقرأ بياناتك…</div><div class="awList" id="awList">'+jobs.map((x,k)=>'<div id="awJ'+k+'"><i>○</i>'+esc(gS(x.r,D.g))+'<small>'+esc(x.e.t)+'</small></div>').join("")+'</div></div>';
+  const wait=ms=>new Promise(ok=>setTimeout(ok,ms)), per=Math.max(60, Math.min(170, 2600/jobs.length));
+  for(let k=0;k<jobs.length;k++){ const x=jobs[k], title=gS(x.r,D.g);
+    if(!x.e.items.some(it=>it.t===title)){ const v=seedInt((CODE||"")+x.r, 7), A=autoReport(x.e.k, x.r, v);
+      x.e.items.push({id:uid(), t:A.t, d:A.d, dt:"", imgs:[], link:"", rep:A.rep, pdf:null, auto:{v, raw:x.r}}); }
+    $("awNow").textContent="أكتب «"+title+"»"; const row=$("awJ"+k); row.classList.add("ok"); row.querySelector("i").textContent="✓"; row.scrollIntoView({block:"nearest"});
+    const p=(k+1)/jobs.length; $("awRingC").style.strokeDashoffset=251.3*(1-p); $("awPct").textContent=AR_DIG(Math.round(p*100))+"٪"; await wait(per); }
+  await save(); markActivity(); render(); $("awNow").textContent="✅ ملفك جاهز"; await wait(450);
+  AW.step=5; drawAuto(); SH().scrollTop=0; celebrateAuto(jobs.length); }
+function celebrateAuto(n){ try{ celebrate({ic:"🎉", t:"تم! "+AR_DIG(n)+" تقرير في ملفك", p:"أضيفي صورك للتقارير اللي تحتاجها، وبعدها حمّلي الملف."}); }catch(e){ toast("🎉 تم! "+AR_DIG(n)+" تقرير في ملفك"); } }
+/* لوحة الملف: كل تقرير وحالته وأزراره */
+async function drawBoard(){ $("awTitle").textContent="✨ ملفك الذكي"; stepDots();
+  const B=$("awBody"), A=autoItems(), np=A.filter(x=>needPh(x.it)).length, cov=Math.round(coverage());
+  let h='<div class="awSum"><div><b>'+AR_DIG(A.length)+'</b><span>تقرير جاهز</span></div><div><b>'+AR_DIG(cov)+'٪</b><span>تغطية العناصر</span></div><div class="'+(np?'w':'')+'"><b>'+AR_DIG(np)+'</b><span>تحتاج صورة</span></div></div>';
+  h+= np ? '<div class="tip" style="margin-top:10px">📸 <b>خطوتك الوحيدة:</b> أضيفي صورة من شغلك الحقيقي لكل تقرير تقدرين عليه (لقطة من الحصة، شهادة، لوحة، رسالة). التقارير اللي بدون صورة تطلع تقرير مكتوب مرتب.</div>'
+    : '<div class="tip ok" style="margin-top:10px">✅ كل التقارير فيها صور. راجعي الملف وحمّليه.</div>';
+  if(!A.length) h+='<div class="empty">ما فيه تقارير تلقائية للحين.<br><button class="btn b-main" id="awStart" style="margin-top:10px">✨ ابدئي التجهيز</button></div>';
+  let lastEl=-1;
+  for(const x of A){ if(x.i!==lastEl){ h+=(lastEl>=0?'</div>':'')+'<div class="awGrp"><div class="awH"><i>'+AR_DIG(x.i+1)+'</i><b>'+esc(x.e.t)+'</b></div>'; lastEl=x.i; }
+    const u=evThumb(x.it)?await imgURL(evThumb(x.it)):"", n=x.it.imgs.length;
+    h+='<div class="awIt" data-i="'+x.i+'" data-j="'+x.j+'"><div class="im" style="'+(u?'background-image:url('+u+')':'')+'">'+(u?'':'📝')+'</div><div class="tx"><b>'+esc(x.it.t)+'</b><p>'+esc(fillT((REPORTS[x.it.rep&&x.it.rep.type]||REPORTS.general).n,""))+'</p>'+
+      '<span class="st '+(needPh(x.it)?'w':'ok')+'">'+(needPh(x.it)?'📸 بدون صورة':'✓ '+(n?AR_DIG(n)+' صور':'فيه مرفق'))+'</span>'+(x.it.dt?'':'<span class="st">📅 بدون تاريخ</span>')+((TX[x.it.auto.raw]||{}).ask&&!x.it.auto.ed?'<span class="st w">✏️ اكتبي '+TX[x.it.auto.raw].ask+'</span>':'')+'</div>'+
+      '<div class="bt"><label class="b ph" title="إضافة صورة">📸<input type="file" accept="image/*" multiple hidden></label><button class="b" data-a="r" title="صياغة ثانية">🔄</button><button class="b" data-a="e" title="تعديل">✏️</button><button class="b" data-a="x" title="حذف">🗑️</button></div></div>'; }
+  if(lastEl>=0) h+='</div>';
+  h+='<button class="btn b-light" id="awMore" style="width:100%;margin-top:12px">➕ أضيفي تقارير ثانية</button>'+
+     (A.length?'<button class="awUndo" id="awUndo">↩️ تراجع: احذفي التقارير التلقائية اللي ما فيها صور ولا تعديل</button>':'')+
+     '<div class="awFoot"><button class="btn b-light" id="awLook">🎨 الشكل</button><button class="btn b-main b-go" id="awPrev">📄 معاينة ملفي وتحميله</button></div>';
+  B.innerHTML=h;
+  if($("awStart")) $("awStart").onclick=()=>{ AW.step=1; drawAuto(); };
+  B.querySelectorAll(".awIt").forEach(row=>{ const i=+row.dataset.i, j=+row.dataset.j, e=D.els[i], it=e.items[j];
+    row.querySelector("input").onchange=async ev=>{ const fs=[...ev.target.files].slice(0, Math.max(0,4-it.imgs.length)); ev.target.value=""; if(!fs.length){ toast("الحد ٤ صور للتقرير"); return; }
+      toast("⏳ أجهّز الصور…"); for(const f of fs){ try{ const b=await shrink(f); const id="i_"+uid(); await dbPut("img",id,b); it.imgs.push(id); }catch(x){ toast("صورة ما قدرت أقراها، جربي غيرها"); } }
+      if(it.auto) it.auto.ph=1; await save(); render(); const st=SH().scrollTop; await drawBoard(); SH().scrollTop=st; toast("✅ انضافت الصورة"); };
+    row.querySelector('[data-a="r"]').onclick=async()=>{ if(it.auto.ed && !confirm("عدّلتي على هذا التقرير. أكتبه بصياغة ثانية وتروح تعديلاتك؟")) return;
+      it.auto.v=(it.auto.v||0)+1; it.auto.ed=0; const N=autoReport(e.k, it.auto.raw, it.auto.v); it.d=N.d; it.rep={...N.rep, who:(it.rep&&it.rep.who)||N.rep.who}; await save();
+      const st=SH().scrollTop; await drawBoard(); SH().scrollTop=st; toast("🔄 انكتب بصياغة ثانية"); };
+    row.querySelector('[data-a="e"]').onclick=()=>{ curEl=i; autoRet=1; openEv(j); };
+    row.querySelector('[data-a="x"]').onclick=async()=>{ if(!confirm("حذف تقرير «"+it.t+"»؟")) return; for(const im of allImgIds(it)) await dbDel("img",im).catch(()=>{}); e.items.splice(j,1); await save(); render(); const st=SH().scrollTop; await drawBoard(); SH().scrollTop=st; };
+  });
+  $("awMore").onclick=()=>{ AW.step=2; initPicks(); drawAuto(); SH().scrollTop=0; };
+  if($("awUndo")) $("awUndo").onclick=async()=>{ const del=autoItems().filter(x=>!x.it.auto.ed && !allImgIds(x.it).length && !x.it.link);
+    if(!del.length){ toast("كل التقارير فيها صور أو تعديلاتك، فما حذفت شي"); return; }
+    if(!confirm("أحذف "+AR_DIG(del.length)+" تقرير تلقائي ما فيها صور ولا تعديل؟ (اللي أضفتي لها صور أو عدلتيها تبقى)")) return;
+    for(const x of del){ const k=x.e.items.indexOf(x.it); if(k>=0) x.e.items.splice(k,1); } await save(); render(); await drawBoard(); toast("↩️ انحذفت التقارير التلقائية"); };
+  $("awLook").onclick=()=>openLook();
+  $("awPrev").onclick=()=>{ closeM("mAuto"); $("fab").click(); };
+}
+$("smartCard").onclick=()=>openAuto();
+
 boot();
 </script>
 </body>
