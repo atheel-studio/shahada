@@ -1959,7 +1959,7 @@ async function makePdf(onePages){
   try{
     for(let i=0;i<pages.length;i++){
       $("expMsg").textContent="⏳ أجهّز الصفحة "+AR_DIG(i+1)+" من "+AR_DIG(pages.length)+"…";
-      stage.innerHTML=pages[i]; const el=stage.firstElementChild; await waitImgs(el);
+      stage.innerHTML=pages[i]; const el=stage.firstElementChild; fixShaping(el); await waitImgs(el);
       const cv=await html2canvas(el,{scale:1.6,backgroundColor:"#ffffff",useCORS:true,logging:false});
       if(i) pdf.addPage();
       pdf.addImage(cv.toDataURL("image/jpeg",.86),"JPEG",0,0,W,H,undefined,"FAST");
@@ -2582,6 +2582,22 @@ function repHTML2(t, x, it, j, urls){ const r=it.rep, hasX=lines(r.steps).length
   try{ for(const o of opts){ RMEAS.innerHTML=repBody(t,x,it,j,urls,{...o,measure:1}); if(RMEAS.scrollHeight<=H) return repBody(t,x,it,j,urls,o); } }
   finally{ RMEAS.innerHTML=""; }
   return repBody(t,x,it,j,urls,opts[opts.length-1]); }
+/* html2canvas يكسر تشكيل الحروف العربية لما تلتصق بالأرقام أو بالحروف اللاتينية (مثل ١٤٤٨هـ) فتطلع «١٤٤٨ه.».
+   الحل: نحط الجزء العربي الملتصق في span لحاله قبل التصوير. */
+function fixShaping(root){
+  const NUM=/[0-9٠-٩۰-۹]/, AR=/[ء-غف-يـٱ-ۓ]/, LAT=/[A-Za-z]/;
+  const doc=root.ownerDocument||document, w=doc.createTreeWalker(root, 4), list=[];
+  while(w.nextNode()){ const t=w.currentNode.nodeValue; if(AR.test(t) && (NUM.test(t)||LAT.test(t))) list.push(w.currentNode); }
+  for(const node of list){
+    const toks=node.nodeValue.match(/[0-9٠-٩۰-۹]+|[A-Za-z]+|\s+|[^\sA-Za-z0-9٠-٩۰-۹]+/g); if(!toks) continue;
+    const kind=s=>/^\s+$/.test(s)?"s":(NUM.test(s[0])||LAT.test(s[0]))?"n":"a";
+    let changed=false; const frag=doc.createDocumentFragment();
+    toks.forEach((s,i)=>{ const k=kind(s), pk=i?kind(toks[i-1]):"", nk=i<toks.length-1?kind(toks[i+1]):"";
+      if(k==="a" && AR.test(s) && (pk==="n"||nk==="n")){ const sp=doc.createElement("span"); sp.style.whiteSpace="nowrap"; sp.textContent=s; frag.appendChild(sp); changed=true; }
+      else frag.appendChild(doc.createTextNode(s)); });
+    if(changed) node.parentNode.replaceChild(frag, node);
+  }
+}
 
 /* ===== ✨ الملف الجاهز بضغطة: الواجهة ===== */
 const SUBJ_CHIPS=["لغتي","اللغة العربية","الرياضيات","العلوم","اللغة الإنجليزية","الدراسات الإسلامية","القرآن الكريم","الدراسات الاجتماعية","المهارات الرقمية","التربية الفنية","التربية البدنية","الطفولة المبكرة"];
