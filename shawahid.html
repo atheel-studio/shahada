@@ -376,9 +376,9 @@ details p{font-size:13.5px;color:var(--muted);font-weight:500;margin-top:6px}
       <div class="plan">
         <span class="tag">جديد 🧭</span>
         <h3>ملف الموجّهة ورائدة النشاط</h3>
-        <div class="price">49 <small>ر.س سعر الإطلاق</small></div>
-        <ul><li>سعر الإطلاق لين 4 ديسمبر، وبعدها 59 ر.س</li><li>13 عنصر للموجّهة و15 لرائدة النشاط بأوزانها</li><li>تقارير جاهزة للتوجيه والنشاط</li><li>كود واحد للوظيفتين، ودفعة وحدة</li></ul>
-        <a class="btn btn-ink" href="https://atheel-studio.com/?product_id=377712608">اطلبيه بـ 49 ر.س</a>
+        <div class="price"><span class="pgP">49</span> <small class="pgS">ر.س سعر الإطلاق</small></div>
+        <ul><li class="pgL">سعر الإطلاق لين 4 ديسمبر، وبعدها 59 ر.س</li><li>13 عنصر للموجّهة و15 لرائدة النشاط بأوزانها</li><li>تقارير جاهزة للتوجيه والنشاط</li><li>كود واحد للوظيفتين، ودفعة وحدة</li></ul>
+        <a class="btn btn-ink pgB" href="https://atheel-studio.com/?product_id=377712608">اطلبيه بـ 49 ر.س</a>
       </div>
     </div>
     <div class="pay">مدى · Apple Pay · تابي · تمارا (4 دفعات بدون فوائد)</div>
@@ -442,6 +442,14 @@ details p{font-size:13.5px;color:var(--muted);font-weight:500;margin-top:6px}
     var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} }); },{threshold:.12});
     els.forEach(function(e){ io.observe(e); });
   } else els.forEach(function(e){ e.classList.add('in'); });
+})();
+</script>
+<script>
+(function(){ if(Date.now() < Date.parse("2026-12-05T00:00:00+03:00")) return;
+  document.querySelectorAll(".pgP").forEach(function(e){e.textContent="59";});
+  document.querySelectorAll(".pgS").forEach(function(e){e.textContent="ر.س";});
+  document.querySelectorAll(".pgL").forEach(function(e){e.textContent="دفعة وحدة بدون اشتراك سنوي";});
+  document.querySelectorAll(".pgB").forEach(function(e){e.textContent="اطلبيه بـ 59 ر.س";});
 })();
 </script>
 </body>
